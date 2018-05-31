@@ -1,0 +1,8 @@
+.head-title{
+    color: #fff;
+    margin-top: 100px;
+}
+.head-title:hover, .head-title:focus {
+    color: #141719;
+    text-decoration: none;
+}

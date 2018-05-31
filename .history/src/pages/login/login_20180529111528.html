@@ -1,0 +1,55 @@
+<div class="container w-xxl w-auto-xs" ng-controller="SigninFormController" ng-init="app.settings.container = false;">
+    <!-- <a href class="navbar-brand block m-t">{{app.name}}</a>
+    <div class="m-b-lg">
+    
+      <form name="form" class="form-validation">
+        <div class="text-danger wrapper text-center" ng-show="authError">
+            {{authError}}
+        </div>
+        <div class="list-group list-group-sm">
+          <div class="list-group-item">
+            <input type="email" placeholder="Email" class="form-control no-border" ng-model="user.email" required>
+          </div>
+          <div class="list-group-item">
+             <input type="password" placeholder="Password" class="form-control no-border" ng-model="user.password" required>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-lg btn-primary btn-block" ng-click="login()" ng-disabled='form.$invalid'>Log in</button>
+       
+      </form>
+    </div> -->
+    <!-- <div class="text-center" ng-include="'tpl/blocks/page_footer.html'"></div> -->
+
+    <div class="content">
+    
+        <div class="header">
+            <label>iConnect安全管理平台2.0</label>
+        </div>
+        <div class="body">
+            <div class="site-login">
+                <div class="row">
+                    <div class="col-lg-5">
+                        <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+    
+                            <?= $form->field($model, 'username',['labelOptions' => ['label'=>null]])
+                              ->textInput([
+                                'autofocus' => true,
+                                'placeholder'=>'用户名',
+                              ]) ?>
+    
+                            <?= $form->field($model, 'password',['labelOptions' => ['label'=>null]])->passwordInput([
+                                'placeholder'=>'密码',
+                              ]) ?>
+    
+    
+                            <div class="form-group">
+                                <?= Html::submitButton('登录', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                            </div>
+    
+                        <?php ActiveForm::end(); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
