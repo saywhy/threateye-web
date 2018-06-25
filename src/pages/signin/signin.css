@@ -2,10 +2,43 @@
     color: #fff;
     margin-top: 100px;
     font-size: 25px;
-    margin-bottom: 15px;
+    /* margin-bottom: 15px; */
     padding: 0 10px;
+    font-family: SimHei;
+    font-size: 26px;
+    font-weight: 700;
 }
+.head_subtitle{
+    font-family: Arial;
+    font-size: 18px;
+    color: #fff;
+    margin-bottom: 70px;
+    text-align: center;
+  }
 .head-title:hover, .head-title:focus {
     color: #FFF !important;
     text-decoration: none;
+}
+.space{
+height: 30px;
+width: 100%;
+}
+.hoohoolab-footer-login{
+    color:#fff;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    font-weight: 700;
+    font-size: 14px;
+    transform: translateX(-50%);
+}
+input{
+    background-color: #fff;
+}
+.list-group-item{
+    height: 40px;
+    border-radius: 5px;
+}
+.list-group-item input {
+height: 100%;
 }
