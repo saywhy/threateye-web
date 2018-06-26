@@ -1,6 +1,6 @@
 .nav>li>a:hover, .nav>li>a:active, .nav>li>a:focus {
-    color: #fff;
-    font-weight: 700 !important;
+    color: #666;
+    /* font-weight: 700 !important; */
     background: #f7f7f7;
 }
 .daterangepicker .calendar th, .daterangepicker .calendar td {
