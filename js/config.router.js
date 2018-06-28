@@ -64,6 +64,7 @@ angular.module('app')
                     // 告警页面-详情
                     .state('app.alarm_detail', {
                         url: '/alarm_detail',
+                        params: {'data': null},
                         templateUrl: 'src/pages/alarm_detail/alarm_detail.html',
                         resolve: {
                             deps: ['$ocLazyLoad',

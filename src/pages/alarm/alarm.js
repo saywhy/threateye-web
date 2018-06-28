@@ -24,30 +24,30 @@ app.controller('AlarmController', [
             $scope.alarmEchart(); // 折线图表
             //假数据
             $scope.pages = [{
-                time: ' 2018-06-22 13:32',
-                type: ' 恶意地址',
-                host: ' 192.168.1.2',
+                time: '2018-06-22 13:32',
+                type: '恶意地址',
+                host: '192.168.1.2',
                 target: '192.168.1.232',
                 application: 'application',
                 state: '未解决'
             }, {
-                time: ' 2018-06-22 13:32',
-                type: ' 恶意地址',
-                host: ' 192.168.1.2',
+                time: '2018-06-22 13:32',
+                type: '恶意地址',
+                host: '192.168.1.2',
                 target: '192.168.1.232',
                 application: 'application',
                 state: '未解决'
             }, {
-                time: ' 2018-06-22 13:32',
-                type: ' 恶意地址',
-                host: ' 192.168.1.2',
+                time: '2018-06-22 13:32',
+                type: '恶意地址',
+                host: '192.168.1.2',
                 target: '192.168.1.232',
                 application: 'application',
                 state: '未解决'
             }, {
-                time: ' 2018-06-22 13:32',
-                type: ' 恶意地址',
-                host: ' 192.168.1.2',
+                time: '2018-06-22 13:32',
+                type: '恶意地址',
+                host: '192.168.1.2',
                 target: '192.168.1.232',
                 application: 'application',
                 state: '未解决'
@@ -192,8 +192,8 @@ app.controller('AlarmController', [
         // 跳转详情页面
         $scope.detail = function (params) {
             console.log(params);
-            
-            $state.go('app.alarm_detail')
+            params = escape(JSON.stringify(params));
+            $state.go('app.alarm_detail',{data:params});
         };
 
         $scope.init();

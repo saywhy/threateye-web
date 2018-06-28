@@ -95,6 +95,8 @@
   }])
   ; 
   app.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'items', function($scope, $modalInstance, items) {
+      console.log(112121);
+      
     $scope.items = items;
     $scope.selected = {
       item: $scope.items[0]

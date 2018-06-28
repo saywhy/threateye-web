@@ -23,3 +23,23 @@
     height: 200px;
     width: 100%;
 }
+
+.alarm_detail .img_box {
+    text-align: center;
+    padding-top: 15px;
+}
+.alarm_detail .img_box .img{
+    margin-bottom: 10px;
+}
+.alarm_detail .img_box p {
+    text-align: left;
+    height: 20px;
+    line-height: 20px;
+    margin: 5px 0;
+}
+.alarm_detail .p_head{
+    max-width: 65px;
+}
+.alarm_detail .img_arrow{
+    margin-top: 60px
+}
