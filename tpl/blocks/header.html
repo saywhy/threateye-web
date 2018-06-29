@@ -265,7 +265,7 @@
               </li>
               <li class="divider"></li> -->
                 <li>
-                    <a ng-click="change_password('lg')" >修改密码</a>
+                    <a ng-click="change_password('lg')">修改密码</a>
                 </li>
                 <li>
                     <a ui-sref="signin">退出</a>
@@ -278,27 +278,44 @@
 
 </div>
 <!-- / navbar collapse -->
-        <script type="text/ng-template" id="modal.html"> 
-            <div>
-                <div class="modal-header">
-                    <h3 class="modal-title" align="center">
-                        修改密码
-                    </h3>
-                </div>
-                <div class="modal-body">
-                    <div align="center">
-                        用户名：
-                            <input type="text" class="form-control item_input"  placeholder="smtp.163.com" ng-model="data.username">
-                           密码： <input type="text" class="form-control item_input"  placeholder="smtp.163.com" ng-model="data.password">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-primary" ng-click="ok()">
-                        确认
-                    </button>
-                    <button class="btn btn-warning" ng-click="cancel()">
-                        退出
-                    </button>
+<script type="text/ng-template" id="modal.html">
+    <div style="border-radius:10px;">
+        <div class="modal-header" style="border-radius:10px;">
+            <h3 class="modal-title" align="left">
+                重置密码
+            </h3>
+        </div>
+        <div class="modal-body">
+
+            <div class="form-group row item_form">
+                <label for="host" class="col-sm-2 control-label" style="max-width:100px">旧的密码：</label>
+                <div class="col-sm-6">
+                    <input type="password" class="form-control item_input" placeholder=" " ng-model="data.old">
                 </div>
             </div>
-        </script>
+            <div class="form-group row item_form">
+                <label for="host" class="col-sm-2 control-label" style="max-width:100px">设置密码：</label>
+                <div class="col-sm-6">
+                    <input type="password" class="form-control item_input"  placeholder="" ng-model="data.new">
+                </div>
+            </div>
+            <p style="padding-left:16px;color:#666">请填写8-30位密码,包含大写字母、小写字母、数字、特称字符</p>
+            <div class="form-group row item_form">
+                <label for="host" class="col-sm-2 control-label" style="max-width:100px">确认密码</label>
+                <div class="col-sm-6">
+                    <input type="password" class="form-control item_input"  placeholder=" " ng-model="data.repeat">
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer row" >
+            
+            <button class="btn btn-primary col-md-1 col-md-offset-5" ng-click="ok()">
+                确认
+            </button>
+            <button class="btn btn-warning col-md-1 col-md-offset-6" ng-click="cancel()">
+                退出
+            </button>
+        </div>
+    </div>
+</script>
