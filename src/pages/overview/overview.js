@@ -2,7 +2,7 @@
 
 /* Controllers */
 // overview controller
-app.controller('OverViemController', ['$scope', '$http', '$state', function ($scope, $http, $state) {
+app.controller('OverViemController', ['$scope', '$http', '$state','$modal', function ($scope, $http, $state,$modal) {
     // 初始化
     $scope.init = function (params) {
        
@@ -24,6 +24,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', function ($sc
         $scope.safetyequipment(); // 右边 图表
         $scope.targetPort(); //top10目标端口
         $scope.alarmNum(); //告警数量
+        $scope.logrythm_left(); //流量统计-左边
     }
     
     // 第一排 左边图表--系统状态
@@ -780,6 +781,137 @@ app.controller('OverViemController', ['$scope', '$http', '$state', function ($sc
         myChart.setOption(option);
     }
     
+    // 第四排 ——流量统计
+    $scope.logrythm_left = function(){
+        var myChart = echarts.init(document.getElementById('logrythm_left'));
+        var option =option = {
+            // color: ['#FC0790', '#065AF8', '#6BE508', '#6D06D1', '#F93C05', '#CB0C11'],
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                x: 'right',
+                data: ['com', 'net', 'edu', 'gov', 'io', 'de','org','tv','to','fi','facebook.com','secious.com','outlook.com','rightpoint.com','spotxcdn.com','adnxs.com']
+            },
+            series: [{
+                name: '访问来源',
+                type: 'pie',
+                radius: ['20%', '40%'],
+                avoidLabelOverlap: false,
+                hoverAnimation: false, //是否开启 hover 在扇区上的放大动画效果。
+                legendHoverLink: false, //是否启用图例 hover 时的联动高亮。
+                // label: {
+                //     normal: {
+                //         show: true,
+                //         position: 'top'
+                //     },
+                //     emphasis: {
+                //         show: true,
+                //         textStyle: {
+                //             fontSize: '30',
+                //             fontWeight: 'bold'
+                //         }
+                //     }
+                // },
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+                data: [{
+                    value: 335,
+                    name: 'com'
+                }, {
+                    value: 12,
+                    name: 'net'
+                }, {
+                    value: 123,
+                    name: 'edu'
+                },{
+                    value: 122,
+                    name: 'gov'
+                }, {
+                    value: 59,
+                    name: 'io'
+                }, {
+                    value: 20,
+                    name: 'de'
+                },{
+                    value: 335,
+                    name: 'org'
+                }, {
+                    value: 12,
+                    name: 'tv'
+                }, {
+                    value: 123,
+                    name: 'to'
+                },{
+                    value: 122,
+                    name: 'fi'
+                }, {
+                    value: 59,
+                    name: 'facebook.com'
+                }, {
+                    value: 20,
+                    name: 'secious.com'
+                },{
+                    value: 20,
+                    name: 'outlook.com'
+                },{
+                    value: 20,
+                    name: 'rightpoint.com'
+                },{
+                    value: 20,
+                    name: 'spotxcdn.com'
+                },{
+                    value: 20,
+                    name: 'adnxs.com'
+                }]
+            }, {
+                name: '访问来源',
+                type: 'pie',
+                radius: ['40%', '60%'],
+                avoidLabelOverlap: false,
+                hoverAnimation: false, //是否开启 hover 在扇区上的放大动画效果。
+                legendHoverLink: false, //是否启用图例 hover 时的联动高亮。
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'top'
+                    },
+                    emphasis: {
+                        show: true,
+                        textStyle: {
+                            fontSize: '30',
+                            fontWeight: 'bold'
+                        }
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+                data: [{
+                    value: 305,
+                    name: '新浪'
+                }, {
+                    value: 340,
+                    name: '雅虎'
+                }, {
+                    value: 234,
+                    name: '网易'
+                }]
+            }]
+        };
+        myChart.setOption(option);
+    }
+
+
+
+
 
     // 弹窗内容拓扑图
     $scope.showState = function (item) {
@@ -788,6 +920,24 @@ app.controller('OverViemController', ['$scope', '$http', '$state', function ($sc
             $scope.sysEchart();
         }
     }
+    $scope.change_password = function (size) {
+        console.log(1111);
+        $scope.data={};
+        var data = '传递数据';
+        var modalInstance = $modal.open({
+            templateUrl: 'modal.html',
+            controller: 'Modal_change_passwordCtrl',
+            size: size,
+            resolve: {
+                data: function () { //data作为modal的controller传入的参数
+                    console.log(222);
+                    return $scope.data; //用于传递数据
+                }
+            }
+        });
+    };
+
+
     $scope.popfasle = function (event) {
         // console.log('2121');
 
