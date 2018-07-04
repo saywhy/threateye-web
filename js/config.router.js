@@ -19,6 +19,11 @@ angular.module('app')
                 $urlRouterProvider
                     .otherwise('/signin');
                 $stateProvider
+                    .state('app', {
+                        abstract: true,
+                        url: '/app',
+                        templateUrl: 'tpl/app.html'
+                    })
                     .state('signin', {
                         url: '/signin',
                         templateUrl: 'src/pages/signin/signin.html',
@@ -30,12 +35,6 @@ angular.module('app')
                                 }
                             ]
                         }
-                    })
-
-                    .state('app', {
-                        abstract: true,
-                        url: '/app',
-                        templateUrl: 'tpl/app.html'
                     })
                     // 总览页面
                     .state('app.overview', {
@@ -64,7 +63,9 @@ angular.module('app')
                     // 告警页面-详情
                     .state('app.alarm_detail', {
                         url: '/alarm_detail',
-                        params: {'data': null},
+                        params: {
+                            'data': null
+                        },
                         templateUrl: 'src/pages/alarm_detail/alarm_detail.html',
                         resolve: {
                             deps: ['$ocLazyLoad',
@@ -603,17 +604,6 @@ angular.module('app')
                     .state('access', {
                         url: '/access',
                         template: '<div ui-view class="fade-in-right-big smooth"></div>'
-                    })
-                    .state('access.signin', {
-                        url: '/signin',
-                        templateUrl: 'tpl/page_signin.html',
-                        resolve: {
-                            deps: ['uiLoad',
-                                function (uiLoad) {
-                                    return uiLoad.load(['js/controllers/signin.js']);
-                                }
-                            ]
-                        }
                     })
                     .state('access.signup', {
                         url: '/signup',

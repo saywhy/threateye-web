@@ -15,11 +15,13 @@
                             <i class="fa fa-bell-o"></i> 告警列表</a>
                     </li>
                 </ul>
-
-                <div class="tab-content" style="padding-top:0px;border-bottom:0px; ">
-                    <!-- protect -->
+                <div class="tab-content" style="padding-top:0px;border-bottom:0px;">
                     <div class="tab-pane active" id="protect">
                         <div class="row margin">
+                            <div class="form-group col-md-4">
+                                <label>告警时间</label>
+                                <input type="text" class="form-control timerange input_radius" readonly style="background-color: #fff;">
+                            </div>
                             <div class="form-group col-md-2">
                                 <label>主机</label>
                                 <input type="text" class="form-control input_radius" ng-model="searchData.client_ip" ng-keyup="myKeyup($event)">
@@ -28,10 +30,6 @@
                                 <label>目的地址</label>
                                 <input type="text" class="form-control input_radius" ng-model="searchData.client_ip" ng-keyup="myKeyup($event)">
                             </div>
-                            <div class="form-group col-md-4">
-                                <label>告警时间</label>
-                                <input type="text" class="form-control timerange input_radius" readonly style="background-color: #fff;">
-                            </div>
                             <div class="form-group col-md-2">
                                 <label>处理状态</label>
                                 <select class="form-control input_radius" ng-init="selectedName=0" style="background-color: #fff;" ng-model="selectedName"
@@ -39,11 +37,11 @@
                             </div>
                             <div class="form-group col-md-1">
                                 <label style="width: 100%;">&nbsp;</label>
-                                <button class="form-control btn btn-primary" style="max-width: 80px;" ng-click="search()">搜&nbsp;&nbsp;索</button>
+                                <button class="form-control btn btn-primary" style="max-width: 80px;" ng-click="search()">搜&nbsp;索</button>
                             </div>
                             <div class="form-group col-md-1">
                                 <label style="width: 100%;">&nbsp;</label>
-                                <button class="form-control btn btn-primary" style="max-width: 80px;" ng-click="search()">导&nbsp;&nbsp;出</button>
+                                <button class="form-control btn btn-primary" style="max-width: 80px;" ng-click="search()">导&nbsp;出</button>
                             </div>
                         </div>
                         <div class="row margin">
@@ -56,7 +54,6 @@
                                     <th>应用</th>
                                     <th> 状态</th>
                                 </tr>
-
                                 <tr style="cursor: pointer;" ng-repeat="item in pages" ng-click="detail(item)">
                                     <td ng-bind="item.type"></td>
                                     <td ng-bind="item.time"></td>
@@ -66,7 +63,6 @@
                                     <td ng-bind="item.state"></td>
                                 </tr>
                             </table>
-
                             <!-- angularjs分页 -->
                             <div style="border-top: 1px solid #f4f4f4;padding: 10px;">
                                 <em>共有

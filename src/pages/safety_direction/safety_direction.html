@@ -14,26 +14,25 @@
                     <!-- protect -->
                     <div class="tab-pane active" id="protect">
                         <div class="row margin">
+                            <div class="form-group col-md-4">
+                                <label>时间</label>
+                                <input type="text" class="form-control timerange input_radius" readonly style="background-color: #fff;">
+                            </div>
                             <div class="form-group col-md-3">
                                 <label>流量方向</label>
-                                <select class="form-control input_radius"style="background-color: #fff;" ng-model="direction.flow_direction"
-                                    ng-options="x.num as x.type for x in statusData"></select>
+                                <select class="form-control input_radius" style="background-color: #fff;" ng-model="direction.flow_direction" ng-options="x.num as x.type for x in statusData"></select>
                             </div>
                             <div class="form-group col-md-2">
                                 <label>主机IP</label>
                                 <input type="text" class="form-control input_radius" ng-model="url.source_port" ng-keyup="myKeyup($event)">
                             </div>
-                            <div class="form-group col-md-4">
-                                <label>时间</label>
-                                <input type="text" class="form-control timerange input_radius" readonly style="background-color: #fff;">
-                            </div>
                             <div class="form-group col-md-1">
                                 <label style="width: 100%;">&nbsp;</label>
-                                <button class="form-control btn btn-primary" style="max-width: 80px;" ng-click="search()">搜&nbsp;&nbsp;索</button>
+                                <button class="form-control btn btn-primary" style="max-width: 80px;" ng-click="search()">搜&nbsp;索</button>
                             </div>
                             <div class="form-group col-md-1 col-md-offset-1">
                                 <label style="width: 100%;">&nbsp;</label>
-                                <button class="form-control btn btn-primary" style="max-width: 80px;" ng-click="export()">导&nbsp;&nbsp;出</button>
+                                <button class="form-control btn btn-primary" style="max-width: 80px;" ng-click="export()">导&nbsp;出</button>
                             </div>
                         </div>
 

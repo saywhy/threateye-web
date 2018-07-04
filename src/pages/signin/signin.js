@@ -3,36 +3,27 @@
 /* Controllers */
 // signin controller
 app.controller('SigninFormController', ['$scope', '$http', '$state', function ($scope, $http, $state) {
-    console.log('333');
-
-    $scope.user = {};
-    $scope.authError = null;
+    console.log('成功链接服务器');
+    $scope.init = function(){
+        $scope.user = {};
+        $scope.particvle();
+    };
     $scope.login = function () {
-        //   $scope.authError = null;
-        console.log($scope.app.https);
-        
-        // Try to login
-        //   $http.post('api/login', {email: $scope.user.email, password: $scope.user.password})
-        //   .then(function(response) {
-        //     if ( !response.data.user ) {
-        //       $scope.authError = 'Email or Password not right';
-        //     }else{
-        //       $state.go('app.dashboard-v1');
-        //     }
-        //   }, function(x) {
-        //     $scope.authError = 'Server Error';
-        //   });
-        // };
         $state.go('app.overview');
         console.log($scope.user);
-        $http.post($scope.app.https + '/site/login', $scope.user)
-            .then(function (data) {
-                console.log(data);
-            }, function (err) {
-                console.log(err);
+        $http.post('api/login', $scope.user)
+            .then(function (response) {
+                $state.go('app.overview');
+            }, function (x) {
+                $scope.authError = 'Server Error';
             });
     };
-
+    // $http.post($scope.app.https + '/site/login', $scope.user)
+    //     .then(function (data) {
+    //         console.log(data);
+    //     }, function (err) {
+    //         console.log(err);
+    //     });
     $scope.test = function (params) {
         $http({
             method: 'GET',
@@ -46,9 +37,8 @@ app.controller('SigninFormController', ['$scope', '$http', '$state', function ($
             console.log(error);
 
         })
-    }
-    // $scope.test();
-
+    };
+    //背景canvas 插件
     $scope.particvle = function (params) {
         particlesJS("particles-js", {
             "particles": {
@@ -160,7 +150,6 @@ app.controller('SigninFormController', ['$scope', '$http', '$state', function ($
             },
             "retina_detect": true
         });
-        
     }
-    $scope.particvle();
+    $scope.init();
 }]);

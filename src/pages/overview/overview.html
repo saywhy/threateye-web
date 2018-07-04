@@ -73,7 +73,7 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="row equipment-content">
-               
+
 
                     <div class="equipment-right col-md-12">
                         <div id="safetyequipment"></div>
@@ -102,21 +102,6 @@
                 </div>
             </div>
         </div>
-        <!-- 中间-未处理告警 -->
-        <!-- <div class="o_container col-md-3">
-            <div class="untreated">
-                <div class="o_box_header">
-                    <p>
-                        <i class="fa fa-cubes"></i>
-                        未处理告警
-                    </p>
-                </div>
-                <div class="row untreated-content">
-                    <div id="untreatedalarm"></div>
-                </div>
-            </div>
-
-        </div> -->
         <!-- 右边-告警-->
         <div class="col-md-6 o_container">
             <div class="alarm">
@@ -147,33 +132,31 @@
                     </p>
                 </div>
                 <div class=" row ">
-                   <div id="logrythm_left"></div>
+                    <div id="logrythm_left"></div>
                 </div>
             </div>
         </div>
 
-        <!-- 右边-最新告警-->
+        <!-- 右边-  流量统计-->
         <div class="col-md-6 o_container">
             <div class="top">
                 <div class="o_box_header">
                     <p>
-                        <i class="fa fa-bell"></i>
-                        最新告警
+                        <i class="glyphicon glyphicon-sort-by-attributes-alt"></i>
+                        流量统计
                     </p>
-                    <a class="more" href="/alert/index">
-                        <span>...</span>
-                    </a>
+
                 </div>
                 <!-- /.o_box_header -->
                 <div class="row ">
-                  <div></div>
+                    <div id="logrythm_right"></div>
                     <!-- <div id="threattype" >   -->
                 </div>
             </div>
         </div>
     </div>
     <!-- 弹窗 -->
-    <div class="pop" ng-show="showpop" ng-click="popfasle(event)">
+    <!-- <div class="pop" ng-show="showpop" ng-click="popfasle(event)">
         <div class="pop-content">
             <p class="pop-content-head">
                 <i class="fa fa-windows"></i> 系统状态监控 </p>
@@ -181,53 +164,26 @@
                 <div class="sys-chart">
                     <div id="topology"></div>
                 </div>
-            
+
             </div>
 
         </div>
 
-    </div>
-
+    </div> -->
 </div>
 
-<script type="text/ng-template" id="modal.html">
+<script type="text/ng-template" id="tuopu.html">
     <div style="border-radius:10px;">
         <div class="modal-header" style="border-radius:10px;">
             <h3 class="modal-title" align="left">
-                重置密码
+                拓扑图
             </h3>
         </div>
         <div class="modal-body">
-
-            <div class="form-group row item_form">
-                <label for="host" class="col-sm-2 control-label" style="max-width:100px">旧的密码：</label>
-                <div class="col-sm-6">
-                    <input type="password" class="form-control item_input" placeholder=" " ng-model="data.old">
-                </div>
-            </div>
-            <div class="form-group row item_form">
-                <label for="host" class="col-sm-2 control-label" style="max-width:100px">设置密码：</label>
-                <div class="col-sm-6">
-                    <input type="password" class="form-control item_input"  placeholder="" ng-model="data.new">
-                </div>
-            </div>
-            <p style="padding-left:16px;color:#666">请填写8-30位密码,包含大写字母、小写字母、数字、特称字符</p>
-            <div class="form-group row item_form">
-                <label for="host" class="col-sm-2 control-label" style="max-width:100px">确认密码</label>
-                <div class="col-sm-6">
-                    <input type="password" class="form-control item_input"  placeholder=" " ng-model="data.repeat">
-                </div>
-            </div>
-
-        </div>
-        <div class="modal-footer row" >
+          
+            <div id="graph"> </div>
             
-            <button class="btn btn-primary col-md-1 col-md-offset-5" ng-click="ok()">
-                确认
-            </button>
-            <button class="btn btn-warning col-md-1 col-md-offset-6" ng-click="cancel()">
-                退出
-            </button>
+
         </div>
     </div>
 </script>
