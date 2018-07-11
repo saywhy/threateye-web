@@ -2,34 +2,48 @@
 
 
     <a href class="navbar-brand block m-t head-title">{{app.name}}</a>
-    
+
     <p class="head_subtitle">ThreatEye Anti-APT Network Solution</p>
     <!-- <div>iConnect安全管理平台2.0</div> -->
     <div class="m-b-lg">
-    
-      <form name="form" class="form-validation">
-        <!-- <div class="text-danger wrapper text-center" ng-show="authError">
-            {{authError}}
-        </div> -->
-       
-        <div class="list-group list-group-sm">
-          <div class="list-group-item">
-            <input type="text" placeholder="用户名" class="form-control no-border" ng-model="user.username" required>
-          </div>
-          <div class="space">
-
-          </div>
-          <div class="list-group-item">
-             <input type="password" placeholder="密码" class="form-control no-border" ng-model="user.password" required>
-          </div>
-        </div>
-        <button type="submit" class="btn btn-lg btn-primary btn-block" ng-click="login()" ng-disabled='form.$invalid'>登 录</button>
-      </form>
+        <!-- 已注册 -->
+        <form name="form" class="form-validation" ng-if="!login_show">
+            <div class="list-group list-group-sm">
+                <div class="list-group-item">
+                    <input type="text" placeholder="用户名" class="form-control no-border" ng-model="user.username" required>
+                </div>
+                <div class="space">
+                </div>
+                <div class="list-group-item">
+                    <input type="password" placeholder="密码" class="form-control no-border" ng-model="user.password" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-lg btn-primary btn-block" ng-click="login()" ng-disabled='form.$invalid'>登 录</button>
+        </form>
+        <!-- 未注册 -->
+        <form name="form" class="form-validation" ng-if="login_show">
+            <div class="list-group list-group-sm">
+                <div class="list-group-item">
+                    <input type="text" placeholder="用户名" class="form-control no-border" ng-model="creat.username" required>
+                </div>
+                <div class="space">
+                </div>
+                <div class="list-group-item">
+                    <input type="password" placeholder="密码" class="form-control no-border" ng-model="creat.password" required>
+                </div>
+                <div class="space">
+                    </div>
+                <div class="list-group-item">
+                    <input type="password" placeholder="确认密码" class="form-control no-border" ng-model="creat.repassword" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-lg btn-primary btn-block" ng-click="creat_admin()" ng-disabled='form.$invalid'>创建管理员</button>
+        </form>
     </div>
-   
+
     <div id="particles-js"></div>
     <div class="hoohoolab-footer-login">
         <span>&copy; 2018 虎特信息科技(上海)有限公司 版权所有</span>
-      </div>
+    </div>
     <!-- <div class="text-center" ng-include="'tpl/blocks/page_footer.html'"></div> -->
-  </div>
+</div>

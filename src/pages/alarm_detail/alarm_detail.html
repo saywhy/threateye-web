@@ -41,8 +41,42 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    
+                <!-- 详情 -->
+                <div class="row part">
+                    <div class="part_detail">
+                        <p>Event importance:<span class="part_detail_span">High </span></p>
+                        <p>Event status: <span class="part_detail_span">New </span></p>
+                        <p>User name: <span class="part_detail_span">- </span></p>
+                        <p>Host name: <span class="part_detail_span">- </span></p>
+                        <p>Event time : <span class="part_detail_span">2018-07-22 12:22:30 </span></p>
+                    </div>
+                    <div class="part_detail">
+                        <h4>Object information</h4>
+                        <p>object name:  <span class="part_detail_span">7e9afsd2f4ds186ds76swa877.zip</span></p>
+                        <p>object type:<span class="part_detail_span"> ArchiveZip </span></p>
+                        <p>file size: <span class="part_detail_span">329KB </span></p>
+                        <p>MD5:<span class="part_detail_span">76ssd2f7e9af4ds186dswa877 </span></p>
+                        <p>SHA256:  <span class="part_detail_span">e9afd86s14ds12f4df786dd</span></p>
+                    </div>
+                    <div class="part_detail">
+                            <div class="box box-solid">
+                                    <div class="box-header with-border" style="border:0">
+                                        <ul id="myTab" class="nav nav-tabs" ng-init="selected == 0">
+                                            <li ng-class="{'active':selected == $index}" ng-click="show($index)" ng-repeat="item in tab_data">
+                                                <a data-toggle="tab">
+                                                    <i class="fa fa-bell-o"></i>
+                                                    <span ng-bind="item.name"></span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="tab-content" ng-if="selected == $index" ng-repeat="item in tab_data">
+                                            <div style="cursor: pointer;" ng-if="selected == 0">
+                                                <p>Event history</p>
+                                        </div>
+                                    </div>`
+                                </div>
+                    </div>
                 </div>
 
             </div>

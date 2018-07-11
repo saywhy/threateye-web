@@ -35,12 +35,12 @@
                             </div>
                         </div>
                         <div class="row margin">
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-2" style="max-width: 150px;">
                                 <label>解析结果</label>
                                 <select class="form-control input_radius" ng-init="selectedName=0 " style="background-color: #fff;" ng-model="dns.resolves_res"
                                     ng-options="x.num as x.type for x in statusData"></select>
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-4" style="max-width: 300px;">
                                 <label>时间</label>
                                 <input type="text" class="form-control timerange input_radius" readonly style="background-color: #fff;">
                             </div>
@@ -48,7 +48,7 @@
                                 <label style="width: 100%;">&nbsp;</label>
                                 <button class="form-control btn btn-primary" style="max-width: 80px;" ng-click="search()">搜&nbsp;索</button>
                             </div>
-                            <div class="form-group col-md-1 col-md-offset-3">
+                            <div class="form-group col-md-1 col-md-offset-4">
                                     <label style="width: 100%;">&nbsp;</label>
                                     <button class="form-control btn btn-primary" style="max-width: 80px;" ng-click="export()">导&nbsp;出</button>
                                 </div>

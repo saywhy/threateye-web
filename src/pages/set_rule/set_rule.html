@@ -1,10 +1,39 @@
 <div class="set" ng-controller="Set_ruleController" ng-init="app.settings.container = false;" ng-cloak>
     <!-- Main content -->
     <div class="row">
-            <div class="col-md-12 ">
-                <div class="set_content">
-                     
+        <div class="col-md-12 ">
+            <div class="set_content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box box-solid">
+                            <div class="box-header with-border" style="border:0">
+                                <ul id="myTab" class="nav nav-tabs" ng-init="selected == 0">
+                                    <li ng-class="{'active':selected == $index}" ng-click="show($index)" ng-repeat="item in tab_data">
+                                        <a data-toggle="tab">
+                                            <i class="fa fa-bell-o"></i>
+                                            <span ng-bind="item.name"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div id="myTabContent" class="tab-content" ng-if="selected == $index" ng-repeat="item in tab_data">
+                                    <div style="cursor: pointer;" ng-if="selected == 0">
+                                    <div style="margin:5px 20px">
+                                        <div class="form-group" style="margin-bottom:5px 20px">
+                                            <label for="InputFile"></label>
+                                            <input type="file" id="InputFile" style="display: none;" accept="application/x-msdownload" data-url="addversion" name="file">
+                                            <br>
+                                            <label class="glyphicon glyphicon-plus-sign text-green" style="font-size: 48px" for="InputFile"></label>
+                                            <span ng-bind="sensorVersion.FileName" style="font-size: 14px;" class="ng-binding"></span>
+                                            <p class="help-block">上传的文件请按照模板的格式</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
 </div>

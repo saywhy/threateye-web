@@ -3,8 +3,8 @@
 /* Controllers */
 
 angular.module('app')
-    .controller('AppCtrl', ['$scope', '$translate', '$localStorage', '$window', '$modal',
-        function ($scope, $translate, $localStorage, $window, $modal) {
+    .controller('AppCtrl', ['$scope', '$translate', '$localStorage', '$window', '$modal', '$http','$state',
+        function ($scope, $translate, $localStorage, $window, $modal, $http,$state) {
             // add 'ie' classes to html
             var isIE = !!navigator.userAgent.match(/MSIE/i);
             isIE && angular.element($window.document.body).addClass('ie');
@@ -83,8 +83,7 @@ angular.module('app')
             $scope.items = ['item1', 'item2', 'item3'];
             //修改密码
             $scope.change_password = function (size) {
-                console.log(1111);
-                $scope.data={};
+                $scope.data = {};
                 var data = '传递数据';
                 var modalInstance = $modal.open({
                     templateUrl: 'modal.html',
@@ -92,12 +91,42 @@ angular.module('app')
                     size: size,
                     resolve: {
                         data: function () { //data作为modal的controller传入的参数
-                            console.log(222);
+                            $scope.reset_token();
                             return $scope.data; //用于传递数据
                         }
                     }
                 });
             };
-       
+            $scope.reset_token = function(){
+        
+                $http({
+                    method: 'get',
+                    url: './yiiapi/user/get-self-password-reset-token'
+                }).then(function successCallback(data) {
+                    if(data.data.status == 0){
+                        $scope.data.token = data.data.data.data.token;
+                    }
+                }, function errorCallback(data) {
+                    console.log(data);
+                });
+             };
+            // 退出
+            $scope.sign_out = function () {
+                var loading = zeroModal.loading(4);
+                $http({
+                    method: 'get',
+                    url: './yiiapi/site/logout'
+                }).then(function successCallback(data) {
+                    console.log(data);
+                    // 退出成功
+                    if (data.data.status == 0) {
+                        zeroModal.close(loading);
+                        $state.go('signin');
+                    }
+                }, function errorCallback(data) {
+                    console.log(data);
+                });
+            }
+
         }
     ]);
