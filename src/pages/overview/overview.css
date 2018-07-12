@@ -69,7 +69,7 @@
 
     .box-block-red {
         width: 20px;
-        height: 12px;
+        height: 10px;
         border-radius: 2px;
         display: inline-block;
         background-color: rgba(214, 72, 71, .8);
@@ -80,7 +80,7 @@
         border-radius: 2px;
         background-color: rgba(131, 186, 174, .8);
         width: 20px;
-        height: 12px;
+        height: 10px;
     }
 
     .box-block-gray {
@@ -88,7 +88,7 @@
         border-radius: 2px;
         background-color: #666;
         width: 20px;
-        height: 12px;
+        height: 10px;
     }
 
     .box-sed-left-left {
@@ -165,7 +165,7 @@
 
     /* 第三排 */
 
-    #top5 {
+    .top5 {
         padding: 10px;
         width: 100%;
         height: 235px;
@@ -212,8 +212,8 @@
 
     td,
     th {
+        overflow: hidden;
         white-space: nowrap;
-        /* overflow: hidden; */
         text-overflow: ellipsis;
         text-align: center;
     }
@@ -221,7 +221,6 @@
     /* 弹窗 */
 
     .pop {
-        /* display: none; */
         position: fixed;
         top: 0;
         left: 0;
@@ -238,7 +237,6 @@
         padding: 10px;
         position: absolute;
         width: 800px;
-        /* height: 400px; */
         background-color: #fff;
         border-radius: 10px;
         left: 50%;
@@ -258,7 +256,6 @@
     /* iot pop */
 
     .iot_pop {
-        /* display: none; */
         position: fixed;
         top: 0;
         left: 0;
@@ -299,7 +296,6 @@
     .sys-chart {
         width: 100%;
         height: 400px;
-        /* border: 1px solid red; */
     }
 
     #topology {
@@ -313,10 +309,13 @@
         height: 400px;
     }
 
-    #graph,
-    #iot_detail {
+    #graph {
         width: 100%;
         height: 400px;
+    }
+    #iot_detail_top,#iot_detail_bom{
+        width: 100%;
+        height: 200px;
     }
 
     .closed {

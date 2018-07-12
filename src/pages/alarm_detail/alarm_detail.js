@@ -12,7 +12,6 @@ app.controller('Alarm_detailController', [
         $scope.init = function (params) {
             $scope.detail_data = JSON.parse(unescape($stateParams.data));
             console.log($scope.detail_data);
-
             $scope.selected = 0;
             $scope.tab_data =[{
                 name:'规则库更新',

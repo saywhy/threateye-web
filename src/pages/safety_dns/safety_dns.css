@@ -4,3 +4,13 @@
 .td_content{
     overflow: hidden;
 }
+.download_relative{
+    position: relative;
+}
+.download_position{
+    padding-top: 40px;
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+    cursor: pointer;
+}

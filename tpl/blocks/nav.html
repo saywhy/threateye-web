@@ -1,9 +1,9 @@
 <!-- list -->
 <ul class="nav">
-  <!-- <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+    <!-- <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
     <span translate="aside.nav.HEADER">Navigation</span>
   </li> -->
-  <!-- <li>
+    <!-- <li>
     <a href class="auto">      
       <span class="pull-right text-muted">
         <i class="fa fa-fw fa-angle-right text"></i>
@@ -33,163 +33,147 @@
   </li> -->
 
 
-  <li ui-sref-active="active">
-    <a ui-sref="app.overview">
-      <i class="glyphicon glyphicon-stats icon text-primary-dker"></i>
-      <span class="font-bold">总览</span>
-    </a>
-  </li>
-<!-- 告警 -->
-  <li ui-sref-active="active">
-    <a ui-sref="app.alarm">
-      <i class="glyphicon glyphicon-bell icon text-info-dker"></i>
-      <span class="font-bold">告警</span>
-    </a>
-  </li>
-
-  <!-- 安全调查 -->
-<!-- 
-  <li ui-sref-active="active">
-    <a ui-sref="app.safety">
-      <i class="glyphicon glyphicon-envelope icon text-info-lter"></i>
-      <span class="font-bold" >安全调查</span>
-    </a>
-  </li> -->
-
-
-  <li>
-    <a href class="auto">
-      <span class="pull-right text-muted">
-        <i class="fa fa-fw fa-angle-right text"></i>
-        <i class="fa fa-fw fa-angle-down text-active"></i>
-      </span>
-      <i class="glyphicon glyphicon-search icon text-success"></i>
-      <span class="font-bold">安全调查</span>
-    </a>
-    <ul class="nav nav-sub dk">
-      <li ui-sref-active="active">
-        <a ui-sref="app.safety_dns">
-          <span>DNS调查</span>
-        </a>
-      </li>
-      <li ui-sref-active="active">
-        <a ui-sref="app.safety_url">
-          <span>IP/URL通讯调查</span>
-        </a>
-      </li>
-      <li ui-sref-active="active">
-        <a ui-sref="app.safety_user">
-          <span>用户调查</span>
-        </a>
-      </li>
-      <li ui-sref-active="active">
-        <a ui-sref="app.safety_file">
-          <span>文件调查</span>
+    <li ui-sref-active="active">
+        <a ui-sref="app.overview">
+            <i class="glyphicon glyphicon-stats icon text-primary-dker"></i>
+            <span class="font-bold">总览</span>
         </a>
     </li>
-        <li ui-sref-active="active">
-            <a ui-sref="app.safety_size">
-              <span>流量大小及时长调查</span>
-            </a>
-        </li>
-        <li ui-sref-active="active">
-            <a ui-sref="app.safety_direction">
-              <span>流量方向调查</span>
-            </a>
-        </li>
-        <li ui-sref-active="active">
-            <a ui-sref="app.safety_host">
-              <span>主机调查</span>
-            </a>
-        </li>
-        <li ui-sref-active="active">
-            <a ui-sref="app.safety_ioc">
-              <span>IOC扫描器</span>
-            </a>
-        </li>
-        
-    </ul>
-  </li>
+    <!-- 告警 -->
+    <li ui-sref-active="active">
+        <a ui-sref="app.alarm">
+            <i class="glyphicon glyphicon-bell icon text-info-dker"></i>
+            <span class="font-bold">告警</span>
+        </a>
+    </li>
 
-
-
-
-<!-- 报表 -->
-<!-- <li ui-sref-active="active">
-    <a ui-sref="app.reportform ">
-      <i class="glyphicon glyphicon-th-large icon text-success"></i>
-      <span class="font-bold" >报表</span>
-    </a>
-  </li> -->
-
-
-
-<!-- 设置 -->
-<!-- <li ui-sref-active="active">
-    <a ui-sref="app.set">
-      <i class="glyphicon glyphicon-calendar icon text-info-dker"></i>
-      <span class="font-bold" >设置</span>
-    </a>
-  </li> -->
-
-  <li>
+    <!-- 安全调查 -->
+    <li>
         <a href class="auto">
-          <span class="pull-right text-muted">
-            <i class="fa fa-fw fa-angle-right text"></i>
-            <i class="fa fa-fw fa-angle-down text-active"></i>
-          </span>
-          <i class="glyphicon glyphicon-cog icon text-info-dker"></i>
-          <span class="font-bold">设置</span>
+            <span class="pull-right text-muted">
+                <i class="fa fa-fw fa-angle-right text"></i>
+                <i class="fa fa-fw fa-angle-down text-active"></i>
+            </span>
+            <i class="glyphicon glyphicon-search icon text-success"></i>
+            <span class="font-bold">安全调查</span>
         </a>
         <ul class="nav nav-sub dk">
-          <li ui-sref-active="active">
-            <a ui-sref="app.set_basic">
-              <span>基本设置</span>
-            </a>
-          </li>
-          <li ui-sref-active="active">
-            <a ui-sref="app.set_net_ip">
-              <span>内部网络IP段</span>
-            </a>
-          </li>
-          <li ui-sref-active="active">
-            <a ui-sref="app.set_black_list">
-              <span>黑白名单</span>
-            </a>
-          </li>
-          <li ui-sref-active="active">
-            <a ui-sref="app.set_user">
-              <span>用户管理</span>
-            </a>
-        </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.safety_dns">
+                    <span>DNS调查</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.safety_url">
+                    <span>IP/URL通讯调查</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.safety_user">
+                    <span>用户调查</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.safety_file">
+                    <span>文件调查</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.safety_size">
+                    <span>流量大小及时长调查</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.safety_direction">
+                    <span>流量方向调查</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.safety_host">
+                    <span>主机调查</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.safety_ioc">
+                    <span>IOC扫描器</span>
+                </a>
+            </li>
+
+        </ul>
+    </li>
+
+
+
+
+    <!-- 报表 -->
+    <li ui-sref-active="active">
+        <a ui-sref="app.reportform ">
+            <i class="glyphicon glyphicon-th-large icon text-success"></i>
+            <span class="font-bold">报表</span>
+        </a>
+    </li>
+
+
+
+    <!-- 设置 -->
+    <li>
+        <a href class="auto">
+            <span class="pull-right text-muted">
+                <i class="fa fa-fw fa-angle-right text"></i>
+                <i class="fa fa-fw fa-angle-down text-active"></i>
+            </span>
+            <i class="glyphicon glyphicon-cog icon text-info-dker"></i>
+            <span class="font-bold">设置</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active">
+                <a ui-sref="app.set_basic">
+                    <span>基本设置</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.set_net_ip">
+                    <span>内部网络IP段</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.set_black_list">
+                    <span>黑白名单</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.set_user">
+                    <span>用户管理</span>
+                </a>
+            </li>
             <li ui-sref-active="active">
                 <a ui-sref="app.set_net">
-                  <span>网络设置</span>
+                    <span>网络设置</span>
                 </a>
             </li>
             <li ui-sref-active="active">
                 <a ui-sref="app.set_rule">
-                  <span>规则库更新</span>
+                    <span>规则库更新</span>
                 </a>
             </li>
             <li ui-sref-active="active">
                 <a ui-sref="app.set_email">
-                  <span>邮件通知</span>
+                    <span>邮件通知</span>
                 </a>
             </li>
             <li ui-sref-active="active">
                 <a ui-sref="app.set_licence">
-                  <span>许可证</span>
+                    <span>许可证</span>
                 </a>
             </li>
-            
+
         </ul>
-      </li>
+    </li>
 
 
-  <li class="line dk"></li>
+    <li class="line dk"></li>
 
-  <!-- <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+    <!-- <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
     <span translate="aside.nav.components.COMPONENTS">Components</span>
   </li>
   <li>
@@ -493,4 +477,4 @@
     </a>
   </li>
 </ul> -->
-<!-- / list -->
+    <!-- / list -->

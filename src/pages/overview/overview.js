@@ -18,21 +18,23 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
             rgbaHigh8: 'rgba(150,33,22,.8)',
             rgbaHigh2: 'rgba(150,33,22,.2)',
             rgbaMid: 'rgba(245,191,65,1)',
+            rgbaMid8: 'rgba(245,191,65,.8)',
+            rgbaMid2: 'rgba(245,191,65,.2)',
             rgbaLow10: 'rgba(74,164,110,1)',
             rgbaLow8: 'rgba(74,164,110,.8)',
             rgbaLow2: 'rgba(74,164,110,.2)',
         };
         // 第一排
         $scope.sysState();
-        $scope.flowInfo();
-        $scope.flowTotal();
+        $scope.file(); // 中间 文件数量
+        $scope.flowTotal(); //中间流量总数
         $scope.safetyequipment(); // 右边 图表
         // 第二排
         $scope.alarmNum(); //告警数量
         $scope.threaten_type(); //威胁类型
         // 第三排
        $scope.top_threaten(); //top 威胁
-        $scope.logrythm_right(); //流量统计-右边
+       $scope.risk_property(); //top 风险资产
         $scope.untreatedAlarm(); //第二排中间未处理告警
         // $scope.change_password(); //test
     };
@@ -134,7 +136,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
     };
     // 第一排 中间图表--流量文件信息
     //文件
-    $scope.flowInfo = function (params) {
+    $scope.file = function (params) {
         //获取文件数量
         var myChart = echarts.init(document.getElementById('flowinfo'));
         var option = {
@@ -626,6 +628,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
         myChart.setOption(option);
     };
 
+
     // 第三排
     // top5威胁
     $scope.top_threaten = function () {
@@ -637,516 +640,79 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
                 backgroundColor: $scope.colorType.rgbaHigh8
             }
         }, {
-            client_ip: '192.1.32.132',
+            client_ip: '12.1.32.322',
             style: {
                 width: '78%',
                 borderRadius: '5px',
-                backgroundColor: $scope.colorType.rgbaHigh8
+                backgroundColor: 'rgba(254,127,0,.8)'
             }
         }, {
-            client_ip: '192.1.32.132',
+            client_ip: '10.1.32.232',
             style: {
                 width: '70%',
                 borderRadius: '5px',
-                backgroundColor: $scope.colorType.rgbaHigh8
+                backgroundColor: '#FE9B20'
             }
         }, {
-            client_ip: '192.1.32.132',
+            client_ip: '192.10.23.32',
             style: {
                 width: '66%',
                 borderRadius: '5px',
-                backgroundColor: $scope.colorType.rgbaHigh8
+                backgroundColor: '#FEBB11'
             }
         }, {
-            client_ip: '192.1.32.132',
+            client_ip: '122.1.32.32',
             style: {
                 width: '54%',
                 borderRadius: '5px',
-                backgroundColor: $scope.colorType.rgbaHigh8
-            }
-        }, {
-            client_ip: '192.1.32.132',
-            style: {
-                width: '50%',
-                borderRadius: '5px',
-                backgroundColor: $scope.colorType.rgbaHigh8
+                backgroundColor: '#FECC01'
             }
         }]
     }
-
+    //top风险资产
+    $scope.risk_property = function(){
+        $scope.risk_property_data = [{
+            client_ip: '192.1.32.132',
+            style: {
+                width: '90%',
+                borderRadius: '5px',
+                backgroundColor: $scope.colorType.rgbaHigh8
+            }
+        }, {
+            client_ip: '12.1.32.322',
+            style: {
+                width: '78%',
+                borderRadius: '5px',
+                backgroundColor: 'rgba(254,127,0,.8)'
+            }
+        }, {
+            client_ip: '10.1.32.232',
+            style: {
+                width: '70%',
+                borderRadius: '5px',
+                backgroundColor: '#FE9B20'
+            }
+        }, {
+            client_ip: '192.10.23.32',
+            style: {
+                width: '66%',
+                borderRadius: '5px',
+                backgroundColor: '#FEBB11'
+            }
+        }, {
+            client_ip: '122.1.32.32',
+            style: {
+                width: '54%',
+                borderRadius: '5px',
+                backgroundColor: '#FECC01'
+            }
+        }]
+    }
+    //最新告警
 
 
     // 第四排 ——流量统计
-    $scope.logrythm_left = function () {
-        var myChart = echarts.init(document.getElementById('logrythm_left'));
-        var option = option = {
-            tooltip: {
-                trigger: 'item',
-                formatter: "com:1212(27%)<br/>{b}: {c} ({d}%)"
-            },
-            legend: {
-                orient: 'vertical',
-                x: 'right',
-                data: ['com', 'net', 'edu', 'gov', 'io', 'de', 'org', 'tv', 'to', 'fi', 'facebook.com', 'secious.com', 'outlook.com', 'rightpoint.com', 'spotxcdn.com', 'adnxs.com']
-            },
-            series: [{
-                name: ' ',
-                type: 'pie',
-                radius: ['35%', '50%'],
-                center: ['45%', '50%'],
-                avoidLabelOverlap: false,
-                hoverAnimation: false, //是否开启 hover 在扇区上的放大动画效果。
-                label: {
-                    normal: {
-                        show: false,
-                        position: 'center'
-                    },
-                    emphasis: {
-                        show: true,
-                        textStyle: {
-                            fontSize: '18',
-                            fontWeight: 'bold'
-                        }
-                    }
-                },
-                data: [{
-                    value: 335,
-                    name: 'com'
-                }, {
-                    value: 12,
-                    name: 'net'
-                }, {
-                    value: 123,
-                    name: 'edu'
-                }, {
-                    value: 122,
-                    name: 'gov'
-                }, {
-                    value: 59,
-                    name: 'io'
-                }, {
-                    value: 20,
-                    name: 'de'
-                }, {
-                    value: 335,
-                    name: 'org'
-                }, {
-                    value: 12,
-                    name: 'tv'
-                }, {
-                    value: 123,
-                    name: 'to'
-                }, {
-                    value: 122,
-                    name: 'fi'
-                }, {
-                    value: 59,
-                    name: 'facebook.com'
-                }, {
-                    value: 20,
-                    name: 'secious.com'
-                }, {
-                    value: 20,
-                    name: 'outlook.com'
-                }, {
-                    value: 20,
-                    name: 'rightpoint.com'
-                }, {
-                    value: 20,
-                    name: 'spotxcdn.com'
-                }, {
-                    value: 20,
-                    name: 'adnxs.com'
-                }]
-            }, {
-                name: ' ',
-                type: 'pie',
-                radius: ['50%', '65%'],
-                center: ['45%', '50%'],
-                avoidLabelOverlap: false,
-                hoverAnimation: false, //是否开启 hover 在扇区上的放大动画效果。
-                legendHoverLink: false, //是否启用图例 hover 时的联动高亮。
-                label: {
-                    normal: {
-                        show: false,
-                        position: 'center'
-                    },
-                    emphasis: {
-                        show: true,
-                        textStyle: {
-                            fontSize: '18',
-                            fontWeight: 'bold'
-                        }
-                    }
-                },
-                labelLine: {
-                    normal: {
-                        show: false
-                    }
-                },
-                data: [{
-                    value: 23,
-                    name: 'com'
-                }, {
-                    value: 113,
-                    name: 'net'
-                }, {
-                    value: 323,
-                    name: 'edu'
-                }, {
-                    value: 1252,
-                    name: 'gov'
-                }, {
-                    value: 323,
-                    name: 'io'
-                }, {
-                    value: 123,
-                    name: 'de'
-                }, {
-                    value: 31,
-                    name: 'org'
-                }, {
-                    value: 65,
-                    name: 'tv'
-                }, {
-                    value: 98,
-                    name: 'to'
-                }, {
-                    value: 121,
-                    name: 'fi'
-                }, {
-                    value: 97,
-                    name: 'facebook.com'
-                }, {
-                    value: 54,
-                    name: 'secious.com'
-                }, {
-                    value: 63,
-                    name: 'outlook.com'
-                }, {
-                    value: 20,
-                    name: 'rightpoint.com'
-                }, {
-                    value: 12,
-                    name: 'spotxcdn.com'
-                }, {
-                    value: 64,
-                    name: 'adnxs.com'
-                }]
-            }, {
-                name: ' ',
-                type: 'pie',
-                radius: ['65%', '80%'],
-                center: ['45%', '50%'],
-                avoidLabelOverlap: false,
-                hoverAnimation: false, //是否开启 hover 在扇区上的放大动画效果。
-                legendHoverLink: false, //是否启用图例 hover 时的联动高亮。
-                label: {
-                    normal: {
-                        show: false,
-                        position: 'center'
-                    },
-                    emphasis: {
-                        show: true,
-                        textStyle: {
-                            fontSize: '18',
-                            fontWeight: 'bold'
-                        }
-                    }
-                },
-                labelLine: {
-                    normal: {
-                        show: false
-                    }
-                },
-                data: [{
-                    value: 111,
-                    name: 'com'
-                }, {
-                    value: 213,
-                    name: 'net'
-                }, {
-                    value: 113,
-                    name: 'edu'
-                }, {
-                    value: 21,
-                    name: 'gov'
-                }, {
-                    value: 323,
-                    name: 'io'
-                }, {
-                    value: 123,
-                    name: 'de'
-                }, {
-                    value: 311,
-                    name: 'org'
-                }, {
-                    value: 323,
-                    name: 'tv'
-                }, {
-                    value: 198,
-                    name: 'to'
-                }, {
-                    value: 11,
-                    name: 'fi'
-                }, {
-                    value: 312,
-                    name: 'facebook.com'
-                }, {
-                    value: 154,
-                    name: 'secious.com'
-                }, {
-                    value: 554,
-                    name: 'outlook.com'
-                }, {
-                    value: 875,
-                    name: 'rightpoint.com'
-                }, {
-                    value: 122,
-                    name: 'spotxcdn.com'
-                }, {
-                    value: 64,
-                    name: 'adnxs.com'
-                }]
-            }]
-        };
-        myChart.setOption(option);
-    };
-    $scope.logrythm_right = function () {
-        var myChart = echarts.init(document.getElementById('logrythm_right'));
-        var option = option = {
-            tooltip: {
-                trigger: 'item',
-                formatter: "link:2252(45%)<br/>{b}: {c} ({d}%)"
-            },
-            legend: {
-                orient: 'vertical',
-                x: 'right',
-                data: ['link', 'ie', 'me', 'ai', 'co', 'ru', 'fm', 'ms', 'uk', 'fr', 'independent.ie', 'somatlx.ai', 'nanorep.co', 'yandex.ru', 'last.fm', 'sfx.ms']
-            },
-            series: [{
-                name: ' ',
-                type: 'pie',
-                radius: ['35%', '50%'],
-                center: ['45%', '50%'],
-                avoidLabelOverlap: false,
-                hoverAnimation: false, //是否开启 hover 在扇区上的放大动画效果。
-                label: {
-                    normal: {
-                        show: false,
-                        position: 'center'
-                    },
-                    emphasis: {
-                        show: true,
-                        textStyle: {
-                            fontSize: '18',
-                            fontWeight: 'bold'
-                        }
-                    }
-                },
-                data: [{
-                    value: 335,
-                    name: 'link'
-                }, {
-                    value: 12,
-                    name: 'ie'
-                }, {
-                    value: 123,
-                    name: 'me'
-                }, {
-                    value: 122,
-                    name: 'ai'
-                }, {
-                    value: 59,
-                    name: 'co'
-                }, {
-                    value: 20,
-                    name: 'ru'
-                }, {
-                    value: 335,
-                    name: 'fm'
-                }, {
-                    value: 12,
-                    name: 'ms'
-                }, {
-                    value: 123,
-                    name: 'uk'
-                }, {
-                    value: 122,
-                    name: 'fr'
-                }, {
-                    value: 59,
-                    name: 'independent.ie'
-                }, {
-                    value: 20,
-                    name: 'somatlx.ai'
-                }, {
-                    value: 20,
-                    name: 'nanorep.co'
-                }, {
-                    value: 20,
-                    name: 'yandex.ru'
-                }, {
-                    value: 20,
-                    name: 'last.fm'
-                }, {
-                    value: 20,
-                    name: 'sfx.ms'
-                }]
-            }, {
-                name: ' ',
-                type: 'pie',
-                radius: ['50%', '65%'],
-                center: ['45%', '50%'],
-                avoidLabelOverlap: false,
-                hoverAnimation: false, //是否开启 hover 在扇区上的放大动画效果。
-                legendHoverLink: false, //是否启用图例 hover 时的联动高亮。
-                label: {
-                    normal: {
-                        show: false,
-                        position: 'center'
-                    },
-                    emphasis: {
-                        show: true,
-                        textStyle: {
-                            fontSize: '18',
-                            fontWeight: 'bold'
-                        }
-                    }
-                },
-                labelLine: {
-                    normal: {
-                        show: false
-                    }
-                },
-                data: [{
-                    value: 131,
-                    name: 'link'
-                }, {
-                    value: 232,
-                    name: 'ie'
-                }, {
-                    value: 111,
-                    name: 'me'
-                }, {
-                    value: 122,
-                    name: 'ai'
-                }, {
-                    value: 11,
-                    name: 'co'
-                }, {
-                    value: 32,
-                    name: 'ru'
-                }, {
-                    value: 112,
-                    name: 'fm'
-                }, {
-                    value: 2231,
-                    name: 'ms'
-                }, {
-                    value: 323,
-                    name: 'uk'
-                }, {
-                    value: 122,
-                    name: 'fr'
-                }, {
-                    value: 519,
-                    name: 'independent.ie'
-                }, {
-                    value: 220,
-                    name: 'somatlx.ai'
-                }, {
-                    value: 20,
-                    name: 'nanorep.co'
-                }, {
-                    value: 20,
-                    name: 'yandex.ru'
-                }, {
-                    value: 201,
-                    name: 'last.fm'
-                }, {
-                    value: 201,
-                    name: 'sfx.ms'
-                }]
-            }, {
-                name: ' ',
-                type: 'pie',
-                radius: ['65%', '80%'],
-                center: ['45%', '50%'],
-                avoidLabelOverlap: false,
-                hoverAnimation: false, //是否开启 hover 在扇区上的放大动画效果。
-                legendHoverLink: false, //是否启用图例 hover 时的联动高亮。
-                label: {
-                    normal: {
-                        show: false,
-                        position: 'center'
-                    },
-                    emphasis: {
-                        show: true,
-                        textStyle: {
-                            fontSize: '18',
-                            fontWeight: 'bold'
-                        }
-                    }
-                },
-                labelLine: {
-                    normal: {
-                        show: false
-                    }
-                },
-                data: [{
-                    value: 35,
-                    name: 'link'
-                }, {
-                    value: 1122,
-                    name: 'ie'
-                }, {
-                    value: 32,
-                    name: 'me'
-                }, {
-                    value: 1322,
-                    name: 'ai'
-                }, {
-                    value: 592,
-                    name: 'co'
-                }, {
-                    value: 210,
-                    name: 'ru'
-                }, {
-                    value: 35,
-                    name: 'fm'
-                }, {
-                    value: 122,
-                    name: 'ms'
-                }, {
-                    value: 1123,
-                    name: 'uk'
-                }, {
-                    value: 22,
-                    name: 'fr'
-                }, {
-                    value: 591,
-                    name: 'independent.ie'
-                }, {
-                    value: 210,
-                    name: 'somatlx.ai'
-                }, {
-                    value: 202,
-                    name: 'nanorep.co'
-                }, {
-                    value: 90,
-                    name: 'yandex.ru'
-                }, {
-                    value: 10,
-                    name: 'last.fm'
-                }, {
-                    value: 70,
-                    name: 'sfx.ms'
-                }]
-            }]
-        };
-        myChart.setOption(option);
-    };
+
     // 弹窗内容拓扑图
     $scope.change_password = function (size) {
         console.log(6666);
@@ -1423,21 +989,19 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
             // 弹窗打印数据的名称
             console.log(params);
             if (params.dataType == "node") {
-                // alert("机器属性："+params.name);
-
                 $scope.$apply(function () {
                     $scope.iotcontent = true;
-
                     setTimeout(function () {
-                        $scope.iot_detail();
+                        $scope.iot_detail_top(); //iot具体cpu/内存/硬盘
+                        $scope.iot_detail_bom();  // iot具体流量
                     }, 10);
                 })
             }
         });
     };
-    // iot_detail -  iot具体流量
-    $scope.iot_detail = function (params) {
-        var myChart = echarts.init(document.getElementById('iot_detail'));
+    // iot_detail -  iot具体cpu/内存/硬盘
+    $scope.iot_detail_top = function (params) {
+        var myChart = echarts.init(document.getElementById('iot_detail_top'));
         var option = {
             grid: {
                 left: 40,
@@ -1465,13 +1029,13 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
                 orient: 'horizontal',
                 selected: {
                     // 选中'系列1'
-                    'HTTP': true,
+                    'CPU': true,
                     // 不选中'系列2'
-                    'HTTPS': true,
-                    'SSH': false,
+                    '内存': true,
+                    '硬盘': true,
 
                 },
-                data: ['HTTP', 'HTTPS', 'SSH']
+                data: ['CPU', '内存', '硬盘']
             },
             xAxis: {
                 type: 'category',
@@ -1522,7 +1086,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
                 }
             },
             series: [{
-                name: 'HTTP',
+                name: 'CPU',
                 type: 'line',
                 smooth: true,
                 showSymbol: false,
@@ -1533,16 +1097,16 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
                     normal: {
                         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
                             offset: 0,
-                            color: 'rgba(199, 237, 250,0.5)'
+                            color: $scope.colorType.rgbaMid8
                         }, {
                             offset: 1,
-                            color: 'rgba(199, 237, 250,0.2)'
+                            color: $scope.colorType.rgbaMid2
                         }], false)
                     }
                 },
                 itemStyle: {
                     normal: {
-                        color: '#f7b851'
+                        color:  $scope.colorType.rgbaMid
                     }
                 },
                 lineStyle: {
@@ -1551,7 +1115,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
                     }
                 }
             }, {
-                name: 'HTTPS',
+                name: '内存',
                 type: 'line',
                 smooth: true,
                 showSymbol: false,
@@ -1580,7 +1144,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
                     }
                 }
             }, {
-                name: 'SSH',
+                name: '硬盘',
                 type: 'line',
                 smooth: true,
                 showSymbol: false,
@@ -1591,16 +1155,132 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
                     normal: {
                         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
                             offset: 0,
-                            color: $scope.colorType.rgbaHigh8
+                            color: $scope.colorType.rgbaLow8
                         }, {
                             offset: 1,
-                            color: $scope.colorType.rgbaHigh2
+                            color: $scope.colorType.rgbaLow2
                         }], false)
                     }
                 },
                 itemStyle: {
                     normal: {
-                        color: $scope.colorType.rgbaHigh10
+                        color: $scope.colorType.rgbaLow10
+                    }
+                },
+                lineStyle: {
+                    normal: {
+                        width: 3
+                    }
+                }
+            }]
+        };
+        myChart.setOption(option);
+        myChart.resize();
+    };
+     // iot_detail -  iot具体流量
+    $scope.iot_detail_bom = function (params) {
+        var myChart = echarts.init(document.getElementById('iot_detail_bom'));
+        var option = {
+            grid: {
+                left: 40,
+                right: 20,
+                top: 15,
+                bottom: 85
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    lineStyle: {
+                        color: '#ddd'
+                    }
+                },
+                backgroundColor: 'rgba(255,255,255,1)',
+                padding: [5, 10],
+                textStyle: {
+                    color: '#7588E4',
+                },
+                extraCssText: 'box-shadow: 0 0 5px rgba(0,0,0,0.3)'
+            },
+            legend: {
+                bottom: 20,
+                left: 20,
+                orient: 'horizontal',
+                selected: {
+                    // 选中'系列1'
+                    '流量': true
+                },
+                data: ['流量']
+            },
+            xAxis: {
+                type: 'category',
+                data: ['00:00', '2:00', '4:00', '6:00', '8:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', "22:00"],
+                boundaryGap: false,
+                splitLine: {
+                    show: false,
+                    interval: 'auto',
+                    lineStyle: {
+                        color: ['#D4DFF5']
+                    }
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: '#666'
+                    }
+                },
+                axisLabel: {
+                    margin: 10,
+                    textStyle: {
+                        fontSize: 10
+                    }
+                }
+            },
+            yAxis: {
+                type: 'value',
+                splitLine: {
+                    lineStyle: {
+                        color: ['#D4DFF5']
+                    }
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: '#666'
+                    }
+                },
+                axisLabel: {
+                    margin: 10,
+                    textStyle: {
+                        fontSize: 10
+                    }
+                }
+            },
+            series: [{
+                name: '流量',
+                type: 'line',
+                smooth: true,
+                showSymbol: false,
+                symbol: 'circle',
+                symbolSize: 6,
+                data: ['1200', '1400', '1008', '1411', '1026', '1288', '1300', '800', '1100', '1000', '1118', '1322'],
+                areaStyle: {
+                    normal: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                            offset: 0,
+                            color: $scope.colorType.rgbaLow8
+                        }, {
+                            offset: 1,
+                            color: $scope.colorType.rgbaLow2
+                        }], false)
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        color: $scope.colorType.rgbaLow10
                     }
                 },
                 lineStyle: {

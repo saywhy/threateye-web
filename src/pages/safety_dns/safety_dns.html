@@ -34,7 +34,7 @@
                                 <input type="text" class="form-control input_radius" ng-model="dns.ttl" ng-keyup="myKeyup($event)">
                             </div>
                         </div>
-                        <div class="row margin">
+                        <div class="row margin download_relative">
                             <div class="form-group col-md-2" style="max-width: 150px;">
                                 <label>解析结果</label>
                                 <select class="form-control input_radius" ng-init="selectedName=0 " style="background-color: #fff;" ng-model="dns.resolves_res"
@@ -48,33 +48,34 @@
                                 <label style="width: 100%;">&nbsp;</label>
                                 <button class="form-control btn btn-primary" style="max-width: 80px;" ng-click="search()">搜&nbsp;索</button>
                             </div>
-                            <div class="form-group col-md-1 col-md-offset-4">
-                                    <label style="width: 100%;">&nbsp;</label>
-                                    <button class="form-control btn btn-primary" style="max-width: 80px;" ng-click="export()">导&nbsp;出</button>
-                                </div>
+                            <div class="download_position">
+                                <span>
+                                    <img src="../src/images/icos/download.png" ng-click="download(item.id)" width="16" height="16" alt="">
+                                </span>
+                            </div>
                         </div>
                         <div class="row margin">
                             <table class="table table-hover ng-cloak">
                                 <tr>
-                                    <th >时间</th>
-                                    <th >DNS服务器IP</th>
-                                    <th >主机IP</th>
-                                    <th >类型</th>
-                                    <th >查询</th>
-                                    <th >域名</th>
-                                    <th > 解析IP</th>
+                                    <th>时间</th>
+                                    <th>DNS服务器IP</th>
+                                    <th>主机IP</th>
+                                    <th>类型</th>
+                                    <th>查询</th>
+                                    <th>域名</th>
+                                    <th> 解析IP</th>
                                     <th style="width:35px;"> 反向IP</th>
-                                    <th > 名称</th>
-                                    <th > TTL</th>
-                                    <th > 解析结果</th>
+                                    <th> 名称</th>
+                                    <th> TTL</th>
+                                    <th> 解析结果</th>
                                 </tr>
                                 <tr style="cursor: pointer;" ng-repeat="item in pages" ng-click="detail(item)">
                                     <td class="td_content" ng-bind="item.time"></td>
-                                    <td class="td_content" ng-bind="item.dns_ip" ></td>
-                                    <td class="td_content" ng-bind="item.host_ip" ></td>
-                                    <td class="td_content" ng-bind="item.type" ></td>
-                                    <td class="td_content" ng-bind="item.query" ></td>
-                                    <td class="td_content" ng-bind="item.host" ></td>
+                                    <td class="td_content" ng-bind="item.dns_ip"></td>
+                                    <td class="td_content" ng-bind="item.host_ip"></td>
+                                    <td class="td_content" ng-bind="item.type"></td>
+                                    <td class="td_content" ng-bind="item.query"></td>
+                                    <td class="td_content" ng-bind="item.host"></td>
                                     <td class="td_content" ng-bind="item.host_addr"></td>
                                     <td class="td_content" ng-bind="item.reverse_addr"></td>
                                     <td class="td_content" ng-bind="item.name"></td>

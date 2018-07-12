@@ -116,7 +116,7 @@
             <div class="alarm">
                 <div class="o_box_header">
                     <p>
-                        <i class="fa fa-life-ring"></i>
+                        <i class="glyphicon glyphicon-link"></i>
                         威胁类型
                     </p>
                 </div>
@@ -140,7 +140,7 @@
                     </p>
                 </div>
                 <div class="row">
-                    <div id="top5">
+                    <div class="top5">
                         <table class="table table-striped">
                             <tr>
                                 <th style="width:15%">排名</th>
@@ -171,8 +171,26 @@
                         TOP5风险资产
                     </p>
                 </div>
-                <div class=" row ">
-                    <div id="logrythm_left"></div>
+                <div class="row">
+                    <div class="top5">
+                        <table class="table table-striped">
+                            <tr>
+                                <th style="width:15%">排名</th>
+                                <th style="width:30%">资产</th>
+                                <th style="width:55%">风险度</th>
+                            </tr>
+                            <tr ng-repeat="(index,item) in risk_property_data">
+                                <td ng-bind="index+1">1</td>
+                                <td ng-bind="item.client_ip"></td>
+                                <td>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-success" ng-style="item.style"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -181,12 +199,58 @@
             <div class="top">
                 <div class="o_box_header">
                     <p>
-                        <i class="glyphicon glyphicon-sort-by-attributes-alt"></i>
+                        <i class="fa fa-bell"></i>
                         最新告警
                     </p>
                 </div>
+
                 <div class="row ">
-                    <div id="logrythm_right"></div>
+                    <div class="top5">
+                        <table class="table table-striped">
+                            <tr>
+                                <th>风险资产</th>
+                                <th>威胁类型</th>
+                                <th>威胁等级</th>
+                                <th>告警信息</th>
+                                <th>告警时间</th>
+                            </tr>
+                            <tr>
+                                <td>192.168.1.231</td>
+                                <td>恶意地址</td>
+                                <td>low</td>
+                                <td>%%01POLICY/6/POLICYPERMIT(l):vsys=public, protocol=17, sourc</td>
+                                <td>2018-07-11</td>
+                            </tr>
+                            <tr>
+                                <td>192.168.1.231</td>
+                                <td>恶意地址</td>
+                                <td>low</td>
+                                <td>%%01POLICY/6/POLICYPERMIT(l):vsys=public, protocol=17, sourc</td>
+                                <td>2018-07-11</td>
+                            </tr>
+                            <tr>
+                                <td>192.168.1.231</td>
+                                <td>恶意地址</td>
+                                <td>low</td>
+                                <td>%%01POLICY/6/POLICYPERMIT(l):vsys=public, protocol=17, sourc</td>
+                                <td>2018-07-11</td>
+                            </tr>
+                            <tr>
+                                <td>192.168.1.231</td>
+                                <td>恶意地址</td>
+                                <td>low</td>
+                                <td>%%01POLICY/6/POLICYPERMIT(l):vsys=public, protocol=17, sourc</td>
+                                <td>2018-07-11</td>
+                            </tr>
+                            <tr>
+                                <td>192.168.1.231</td>
+                                <td>恶意地址</td>
+                                <td>low</td>
+                                <td>%%01POLICY/6/POLICYPERMIT(l):vsys=public, protocol=17, sourc</td>
+                                <td>2018-07-11</td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -209,13 +273,16 @@
     <div class="iot_pop" ng-show="iotcontent">
         <div class="iot_pop_content">
             <p class="iot_pop_content_head">
-                <i class="fa fa-windows"></i> IOT设备流量情况 </p>
+                <i class="fa fa-windows"></i> IOT设备情况 </p>
             <span class="closed" ng-click="ito_popfasle(event)">
                 <i class="glyphicon glyphicon-remove"></i>
             </span>
             <div class="pop-content-info">
                 <div class="sys-chart">
-                    <div id="iot_detail">
+                    <div id="iot_detail_top">
+
+                    </div>
+                    <div id="iot_detail_bom">
 
                     </div>
 

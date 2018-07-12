@@ -58,7 +58,8 @@ app.controller('SigninFormController', ['$scope', '$http', '$state', function ($
     };
     // 登录
     $scope.login = function () {
-        var loading = zeroModal.loading(4);
+        
+        // var loading = zeroModal.loading(4);
         console.log($scope.user);
         $state.go('app.overview');
         $http({
