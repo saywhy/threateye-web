@@ -289,22 +289,25 @@
 
             <div class="form-group row item_form">
                 <label for="host" class="col-sm-2 control-label" style="max-width:100px">旧的密码：</label>
-                <div class="col-sm-6">
-                    <input type="password" class="form-control item_input" placeholder=" " ng-model="data.old">
+                <div class="col-sm-3">
+                    <input type="password" class="form-control" style="width:200px" placeholder=" " ng-model="data.old">
                 </div>
+                <div class="col-sm-3 err_info_header">sdsdsd</div>
             </div>
             <div class="form-group row item_form">
                 <label for="host" class="col-sm-2 control-label" style="max-width:100px">设置密码：</label>
-                <div class="col-sm-6">
-                    <input type="password" class="form-control item_input"  placeholder="" ng-model="data.new">
+                <div class="col-sm-3">
+                    <input type="password" min="8" maxlength="30" class="form-control " style="width:200px" placeholder="" ng-model="data.new">
                 </div>
+                <div class="col-sm-3 err_info_header">sdsdsd</div>
             </div>
             <p style="padding-left:16px;color:#666">请填写8-30位密码,包含大写字母、小写字母、数字、特称字符</p>
             <div class="form-group row item_form">
-                <label for="host" class="col-sm-2 control-label" style="max-width:100px">确认密码</label>
-                <div class="col-sm-6">
-                    <input type="password" class="form-control item_input"  placeholder=" " ng-model="data.repeat">
+                <label for="host" class="col-sm-2 control-label"  style="max-width:100px">确认密码</label>
+                <div class="col-sm-3">
+                    <input type="password" min="8" maxlength="30" class="form-control" style="width:200px" placeholder=" " ng-model="data.repeat">
                 </div>
+                <div class="col-sm-3 err_info_header">sdsdsd</div>
             </div>
 
         </div>

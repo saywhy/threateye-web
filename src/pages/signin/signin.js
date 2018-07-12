@@ -17,7 +17,7 @@ app.controller('SigninFormController', ['$scope', '$http', '$state', function ($
             method: 'POST',
             url: './yiiapi/site/login'
         }).then(function successCallback(data) {
-            console.log(data);
+            console.log(data.data);
             if(data.data.status == 207){
                 console.log('未注册');
                 $scope.login_show = true;
@@ -58,10 +58,9 @@ app.controller('SigninFormController', ['$scope', '$http', '$state', function ($
     };
     // 登录
     $scope.login = function () {
-        
-        // var loading = zeroModal.loading(4);
+        var loading = zeroModal.loading(4);
         console.log($scope.user);
-        $state.go('app.overview');
+        // $state.go('app.overview');
         $http({
             method: 'POST',
             url: './yiiapi/site/login',
@@ -73,14 +72,23 @@ app.controller('SigninFormController', ['$scope', '$http', '$state', function ($
                 "login-button": ""
             }
         }).then(function successCallback(data) {
-            console.log(data);
+            console.log(data.data);
             // 登陆成功
             if (data.data.status == 0) {
                 $state.go('app.overview');
                 zeroModal.close(loading);
             } else if (data.data.status == 202) {
+                // 已登录
                 $state.go('app.overview');
                 zeroModal.close(loading);
+            }else if(data.data.status == 1){
+                zeroModal.close(loading);
+                if(data.data.msg.username){
+                    $scope.msg_error = data.data.msg.username[0];
+                };
+                if(data.data.msg.password){
+                    $scope.msg_error = data.data.msg.password[0];
+                };
             }
         }, function errorCallback(data) {
             console.log(data);

@@ -73,6 +73,7 @@
         border-radius: 2px;
         display: inline-block;
         background-color: rgba(214, 72, 71, .8);
+        
     }
 
     .box-block-green {
@@ -323,4 +324,11 @@
         top: 20px;
         right: 20px;
         cursor: pointer;
+    }
+
+
+
+    .err_info_header{
+        color: #F90504;
+        line-height: 34px;
     }

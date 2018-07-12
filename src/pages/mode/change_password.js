@@ -10,10 +10,13 @@ angular.module('app')
         var loading = zeroModal.loading(4);
          console.log( $scope.data);
          $http({
-            method: 'put',
-            url: './yiiapi/user/reset-password?'+$scope.data,
-            params: {
-                
+            method: 'POST',
+            url: './yiiapi/user/reset-password?'+ $scope.data.token,
+            data: {
+                "ResetPasswordForm": {
+                    "password": $scope.data.new
+                },
+                "old_password": $scope.data.old
             }
         }).then(function successCallback(data) {
             console.log(data);
@@ -25,7 +28,7 @@ angular.module('app')
             console.log(data);
             zeroModal.close(loading);
         });
-        $modalInstance.close();
+        // $modalInstance.close();
     };
     $scope.cancel = function() {
         $modalInstance.dismiss('cancel');

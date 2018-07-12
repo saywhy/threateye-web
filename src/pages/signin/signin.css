@@ -23,6 +23,10 @@
 height: 30px;
 width: 100%;
 }
+.error_info{
+    color: red;
+    line-height: 30px;
+}
 .hoohoolab-footer-login{
     color:#fff;
     position: absolute;
