@@ -2,94 +2,210 @@
 app.controller('Set_userController', ['$scope', '$http', '$state', function ($scope, $http, $state) {
     // 初始化
     $scope.init = function (params) {
-        $scope.get_users();// 获取所有用户
-        // $http.post('http://localhost:81/user/user-add',
-        // {'Content-Type':'application/form-data'})
-        // .success(function(data){
-        //     console.log(1111); console.log(data);
-        // });
-        // $http.jsonp("http://localhost:81/user/page?callback=JSON_CALLBACK").success(function(data){  
-        //      console.log(1111); console.log(data); 
-
-        //     });
-        //     $http({
-        //         method: 'JSONP',
-        //         url: 'http://localhost:81/user/page',
-        //     }).success(function (data) {
-        //         console.log(data);
-        //     });
-        
-     
-        $http({
-            method: 'GET',
-            url: 'http://192.168.1.123:81/user/page'
-        }).then(function successCallback(data) {
-            console.log(data.data);
-        }, function errorCallback(data) {
-            console.log(data);
-        });
-        // $http.get('http://localhost:81/user/page').success(function (data) {
-        //     console.log(11212);
-        //     console.log(data);
-        // });
-        // $.get("http://localhost:81/user/page", function (data) {
-        //     console.log(data);
-        // });
-        //   $.ajax({
-        //     type:"get",    //请求方式
-        //     async:true,    //是否异步
-        //     url:"http://192.168.1.123:81/user/page",
-        //     dataType:"jsonp",    //跨域json请求一定是jsonp
-        //     // jsonp: "callbackparam",    //跨域请求的参数名，默认是callback
-        //         //jsonpCallback:"successCallback",    //自定义跨域参数值，回调函数名也是一样，默认为jQuery自动生成的字符串
-        //     // data:{"query":"civilnews"},    //请求参数
-        //     beforeSend: function() {
-        //         //请求前的处理
-        //     },
-        //     success: function(data) {
-        //         console.log(data);
-        //         //请求成功处理，和本地回调完全一样
-        //     },
-        //     complete: function() {
-        //         //请求完成的处理
-        //     },
-        //     error: function() {
-        //         console.log(data);
-        //         //请求出错处理
-        //     }
-        // });
-        // $.ajax({
-        //     url: "http://192.168.1.123:81/user/page",
-        //     // dataType: 'jsonp', 
-        //     type: 'GET',
-        //     success: function (data) {
-        //         console.log(data);
-        //     },
-        //     error: function (data) {
-        //         console.log(data);
-        //         //请求出错处理
-        //     }
-        // });
-    }
-    // 获取用户列表
-    $scope.get_users = function(){
-        var loading = zeroModal.loading(4);
-        var params = {
-            page:1,
-            rows:10
+        $scope.UserIDList = [];
+        $scope.userList = {};
+        $scope.pages = {
+            data: [],
+            count: 0,
+            maxPage: "...",
+            pageNow: 1,
         };
-        $http({
-            method: 'get',
-            url: '../yiiapi/user/page',
-            params:params
-        }).then(function successCallback(data) {
-            console.log(data);
+        $scope.userRole = {
+            'admin': '管理员',
+            'user': '普通用户',
+            'share': '共享用户'
+        }
+        $scope.getPage(); // 获取用户列表
+    };
+    // 获取用户列表
+    $scope.getPage = function (pageNow) {
+        pageNow = pageNow ? pageNow : 1;
+        $http.post('./yiiapi/user/page', {
+            page: pageNow
+        }).then(function success(rsp) {
+            console.log(rsp.data);
+            if (rsp.data.status == 0) {
+                $scope.pages = rsp.data.data;
+            }
+        }, function err(rsp) {});
+    };
+    // 添加用户
+    $scope.add = function () {
+        var W = 540;
+        var H = 480;
+        var box = null;
+        $scope.newUser = {
+            username: '',
+            password: '',
+            role: 'user'
+        }
+        box = zeroModal.show({
+            title: '添加用户',
+            content: newUser,
+            width: W + "px",
+            height: H + "px",
+            ok: true,
+            cancel: true,
+            okFn: function () {
+                var username = $scope.newUser.username;
+                var flag = true;
+                if (username == null || username.length == 0 || !/^[a-z0-9_-]{2,16}$/.test(username)) {
+                    flag = false;
+                    $scope.nameerror = true;
+                } else {
+                    $scope.nameerror = false;
+                }
+                var password = $scope.newUser.password;
+                var pattern = /(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^a-zA-Z0-9]).{8,30}/;
+                if (!pattern.test(password)) {
+                    flag = false;
+                    $scope.passworderror = true;
+                } else {
+                    $scope.passworderror = false;
+                }
+                if (password != $scope.newUser.repassword) {
+                    flag = false;
+                    $scope.repassworderror = true;
+                } else {
+                    $scope.repassworderror = false;
+                }
+                $scope.$apply();
+                if (!flag) {
+                    return false;
+                }
+                $scope.sendUser();
+            },
+            onCleanup: function () {
+                hideenBox.appendChild(newUser);
+            }
+        });
+    };
+    $scope.sendUser = function (id, $event) {
+        rqs_data = {
+            username: $scope.newUser.username,
+            password: $scope.newUser.password,
+            role: $scope.newUser.role,
+            page: $scope.pages.pageNow
+        };
+        var str = JSON.stringify(rqs_data)
+        console.log(str);
+        var loading = zeroModal.loading(4);
+        $http.post("./yiiapi/user/user-add", rqs_data).then(function success(rsp) {
             zeroModal.close(loading);
-        }, function errorCallback(data) {
-            console.log(data);
+            console.log(rsp);
+            if (rsp.data.status == 0) {
+                $scope.pages = rsp.data.data;
+            } else if (rsp.data.status == 1) {
+                zeroModal.error({
+                    content: '用户添加失败',
+                    contentDetail: '此用户名已经存在！'
+                });
+            }
+        }, function err(rsp) {
             zeroModal.close(loading);
         });
     };
+    // 删除用户
+    $scope.del = function (item) {
+        zeroModal.confirm({
+            content: '确定删除' + $scope.userRole[item.role] + '"' + item.username + '"吗？',
+            okFn: function () {
+                rqs_data = {
+                    id: item.id,
+                    page: $scope.pages.pageNow
+                };
+                console.log(rqs_data);
+                var loading = zeroModal.loading(4);
+                $http({
+                    method: 'delete',
+                    url: './yiiapi/user/user-del',
+                    data: rqs_data,
+                }).success(function (req) {
+                    zeroModal.close(loading);
+                    if (req.status == 0) {
+                        $scope.getPage();
+                    }
+                }).error(function () {
+                    zeroModal.close(loading);
+                })
+            },
+            cancelFn: function () {}
+        });
+    };
+    //重置密码
+    $scope.resetPassword = function (user) {
+        var loading = zeroModal.loading(4);
+        $http.get("./yiiapi/user/get-password-reset-token?id=" + user.id).then(function success(rsp) {
+            zeroModal.close(loading);
+            if (rsp.data.status == 'success') {
+                var W = 540;
+                var H = W * 3 / 4;
+                zeroModal.show({
+                    title: '重置[' + user.username + ']的密码',
+                    content: resetPassword,
+                    width: W + "px",
+                    height: H + "px",
+                    ok: true,
+                    cancel: true,
+                    okFn: function () {
+                        var flag = true;
+                        var password = $scope.resetUser.password;
+                        var pattern = /(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^a-zA-Z0-9]).{8,30}/;
+                        if (!pattern.test(password)) {
+                            flag = false;
+                            $scope.resetUser_passworderror = true;
+                        } else {
+                            $scope.resetUser_passworderror = false;
+                        }
+                        if (password != $scope.resetUser.repassword) {
+                            flag = false;
+                            $scope.resetUser_repassworderror = true;
+                        } else {
+                            $scope.resetUser_repassworderror = false;
+                        }
+                        $scope.$apply();
+                        if (!flag) {
+                            return false;
+                        }
+                        var post_data = {
+                            'ResetPasswordForm': {
+                                'password': password
+                            }
+                        };
+                        var formData = {
+                            method: 'POST',
+                            url: './yiiapi/user/reset-password?token=' + rsp.data.token + ',' + post_data,
+                            data: post_data
+                        }
+                        loading = zeroModal.loading(4);
+                        $http({
+                            method: formData.method,
+                            url: formData.url,
+                            data: $httpParamSerializerJQLike(formData.data),
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded'
+                            }
+                        }).then(function success(rsp) {
+                            if (rsp.data.status == 'success') {
+                                zeroModal.success('密码重置成功！');
+                            } else {
+                                zeroModal.error('密码重置失败！');
+                            }
+                            zeroModal.close(loading);
+                        }, function err(rsp) {
+                            zeroModal.close(loading);
+                        });
+                    },
+                    onCleanup: function () {
+                        hideenBox.appendChild(resetPassword);
+                    }
+                });
+            }
+        }, function err(rsp) {
+            zeroModal.close(loading);
+        });
+    };
+
 
 
     $scope.init();

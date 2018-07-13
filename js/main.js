@@ -3,8 +3,8 @@
 /* Controllers */
 
 angular.module('app')
-    .controller('AppCtrl', ['$scope', '$translate', '$localStorage', '$window', '$modal', '$http','$state',
-        function ($scope, $translate, $localStorage, $window, $modal, $http,$state) {
+    .controller('AppCtrl', ['$scope', '$translate', '$localStorage', '$window', '$modal', '$http', '$state',
+        function ($scope, $translate, $localStorage, $window, $modal, $http, $state) {
             // add 'ie' classes to html
             var isIE = !!navigator.userAgent.match(/MSIE/i);
             isIE && angular.element($window.document.body).addClass('ie');
@@ -17,30 +17,7 @@ angular.module('app')
                 version: '1.0.0',
                 http: 'http://192.168.1.253',
                 https: 'http://192.168.1.253',
-                // for chart colors
-                color: {
-                    primary: '#7266ba',
-                    info: '#23b7e5',
-                    success: '#27c24c',
-                    warning: '#fad733',
-                    danger: '#f05050',
-                    light: '#e8eff0',
-                    dark: '#3a3f51',
-                    black: '#1c2b36'
-                },
-                settings: {
-                    themeID: 1,
-                    navbarHeaderColor: 'bg-black',
-                    navbarCollapseColor: 'bg-white-only',
-                    asideColor: 'bg-black',
-                    headerFixed: true,
-                    asideFixed: false,
-                    asideFolded: false,
-                    asideDock: false,
-                    container: false
-                }
             }
-
             // save settings to local storage
             if (angular.isDefined($localStorage.settings)) {
                 $scope.app.settings = $localStorage.settings;
@@ -80,6 +57,22 @@ angular.module('app')
                 // Checks for iOs, Android, Blackberry, Opera Mini, and Windows mobile devices
                 return (/iPhone|iPod|iPad|Silk|Android|BlackBerry|Opera Mini|IEMobile/).test(ua);
             }
+            //-------------------------------------------------------
+            $scope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+                // console.log(toState);
+                if (toState.url == '' || toState.url == '/signin') {
+                    $http({
+                        method: 'POST',
+                        url: './yiiapi/site/login'
+                    }).then(function successCallback(data) {
+                        console.log(data.data);
+                        if (data.data.status == 202) {
+                            // console.log('已登陆');
+                            $state.go('app.overview');
+                        }
+                    }, function errorCallback(data) {});
+                }
+            });
             $scope.items = ['item1', 'item2', 'item3'];
             //修改密码
             $scope.change_password = function (size) {
@@ -97,19 +90,19 @@ angular.module('app')
                     }
                 });
             };
-            $scope.reset_token = function(){
-        
+            $scope.reset_token = function () {
+
                 $http({
                     method: 'get',
                     url: './yiiapi/user/get-self-password-reset-token'
                 }).then(function successCallback(data) {
-                    if(data.data.status == 0){
+                    if (data.data.status == 0) {
                         $scope.data.token = data.data.data.data.token;
                     }
                 }, function errorCallback(data) {
                     console.log(data);
                 });
-             };
+            };
             // 退出
             $scope.sign_out = function () {
                 var loading = zeroModal.loading(4);
@@ -126,7 +119,6 @@ angular.module('app')
                 }, function errorCallback(data) {
                     console.log(data);
                 });
-            }
-
+            };
         }
     ]);

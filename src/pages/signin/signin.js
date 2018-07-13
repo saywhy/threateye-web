@@ -3,7 +3,7 @@
 /* Controllers */
 // signin controller
 app.controller('SigninFormController', ['$scope', '$http', '$state', function ($scope, $http, $state) {
-    console.log('成功链接服务器');
+    console.log('成功链接服务器230');
     $scope.init = function () {
         $scope.particvle();
         $scope.login_show = false;
@@ -21,6 +21,9 @@ app.controller('SigninFormController', ['$scope', '$http', '$state', function ($
             if(data.data.status == 207){
                 console.log('未注册');
                 $scope.login_show = true;
+            }else if(data.data.status == 202){
+                console.log('已登陆');
+                $state.go('app.overview');
             }else{
                 $scope.login_show = false;
             }
@@ -32,28 +35,40 @@ app.controller('SigninFormController', ['$scope', '$http', '$state', function ($
     // 创建管理员
     $scope.creat_admin = function(){
         console.log($scope.creat);
-        $state.go('app.overview');
-        $http({
-            method: 'POST',
-            url: './yiiapi/site/login',
-            data:{
-                "LoginForm": {
-                    "username": $scope.creat.username,
-                    "password": $scope.creat.password,
-                    'repassword':$scope.creat.repassword
-                },
-                "login-button": ""
-            }
-        }).then(function successCallback(data) {
-            console.log(data);
-            // 创建成功，显示登录页面登录
-            if (data.data.status == 0) {
-                zeroModal.success('创建管理员成功!');
-                $scope.login_show = false;
-            } 
-        }, function errorCallback(data) {
+        var loading = zeroModal.loading(4);
+        // $state.go('app.overview');
+        $scope.password_rexp = /(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^a-zA-Z0-9]).{8,30}/;
+        if( !$scope.password_rexp.test($scope.creat.password)){
+            zeroModal.error('密码8-30位必须包含大写字母、小写字母、数字、特殊字符');
             zeroModal.close(loading);
-        });
+        }else if($scope.creat.password!=$scope.creat.repassword){
+            zeroModal.error('密码不一致');
+            zeroModal.close(loading);
+        }else {
+            $http({
+                method: 'POST',
+                url: './yiiapi/site/login',
+                data:{
+                    "LoginForm": {
+                        "username": $scope.creat.username,
+                        "password": $scope.creat.password,
+                        'repassword':$scope.creat.repassword
+                    },
+                    "login-button": ""
+                }
+            }).then(function successCallback(data) {
+                console.log(data);
+                zeroModal.close(loading);
+                // 创建成功，显示登录页面登录
+                if (data.data.status == 0) {
+                    zeroModal.success('创建管理员成功!');
+                    $scope.login_show = false;
+                } 
+            }, function errorCallback(data) {
+                zeroModal.close(loading);
+            });
+        }
+      
       
     };
     // 登录

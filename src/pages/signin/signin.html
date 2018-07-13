@@ -25,17 +25,17 @@
         <form name="form" class="form-validation" ng-if="login_show">
             <div class="list-group list-group-sm">
                 <div class="list-group-item">
-                    <input type="text" placeholder="用户名" class="form-control no-border" ng-model="creat.username" required>
+                    <input type="text" placeholder="用户名" maxlength="16" class="form-control no-border" ng-model="creat.username" required>
                 </div>
                 <div class="space">
                 </div>
                 <div class="list-group-item">
-                    <input type="password" placeholder="密码" class="form-control no-border" ng-model="creat.password" required>
+                    <input type="password" placeholder="密码" maxlength="30" class="form-control no-border" ng-model="creat.password" required>
                 </div>
                 <div class="space">
                     </div>
                 <div class="list-group-item">
-                    <input type="password" placeholder="确认密码" class="form-control no-border" ng-model="creat.repassword" required>
+                    <input type="password" placeholder="确认密码" maxlength="30" class="form-control no-border" ng-model="creat.repassword" required>
                 </div>
             </div>
             <button type="submit" class="btn btn-lg btn-primary btn-block" ng-click="creat_admin()" ng-disabled='form.$invalid'>创建管理员</button>
