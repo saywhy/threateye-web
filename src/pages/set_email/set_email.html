@@ -24,7 +24,7 @@
                         <label class="col-sm-3 control-label">SMTP启用安全连接SSL</label>
                         <div class="col-sm-6">
                             <div class="pull-left">
-                                <input class="tgl tgl-ios" id="encryption" type="checkbox" ng-checked="item.encryption == 'yes'" ng-click="item.encryption = (item.encryption=='no'?'yes':'no')">
+                                <input class="tgl tgl-ios" id="encryption" type="checkbox" ng-checked="item.encryption == 'ssl'" ng-click="item.encryption = (item.encryption=='ssl'?'':'ssl')">
                                 <label class="tgl-btn" for="encryption"></label>
                             </div>
                         </div>
@@ -62,7 +62,7 @@
                         <label class="col-sm-3 control-label">发生告警时给此邮件发送通知邮件</label>
                         <div class="col-sm-6">
                             <div class="pull-left">
-                                <input class="tgl tgl-ios" id="send" type="checkbox" ng-checked="item.send == 'yes'" ng-click="item.send = (item.send=='no'?'yes':'no')">
+                                <input class="tgl tgl-ios" id="send" type="checkbox" ng-checked="item.send" ng-click="item.send=(item.send?false:true)">
                                 <label class="tgl-btn" for="send"></label>
                             </div>
                         </div>
@@ -76,7 +76,7 @@
                     </div>
                     <div class="form-group col-md-1">
                         <label style="width: 100%;">&nbsp;</label>
-                        <button class="form-control btn btn-primary" style="max-width: 80px;" ng-click="search()">保&nbsp;存</button>
+                        <button class="form-control btn btn-primary" style="max-width: 80px;" ng-click="save()">保&nbsp;存</button>
                     </div>
                 </div>
               

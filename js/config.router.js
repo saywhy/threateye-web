@@ -26,7 +26,6 @@ angular.module('app')
                     .state('signin', {
                         url: '/signin',
                         templateUrl: 'src/pages/signin/signin.html',
-                        controller: 'SigninFormController',
                         resolve: {
                             deps: ['uiLoad',
                                 function (uiLoad) {
@@ -89,7 +88,6 @@ angular.module('app')
                     // 安全调查-dns
                     .state('app.safety_dns', {
                         url: '/safety_dns',
-                        controller: 'Safety_dnsController',
                         templateUrl: 'src/pages/safety_dns/safety_dns.html',
                         resolve: {
                             deps: ['$ocLazyLoad',

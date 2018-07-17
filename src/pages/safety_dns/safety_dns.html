@@ -70,14 +70,14 @@
                                     <th> TTL</th>
                                     <th> 解析结果</th>
                                 </tr>
-                                <tr style="cursor: pointer;" ng-repeat="item in pages" ng-click="detail(item)">
-                                    <td class="td_content" ng-bind="item.time"></td>
+                                <tr style="cursor: pointer;" ng-repeat="item in pages.data" ng-click="detail(item)">
+                                    <td class="td_content" ng-bind="item.timestamp"></td>
                                     <td class="td_content" ng-bind="item.dns_ip"></td>
                                     <td class="td_content" ng-bind="item.host_ip"></td>
                                     <td class="td_content" ng-bind="item.type"></td>
                                     <td class="td_content" ng-bind="item.query"></td>
-                                    <td class="td_content" ng-bind="item.host"></td>
-                                    <td class="td_content" ng-bind="item.host_addr"></td>
+                                    <td class="td_content" ng-bind="item.rrname"></td>
+                                    <td class="td_content" ng-bind="item.rdata"></td>
                                     <td class="td_content" ng-bind="item.reverse_addr"></td>
                                     <td class="td_content" ng-bind="item.name"></td>
                                     <td class="td_content" ng-bind="item.ttl"></td>
@@ -88,7 +88,7 @@
                             <!-- angularjs分页 -->
                             <div style="border-top: 1px solid #f4f4f4;padding: 10px;">
                                 <em>共有
-                                    <span ng-bind="pages.count"></span>条告警</em>
+                                    <span ng-bind="pages.count"></span>条</em>
                                 <!-- angularjs分页 -->
                                 <ul class="pagination pagination-sm no-margin pull-right ng-cloak">
                                     <li>
