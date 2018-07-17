@@ -38,20 +38,24 @@
     margin: 5px 0;
 }
 .alarm_detail .p_head{
-    max-width: 65px;
+    max-width: 60px;
+    padding: 0;
 }
 .alarm_detail .img_arrow{
-    margin-top: 60px
+    margin-top: 4px
 }
 .alarm_detail .part{
    padding: 10px 30px;
 }
 .alarm_detail .part .part_detail{
     padding: 10px 0;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #666;
 }
 .alarm_detail .part p{
     margin: 5px 0;
+    height: 30px;
+    line-height: 30px;
+    border-bottom: 1px solid #ddd;
 }
 .alarm_detail .part_detail_span{
    padding-left: 15px;

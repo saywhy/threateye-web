@@ -49,16 +49,20 @@
                                 <tr>
                                     <th>告警类型</th>
                                     <th>时间</th>
+                                    <th>告警等级</th>
                                     <th>源地址</th>
                                     <th>目的地址</th>
+                                    <th>告警描述</th>
                                     <th>应用</th>
                                     <th> 状态</th>
                                 </tr>
                                 <tr style="cursor: pointer;" ng-repeat="item in pages" ng-click="detail(item)">
                                     <td ng-bind="item.type"></td>
                                     <td ng-bind="item.time"></td>
+                                    <td ng-bind="item.level"></td>
                                     <td ng-bind="item.host"></td>
                                     <td ng-bind="item.target"></td>
+                                    <td ng-bind="item.des"></td>
                                     <td ng-bind="item.application"></td>
                                     <td ng-bind="item.state"></td>
                                 </tr>

@@ -134,10 +134,14 @@ app.controller('Set_userController', ['$scope', '$http', '$state', function ($sc
     };
     //重置密码
     $scope.resetPassword = function (user) {
+        console.log(user);
+        
         var loading = zeroModal.loading(4);
         $http.get("./yiiapi/user/get-password-reset-token?id=" + user.id).then(function success(rsp) {
+            console.log(rsp);
+            
             zeroModal.close(loading);
-            if (rsp.data.status == 'success') {
+            if (rsp.data.status == 0) {
                 var W = 540;
                 var H = W * 3 / 4;
                 zeroModal.show({
@@ -172,29 +176,23 @@ app.controller('Set_userController', ['$scope', '$http', '$state', function ($sc
                                 'password': password
                             }
                         };
-                        var formData = {
-                            method: 'POST',
-                            url: './yiiapi/user/reset-password?token=' + rsp.data.token + ',' + post_data,
-                            data: post_data
-                        }
                         loading = zeroModal.loading(4);
                         $http({
-                            method: formData.method,
-                            url: formData.url,
-                            data: $httpParamSerializerJQLike(formData.data),
-                            headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded'
-                            }
-                        }).then(function success(rsp) {
-                            if (rsp.data.status == 'success') {
+                            method: 'put',
+                            url: './yiiapi/user/reset-password?token=' + rsp.data.data.token,
+                            data: post_data,
+                        }).success(function (data) {
+                            console.log(data);
+                            if(data.status == 0){
                                 zeroModal.success('密码重置成功！');
-                            } else {
+                            }else{
                                 zeroModal.error('密码重置失败！');
                             }
                             zeroModal.close(loading);
-                        }, function err(rsp) {
+                        }).error(function () {
                             zeroModal.close(loading);
-                        });
+                            zeroModal.error('密码重置失败！');
+                        })
                     },
                     onCleanup: function () {
                         hideenBox.appendChild(resetPassword);

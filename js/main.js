@@ -58,6 +58,10 @@ angular.module('app')
                 return (/iPhone|iPod|iPad|Silk|Android|BlackBerry|Opera Mini|IEMobile/).test(ua);
             }
             //-------------------------------------------------------
+            $scope.init_main = function(){
+                $scope.new_data_info = 0;
+                $scope.get_news();
+            }
             $scope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
                 // console.log(toState);
                 if (toState.url == '' || toState.url == '/signin') {
@@ -120,5 +124,68 @@ angular.module('app')
                     console.log(data);
                 });
             };
+
+            // 消息news
+            $scope.get_news = function(){
+                $http({
+                    method: 'get',
+                    url: './yiiapi/news/list',
+                }).success(function (data) {
+                    console.log(data);
+                    $scope.user_name = data.user_name;
+                    if(data.status == 0){  
+                         $scope.new_data_info= data.data;
+                    }else{
+                        $scope.new_data_info = 0;
+                    }
+                }).error(function () {
+                })
+            };
+            $scope.showNews = function(item){
+                console.log(item);
+                var W = 480;
+                var H = 200;
+                zeroModal.show({
+                    title: item.title,
+                    content: item.content,
+                    width: W+"px",
+                    height: H+"px",
+                    onCleanup: function(data) {
+                        console.log(data);
+                    },
+                    buttons:[
+                        {
+                            className:'zeromodal-btn zeromodal-btn-default',
+                            name: '关闭',
+                            fn:function(){}
+                        },
+                        {
+                            className:'zeromodal-btn zeromodal-btn-success',
+                            name: '已查看',
+                            fn:function(){
+                                console.log(item);
+                                $http({
+                                    method: 'post',
+                                    url: './yiiapi/news/update',
+                                    data:{
+                                        id:item.id
+                                    }
+                                }).success(function (data) {
+                                    console.log(data);
+                                    if(data.status==0){
+                                        $scope.get_news();
+                                    }
+                                }).error(function (err) {
+                                    console.log(err);
+                                    
+                                })
+                            }
+                        }
+                    ]
+                        
+                });
+            }
+
+            $scope.init_main();
         }
     ]);

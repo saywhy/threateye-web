@@ -14,17 +14,11 @@ app.controller('Alarm_detailController', [
             console.log($scope.detail_data);
             $scope.selected = 0;
             $scope.tab_data =[{
-                name:'规则库更新',
+                name:'当前告警资产',
                 content:'11111'
             },{
-                name:'规则库更新2',
+                name:'历史告警资产',
                 content:'22222'
-            },{
-                name:'规则库更新3',
-                content:'3333'
-            },{
-                name:'规则库更新4',
-                content:'4444'
             }]
         };
    $scope.show = function (params) {

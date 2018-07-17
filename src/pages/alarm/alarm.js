@@ -26,12 +26,16 @@ app.controller('AlarmController', [
             $scope.pages = [{
                 time: '2018-06-22 13:32',
                 type: '恶意地址',
+                level:'中',
                 host: '192.168.1.2',
                 target: '192.168.1.232',
+                des:'1111233232',
                 application: 'application',
                 state: '未解决'
             }, {
                 time: '2018-06-22 13:32',
+                level:'低',
+                des:'222222',
                 type: '恶意地址',
                 host: '192.168.1.2',
                 target: '192.168.1.232',
@@ -40,6 +44,8 @@ app.controller('AlarmController', [
             }, {
                 time: '2018-06-22 13:32',
                 type: '恶意地址',
+                level:'高',
+                des:'33333',
                 host: '192.168.1.2',
                 target: '192.168.1.232',
                 application: 'application',
@@ -48,6 +54,8 @@ app.controller('AlarmController', [
                 time: '2018-06-22 13:32',
                 type: '恶意地址',
                 host: '192.168.1.2',
+                level:'中',
+                des:'444444555',
                 target: '192.168.1.232',
                 application: 'application',
                 state: '未解决'
