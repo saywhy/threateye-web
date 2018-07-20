@@ -33,8 +33,8 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
         $scope.alarmNum(); //告警数量
         $scope.threaten_type(); //威胁类型
         // 第三排
-       $scope.top_threaten(); //top 威胁
-       $scope.risk_property(); //top 风险资产
+        $scope.top_threaten(); //top 威胁
+        $scope.risk_property(); //top 风险资产
         $scope.untreatedAlarm(); //第二排中间未处理告警
         // $scope.change_password(); //test
     };
@@ -390,6 +390,34 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
         };
 
         myChart.setOption(option);
+
+        setTimeout(function(){
+            console.log( myChart.getDataURL());
+        },1000)
+     
+        function getFullCanvasDataURL(divId) {
+            //将第一个画布作为基准。
+            var baseCanvas = $("#" + divId).find("canvas").first()[0];
+            if (!baseCanvas) {
+                return false;
+            };
+            var width = baseCanvas.width;
+            var height = baseCanvas.height;
+            var ctx = baseCanvas.getContext("2d");
+            //遍历，将后续的画布添加到在第一个上
+            $("#" + divId).find("canvas").each(function (i, canvasObj) {
+                if (i > 0) {
+                    var canvasTmp = $(canvasObj)[0];
+                    ctx.drawImage(canvasTmp, 0, 0, width, height);
+                }
+            });
+            //获取base64位的url
+            return baseCanvas.toDataURL();
+        }
+        // getCanvasDataURL(myChart) 
+        console.log(1111)
+        console.log(getFullCanvasDataURL('safetyequipment'));
+
     };
     // 第二排 右边图表 - 威胁类型
     $scope.threaten_type = function (params) {
@@ -670,7 +698,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
         }]
     }
     //top风险资产
-    $scope.risk_property = function(){
+    $scope.risk_property = function () {
         $scope.risk_property_data = [{
             client_ip: '192.1.32.132',
             style: {
@@ -993,7 +1021,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
                     $scope.iotcontent = true;
                     setTimeout(function () {
                         $scope.iot_detail_top(); //iot具体cpu/内存/硬盘
-                        $scope.iot_detail_bom();  // iot具体流量
+                        $scope.iot_detail_bom(); // iot具体流量
                     }, 10);
                 })
             }
@@ -1106,7 +1134,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
                 },
                 itemStyle: {
                     normal: {
-                        color:  $scope.colorType.rgbaMid
+                        color: $scope.colorType.rgbaMid
                     }
                 },
                 lineStyle: {
@@ -1177,7 +1205,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
         myChart.setOption(option);
         myChart.resize();
     };
-     // iot_detail -  iot具体流量
+    // iot_detail -  iot具体流量
     $scope.iot_detail_bom = function (params) {
         var myChart = echarts.init(document.getElementById('iot_detail_bom'));
         var option = {

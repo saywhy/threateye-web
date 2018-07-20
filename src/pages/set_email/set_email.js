@@ -38,7 +38,11 @@ app.controller('Set_emailController', ['$scope', '$http', '$state', function ($s
         if (!$scope.validate('test')) {
             zeroModal.error('请输入有效的邮箱!');
             return;
-        }
+        };
+        if ($scope.item.password == '') {
+            zeroModal.error('请输入邮箱密码');
+            return;
+        };
         rqs_data = $scope.item;
         var loading = zeroModal.loading(4);
         $http.post("./yiiapi/email/test", rqs_data).then(function success(rsp) {
@@ -77,7 +81,6 @@ app.controller('Set_emailController', ['$scope', '$http', '$state', function ($s
             zeroModal.error('保存失败!');
         });
     }
-
     $scope.search = function (params) {
         console.log($scope.item);
     };

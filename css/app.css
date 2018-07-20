@@ -2585,7 +2585,7 @@ fieldset[disabled] .i-checks input + i:before {
 }
 
 .i-checks > span {
-  margin-left: -20px;
+  margin-left: 0px;
 }
 
 .i-checks > span .active {

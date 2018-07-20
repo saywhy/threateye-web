@@ -33,7 +33,7 @@
             &nbsp;
 
             <span class="item-span-content">自定义时间:</span>
-            <label for="reservationtime">
+            <label for="reservationtime" class="time_input_report">
                 <input type="text" ng-click="custom()" class="form-control" id="reservationtime" readonly style="background-color: #fff;">
             </label>
 
@@ -85,10 +85,10 @@
                     <td ng-bind="item.report_type"></td>
 
                     <td class="cursor">&nbsp;&nbsp;
-                        <img src="../../images/icos/download.png" ng-click="download(item.id)" width="16" height="16" alt="">
+                        <img src="../src/images/icos/download.png" ng-click="download(item)" width="16" height="16" alt="">
                     </td>
                     <td class="cursor">&nbsp;&nbsp;
-                        <img src="../../images/icos/delate.png" ng-click="del(item.id)" width="16" height="16" alt="">
+                        <img src="../src/images/icos/delate.png" ng-click="del(item)" width="16" height="16" alt="">
                     </td>
                 </tr>
 
@@ -144,5 +144,9 @@
         <!-- /.angularjs分页 -->
     </div>
 
+    <div class="echarts" >
+        <!-- 未处理告警 -->
+        <div id="untreatedalarm"></div>
+    </div>
 
 </div>

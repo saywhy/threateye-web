@@ -1,8 +1,4 @@
 
-
-
-
-
 .head{
    background-color: #fff;
    border-radius: 5px;
@@ -39,10 +35,6 @@
     vertical-align: middle;
     background-color: #fff;
     border: 1px solid #cfdadd;
-}
-.i-checks {
-    padding-left: 20px;
-    cursor: pointer;
 }
 .i-checks input:checked + i:before {
     top: 4px;
@@ -105,4 +97,14 @@
 
 .bordercolor{
     border: 1px solid red;
+}
+.echarts{
+    display: none;
+}
+#untreatedalarm {
+    width: 1000px;
+    height: 600px;
+}
+.time_input_report{
+    min-width: 300px
 }

@@ -5,7 +5,7 @@
 app.controller('SigninFormController', ['$scope', '$http', '$state', function ($scope, $http, $state) {
     console.log('成功链接服务器230');
     $scope.init = function () {
-        $scope.particvle();
+        // $scope.particvle();
         $scope.login_show = false;
         $scope.user = {};
         $scope.creat = {};
