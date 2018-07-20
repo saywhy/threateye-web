@@ -1,6 +1,6 @@
 <div class="safety_ioc" ng-controller="Safety_iocController" ng-init="app.settings.container = false;" ng-cloak>
 
-<span id="aaa">ssss</span>
+    <span id="aaa">ssss</span>
     <div class="row">
         <div class="col-md-12">
             <div class="nav-tabs-custom" style="margin-bottom: 0px;">
@@ -11,24 +11,24 @@
                     </li>
                 </ul>
                 <div style="margin:5px 20px">
-                        <form id="upload" enctype="multipart/form-data" method="post"> 
-                            <input type="file" name="file" id="pic"/> 
-                            <input type="button" value="提交" ng-click="uploadPic()"/> 
-                            <span class="showUrl"></span> 
-                            <img src="" class="showPic" alt=""> 
-                           </form> 
+                    <form id="upload" enctype="multipart/form-data" method="post">
+                        <input type="file" name="file" id="pic" />
+                        <input type="button" value="提交" ng-click="uploadPic()" />
+                        <span class="showUrl"></span>
+                        <img src="" class="showPic" alt="">
+                    </form>
                     <div class="form-group" style="margin-bottom:5px 20px">
                         <label for="InputFile">上传IOC</label>
                         <input type="file" id="InputFile" style="display: none;" accept="application/x-msdownload" data-url="addversion" name="file">
                         <br>
                         <label class="glyphicon glyphicon-plus-sign text-green" style="font-size: 48px" for="InputFile"></label>
                         <span ng-bind="sensorVersion.FileName" style="font-size: 14px;" class="ng-binding"></span>
-                        
+
                     </div>
                 </div>
                 <div style="margin:20px">
                     <a ng-click="download_temp()"> 下载模版</a>
-                    <span >上传的文件请按照模板的格式</span>
+                    <span>上传的文件请按照模板的格式</span>
                 </div>
                 <div class="form-group col-md-1">
                     <button class="form-control btn btn-primary" style="max-width: 80px;" ng-click="search()">搜&nbsp;&nbsp;索</button>

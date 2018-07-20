@@ -44,7 +44,6 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter', 
         //获取报表 记录
         $scope.getPage(1);
     };
-
     $scope.inputfocus = function (params) {
         $scope.reportNameInput = true;
     };
@@ -205,7 +204,7 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter', 
                 $scope.high_total_count = item.total_count
             }
         });
-        var myChart = echarts.init(document.getElementById('untreatedalarm'));
+        var myChart = echarts.init(document.getElementById('untreatedalarm_report'));
         var option = {
             tooltip: {
                 trigger: 'item',
@@ -289,7 +288,6 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter', 
     };
     $scope.download_report = function (params) {
         console.log(params);
-
         var tt = new Date().getTime();
         var url = './yiiapi/report/download-report';
         /**
@@ -303,7 +301,6 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter', 
         form.attr("method", "get"); //请求类型
         form.attr("action", url); //请求地址
         $("body").append(form); //将表单放置在web中
-        　　
         /**
          * input标签主要用来传递请求所需的参数：
          * 1.name属性是传递请求所需的参数名.

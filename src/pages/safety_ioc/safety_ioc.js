@@ -6,7 +6,7 @@ app.controller('Safety_iocController', ['$scope', '$http', '$state', function ($
         console.log('Safety_iocController');
 
       
-    }
+    };
     // 下载模版
     $scope.download_temp = function () {
         var tt = new Date().getTime();
@@ -22,11 +22,9 @@ app.controller('Safety_iocController', ['$scope', '$http', '$state', function ($
         input1.attr("name", "id");
         form.append(input1);
         form.submit(); //表单提交
-    }
+    };
     // 上传文件
     $scope.uploadPic = function () {
-        console.log(1111);
-        
         var form = document.getElementById('upload'),
             formData = new FormData(form);
         $.ajax({
@@ -47,10 +45,8 @@ app.controller('Safety_iocController', ['$scope', '$http', '$state', function ($
             error: function (err) {
                 alert("网络连接失败,稍后重试", err);
             }
-
         })
-
-    }
+    };
 
     $scope.init();
 }]);
