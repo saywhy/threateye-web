@@ -128,7 +128,7 @@
     <!-- 第三排 -->
     <div class="row o_fourth">
         <!-- 左边-TOP5威胁 -->
-        <div class="o_container col-md-4">
+        <div class="o_container col-md-3">
             <div class="top">
                 <div class="o_box_header">
                     <p>
@@ -140,18 +140,14 @@
                     <div class="top5">
                         <table class="table table-striped">
                             <tr>
-                                <th style="width:15%">排名</th>
-                                <th style="width:30%">资产</th>
-                                <th style="width:55%">风险度</th>
+                                <th>排名</th>
+                                <th>威胁</th>
+                                <th>威胁类型</th>
                             </tr>
-                            <tr ng-repeat="(index,item) in top_threaten_data">
+                            <tr ng-repeat="(index,item) in threat_type">
                                 <td ng-bind="index+1">1</td>
-                                <td ng-bind="item.client_ip"></td>
-                                <td>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-success" ng-style="item.style"></div>
-                                    </div>
-                                </td>
+                                <td ng-bind="item.alert_type"></td>
+                                <td ng-bind="item.total_count"></td>
                             </tr>
                         </table>
                     </div>
@@ -191,7 +187,7 @@
             </div>
         </div>
         <!-- 右边-  最新告警-->
-        <div class="col-md-4 o_container">
+        <div class="col-md-5 o_container">
             <div class="top">
                 <div class="o_box_header">
                     <p>
@@ -199,51 +195,24 @@
                         最新告警
                     </p>
                 </div>
-
                 <div class="row ">
                     <div class="top5">
                         <table class="table table-striped">
                             <tr>
-                                <th>风险资产</th>
-                                <th>威胁类型</th>
-                                <th>威胁等级</th>
-                                <th>告警信息</th>
-                                <th>告警时间</th>
+                                <th>告警类型</th>
+                                <th>时间</th>
+                                <th>告警等级</th>
+                                <th>源地址</th>
+                                <th>目的地址</th>
+                                <th>告警描述</th>
                             </tr>
-                            <tr>
-                                <td>192.168.1.231</td>
-                                <td>恶意地址</td>
-                                <td>low</td>
-                                <td>%%01POLICY/6/POLICYPERMIT(l):vsys=public, protocol=17, sourc</td>
-                                <td>2018-07-11</td>
-                            </tr>
-                            <tr>
-                                <td>192.168.1.231</td>
-                                <td>恶意地址</td>
-                                <td>low</td>
-                                <td>%%01POLICY/6/POLICYPERMIT(l):vsys=public, protocol=17, sourc</td>
-                                <td>2018-07-11</td>
-                            </tr>
-                            <tr>
-                                <td>192.168.1.231</td>
-                                <td>恶意地址</td>
-                                <td>low</td>
-                                <td>%%01POLICY/6/POLICYPERMIT(l):vsys=public, protocol=17, sourc</td>
-                                <td>2018-07-11</td>
-                            </tr>
-                            <tr>
-                                <td>192.168.1.231</td>
-                                <td>恶意地址</td>
-                                <td>low</td>
-                                <td>%%01POLICY/6/POLICYPERMIT(l):vsys=public, protocol=17, sourc</td>
-                                <td>2018-07-11</td>
-                            </tr>
-                            <tr>
-                                <td>192.168.1.231</td>
-                                <td>恶意地址</td>
-                                <td>low</td>
-                                <td>%%01POLICY/6/POLICYPERMIT(l):vsys=public, protocol=17, sourc</td>
-                                <td>2018-07-11</td>
+                            <tr ng-repeat="item in new_alarm_data">
+                                <td ng-bind="item.alert_type"></td>
+                                <td ng-bind="item.alert_time*1000 |date:'yyyy-MM-dd HH:mm:ss'"></td>
+                                <td ng-bind="item.degree"></td>
+                                <td ng-bind="item.src_ip"></td>
+                                <td ng-bind="item.dest_ip"></td>
+                                <td ng-bind="item.alert_description"></td>
                             </tr>
                         </table>
                     </div>

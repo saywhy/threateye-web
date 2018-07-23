@@ -6,7 +6,8 @@ app.controller('AlarmController', [
     '$scope',
     '$http',
     '$state',
-    function ($scope, $http, $state) {
+    '$filter',
+    function ($scope, $http, $state, $filter) {
         // 初始化
         $scope.init = function (params) {
             $scope.searchData = {};
@@ -22,45 +23,66 @@ app.controller('AlarmController', [
             }];
             $scope.timepicker();
             $scope.alarmEchart(); // 折线图表
-            //假数据
-            $scope.pages = [{
-                time: '2018-06-22 13:32',
-                type: '恶意地址',
-                level:'中',
-                host: '192.168.1.2',
-                target: '192.168.1.232',
-                des:'1111233232',
-                application: 'application',
-                state: '未解决'
-            }, {
-                time: '2018-06-22 13:32',
-                level:'低',
-                des:'222222',
-                type: '恶意地址',
-                host: '192.168.1.2',
-                target: '192.168.1.232',
-                application: 'application',
-                state: '未解决'
-            }, {
-                time: '2018-06-22 13:32',
-                type: '恶意地址',
-                level:'高',
-                des:'33333',
-                host: '192.168.1.2',
-                target: '192.168.1.232',
-                application: 'application',
-                state: '未解决'
-            }, {
-                time: '2018-06-22 13:32',
-                type: '恶意地址',
-                host: '192.168.1.2',
-                level:'中',
-                des:'444444555',
-                target: '192.168.1.232',
-                application: 'application',
-                state: '未解决'
-            }]
+            $scope.pages = {
+                data: [],
+                count: 0,
+                maxPage: "...",
+                pageNow: 1,
+            };
+            // 默认时间
+            $scope.searchData = {
+                startTime: moment().subtract(365, 'days').unix(),
+                endTime: moment().unix()
+            };
+            $scope.getPage();
         };
+        // 告警列表
+        $scope.getPage = function (pageNow) {
+            pageNow = pageNow ? pageNow : 1;
+            $scope.params_data = {
+                start_time: $scope.searchData.startTime,
+                end_time: $scope.searchData.endTime,
+                src_ip: $scope.searchData.src_ip,
+                dest_ip: $scope.searchData.dest_ip,
+                status: $scope.searchData.status,
+                page: pageNow,
+                rows: '10'
+            };
+            console.log($scope.params_data);
+            $http({
+                method: 'get',
+                url: './yiiapi/alert/list',
+                params: $scope.params_data,
+            }).success(function (data) {
+                console.log(data);
+                if (data.status == 0) {
+                    $scope.pages = data.data;
+                }
+                console.log($scope.pages);
+            }).error(function (err) {
+                console.log(err);
+            })
+        }
+         // 默认是未解决
+    $scope.selectedName = 0;
+    $scope.setAriaID = function (item, $event) {
+        $event.stopPropagation();
+        if ($scope.ariaID == item.id) {
+            $scope.ariaID = null;
+        } else {
+            $scope.ariaID = item.id;
+        }
+    };
+    $scope.delAriaID = function ($event) {
+        $event.stopPropagation();
+        setTimeout(function () {
+            $scope.ariaID = null;
+        }, 10);
+    };
+        // 搜索按钮
+        $scope.search = function () {
+            $scope.getPage();
+        }
         // 折线图表
         $scope.alarmEchart = function (params) {
             var data = {
@@ -201,7 +223,9 @@ app.controller('AlarmController', [
         $scope.detail = function (params) {
             console.log(params);
             params = escape(JSON.stringify(params));
-            $state.go('app.alarm_detail',{data:params});
+            $state.go('app.alarm_detail', {
+                data: params
+            });
         };
 
         $scope.init();

@@ -17,18 +17,18 @@
                 </ul>
                 <div class="tab-content" style="padding-top:0px;border-bottom:0px;">
                     <div class="tab-pane active" id="protect">
-                        <div class="row margin">
+                        <div class="row margin search_box">
                             <div class="form-group col-md-4">
                                 <label>告警时间</label>
                                 <input type="text" class="form-control timerange input_radius" readonly style="background-color: #fff;">
                             </div>
                             <div class="form-group col-md-2">
                                 <label>源地址</label>
-                                <input type="text" class="form-control input_radius" ng-model="searchData.client_ip" ng-keyup="myKeyup($event)">
+                                <input type="text" class="form-control input_radius" ng-model="searchData.src_ip" ng-keyup="myKeyup($event)">
                             </div>
                             <div class="form-group col-md-2">
                                 <label>目的地址</label>
-                                <input type="text" class="form-control input_radius" ng-model="searchData.client_ip" ng-keyup="myKeyup($event)">
+                                <input type="text" class="form-control input_radius" ng-model="searchData.dest_ip" ng-keyup="myKeyup($event)">
                             </div>
                             <div class="form-group col-md-2">
                                 <label>处理状态</label>
@@ -39,9 +39,10 @@
                                 <label style="width: 100%;">&nbsp;</label>
                                 <button class="form-control btn btn-primary" style="max-width: 80px;" ng-click="search()">搜&nbsp;索</button>
                             </div>
-                            <div class="form-group col-md-1">
-                                <label style="width: 100%;">&nbsp;</label>
-                                <button class="form-control btn btn-primary" style="max-width: 80px;" ng-click="search()">导&nbsp;出</button>
+                            <div class="download_position ">
+                                <span>
+                                    <img src="../src/images/icos/download.png" ng-click="download(item.id)" width="16" height="16" alt="">
+                                </span>
                             </div>
                         </div>
                         <div class="row margin">
@@ -56,15 +57,30 @@
                                     <th>应用</th>
                                     <th> 状态</th>
                                 </tr>
-                                <tr style="cursor: pointer;" ng-repeat="item in pages" ng-click="detail(item)">
-                                    <td ng-bind="item.type"></td>
-                                    <td ng-bind="item.time"></td>
-                                    <td ng-bind="item.level"></td>
-                                    <td ng-bind="item.host"></td>
-                                    <td ng-bind="item.target"></td>
-                                    <td ng-bind="item.des"></td>
+                                <tr style="cursor: pointer;" ng-repeat="item in pages.data" ng-click="detail(item)">
+                                    <td ng-bind="item.alert_type"></td>
+                                    <td ng-bind="item.alert_time*1000 |date:'yyyy-MM-dd HH:mm:ss'"></td>
+                                    <td ng-bind="item.degree"></td>
+                                    <td ng-bind="item.src_ip"></td>
+                                    <td ng-bind="item.dest_ip"></td>
+                                    <td ng-bind="item.alert_description"></td>
                                     <td ng-bind="item.application"></td>
-                                    <td ng-bind="item.state"></td>
+                                    <td >
+                                        <div class="btn-group {{(ariaID == item.id)?'open':''}}">
+                                            <button type="button" class="btn btn-{{status_str[item.status].css}} btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false"
+                                                ng-click="setAriaID(item,$event);" ng-blur="delAriaID($event);" set-focus>
+                                                <span ng-if="item.status == 2">&nbsp;</span>
+                                                <span ng-bind="status_str[item.status].label"></span>
+                                                <span ng-if="item.status == 2">&nbsp;</span>
+                                                <span class="caret" ng-if="item.status != 2"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu" style="min-width:70px" ng-if="item.status != 2">
+                                                <li>
+                                                    <a href="javascript:void(0);" style="padding: 3px 7px" ng-click="update(item);$event.stopPropagation();">已解决</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </td>
                                 </tr>
                             </table>
                             <!-- angularjs分页 -->

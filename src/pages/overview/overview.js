@@ -37,6 +37,19 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
         $scope.risk_property(); //top 风险资产
         $scope.untreatedAlarm(); //第二排中间未处理告警
         // $scope.change_password(); //test
+        $scope.new_alarm(); //最新告警
+        $scope.test();
+    };
+    $scope.test = function () {
+        $http({
+            method: 'get',
+            url: './yiiapi/alert/threat-type'
+        }).success(function (data) {
+            // console.log(data);
+
+        }).error(function (err) {
+            console.log(err);
+        })
     };
     // 第一排 左边图表--系统状态
     $scope.sysState = function (params) {
@@ -123,7 +136,6 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
                         }
                     },
                     data: [11],
-
                     itemStyle: {
                         normal: {
                             color: 'rgba(131,186,174,1)'
@@ -235,20 +247,20 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
                 top: 15,
                 bottom: 25
             },
-            tooltip: {
-                trigger: 'axis',
-                axisPointer: {
-                    lineStyle: {
-                        color: '#ddd'
-                    }
-                },
-                backgroundColor: 'rgba(255,255,255,1)',
-                padding: [5, 10],
-                textStyle: {
-                    color: '#7588E4',
-                },
-                extraCssText: 'box-shadow: 0 0 5px rgba(0,0,0,0.3)'
-            },
+            // tooltip: {
+            //     trigger: 'axis',
+            //     axisPointer: {
+            //         lineStyle: {
+            //             color: '#ddd'
+            //         }
+            //     },
+            //     backgroundColor: 'rgba(255,255,255,1)',
+            //     padding: [5, 10],
+            //     textStyle: {
+            //         color: '#7588E4',
+            //     },
+            //     extraCssText: 'box-shadow: 0 0 5px rgba(0,0,0,0.3)'
+            // },
             xAxis: {
                 type: 'category',
                 data: ['05-23', '05-24', '05-25', '05-26', '05-27', '05-28', '05-29'],
@@ -315,83 +327,197 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
     };
     // 第一排右边 图表 协议统计
     $scope.safetyequipment = function (params) {
-
         var myChart = echarts.init(document.getElementById('safetyequipment'));
         var option = {
+            grid: {
+                left: 40,
+                right: 20,
+                top: 15,
+                bottom: 85
+            },
             tooltip: {
                 trigger: 'axis',
-                axisPointer: { // 坐标轴指示器，坐标轴触发有效
-                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-                }
+                axisPointer: {
+                    lineStyle: {
+                        color: '#ddd'
+                    }
+                },
+                backgroundColor: 'rgba(255,255,255,1)',
+                padding: [5, 10],
+                textStyle: {
+                    color: '#7588E4',
+                },
+                extraCssText: 'box-shadow: 0 0 5px rgba(0,0,0,0.3)'
             },
-            grid: {
-                left: '3%',
-                right: '4%',
-                bottom: '3%',
-                top: '4%',
-                containLabel: true
+            legend: {
+                bottom: 20,
+                left: 20,
+                orient: 'horizontal',
+                selected: {
+                    // 选中'系列1'
+                    'HTTP': true,
+                    // 不选中'系列2'
+                    'HTTPS': true,
+                    'SSH': false,
+
+                },
+                data: ['HTTP', 'HTTPS', 'SSH']
             },
             xAxis: {
-                type: 'value',
-                axisTick: {
-                    show: false
-                },
-            },
-            yAxis: {
                 type: 'category',
-                data: ['SSH', 'TLS', 'IPSec', 'Telnet', 'SSH', 'SET'],
-                axisTick: {
-                    show: false
-                },
-
-            },
-            series: [{
-                    name: '直接访问',
-                    type: 'bar',
-                    stack: '总量',
-                    data: [320, 302, 301, 334, 390, 330],
-                    barWidth: 20,
-                    itemStyle: {
-                        normal: {
-                            barBorderRadius: [4, 0, 0, 4], //柱形图圆角，初始化效果
-                        }
+                data: ['00:00', '2:00', '4:00', '6:00', '8:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', "22:00"],
+                boundaryGap: false,
+                splitLine: {
+                    show: false,
+                    interval: 'auto',
+                    lineStyle: {
+                        color: ['#D4DFF5']
                     }
                 },
-                {
-                    name: '邮件营销',
-                    type: 'bar',
-                    stack: '总量',
-                    data: [120, 132, 101, 134, 90, 230]
+                axisTick: {
+                    show: false
                 },
-                {
-                    name: '联盟广告',
-                    type: 'bar',
-                    stack: '总量',
-                    data: [220, 182, 191, 234, 290, 330]
+                axisLine: {
+                    lineStyle: {
+                        color: '#666'
+                    }
                 },
-                {
-                    name: '视频广告',
-                    type: 'bar',
-                    stack: '总量',
-                    data: [150, 212, 201, 154, 190, 330]
-                },
-                {
-                    name: '搜索引擎',
-                    type: 'bar',
-                    stack: '总量',
-                    data: [820, 832, 901, 934, 1290, 1330],
-                    itemStyle: {
-                        normal: {
-                            barBorderRadius: [0, 4, 4, 0], //柱形图圆角，初始化效果
-                        }
+                axisLabel: {
+                    margin: 10,
+                    textStyle: {
+                        fontSize: 10
                     }
                 }
-            ]
+            },
+            yAxis: {
+                type: 'value',
+                splitLine: {
+                    lineStyle: {
+                        color: ['#D4DFF5']
+                    }
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: '#666'
+                    }
+                },
+                axisLabel: {
+                    margin: 10,
+                    textStyle: {
+                        fontSize: 10
+                    }
+                }
+            },
+            series: [{
+                name: 'HTTP',
+                type: 'line',
+                smooth: true,
+                showSymbol: false,
+                symbol: 'circle',
+                symbolSize: 6,
+                data: ['1200', '1400', '1008', '1411', '1026', '1288', '1300', '800', '1100', '1000', '1118', '1322'],
+                areaStyle: {
+                    normal: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                            offset: 0,
+                            color: 'rgba(199, 237, 250,0.5)'
+                        }, {
+                            offset: 1,
+                            color: 'rgba(199, 237, 250,0.2)'
+                        }], false)
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        color: '#f7b851'
+                    }
+                },
+                lineStyle: {
+                    normal: {
+                        width: 3
+                    }
+                }
+            }, {
+                name: 'HTTPS',
+                type: 'line',
+                smooth: true,
+                showSymbol: false,
+                symbol: 'circle',
+                symbolSize: 6,
+                data: ['1200', '1400', '808', '811', '626', '488', '1600', '1100', '500', '300', '1998', '822'],
+                areaStyle: {
+                    normal: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                            offset: 0,
+                            color: 'rgba(216, 244, 247,1)'
+                        }, {
+                            offset: 1,
+                            color: 'rgba(216, 244, 247,1)'
+                        }], false)
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        color: '#58c8da'
+                    }
+                },
+                lineStyle: {
+                    normal: {
+                        width: 3
+                    }
+                }
+            }, {
+                name: 'SSH',
+                type: 'line',
+                smooth: true,
+                showSymbol: false,
+                symbol: 'circle',
+                symbolSize: 6,
+                data: ['488', '1600', '1200', '1400', '626', '1100', '500', '300', '1998', '822', '808', '811'],
+                areaStyle: {
+                    normal: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                            offset: 0,
+                            color: $scope.colorType.rgbaHigh8
+                        }, {
+                            offset: 1,
+                            color: $scope.colorType.rgbaHigh2
+                        }], false)
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        color: $scope.colorType.rgbaHigh10
+                    }
+                },
+                lineStyle: {
+                    normal: {
+                        width: 3
+                    }
+                }
+            }]
         };
         myChart.setOption(option);
     };
     // 第二排 右边图表 - 威胁类型
     $scope.threaten_type = function (params) {
+        $http({
+            method: 'get',
+            url: './yiiapi/alert/threat-type'
+        }).success(function (data) {
+            // console.log(data);
+            if (data.status == 0) {
+                $scope.threaten_type={};
+                $scope.threaten_type.type = [];
+                $scope.threaten_type.num = [];
+                angular.forEach(data.data,function(item){
+                    $scope.threaten_type.type.push(item.alert_type);
+                    $scope.threaten_type.num.push(item.total_count);
+                })
+
         var myChart = echarts.init(document.getElementById('threaten_type'));
         var option = {
             tooltip: {
@@ -415,256 +541,249 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
             },
             yAxis: {
                 type: 'category',
-                data: ['可疑IP', '可疑文件', '可疑URL', '可疑行为', '其他'],
+                data:  $scope.threaten_type.type,
                 axisTick: {
                     show: false
                 },
 
             },
             series: [{
-                    name: '直接访问',
+                    name: '',
                     type: 'bar',
                     stack: '总量',
-                    data: [320, 302, 301, 334, 330],
+                    data:  $scope.threaten_type.num,
                     barWidth: 20,
                     itemStyle: {
                         normal: {
-                            barBorderRadius: [4, 0, 0, 4], //柱形图圆角，初始化效果
-                        }
-                    }
-                },
-                {
-                    name: '邮件营销',
-                    type: 'bar',
-                    stack: '总量',
-                    data: [120, 132, 134, 190, 230]
-                },
-                {
-                    name: '联盟广告',
-                    type: 'bar',
-                    stack: '总量',
-                    data: [182, 191, 234, 190, 330]
-                },
-                {
-                    name: '视频广告',
-                    type: 'bar',
-                    stack: '总量',
-                    data: [100, 212, 201, 154, 330]
-                },
-                {
-                    name: '搜索引擎',
-                    type: 'bar',
-                    stack: '总量',
-                    data: [820, 901, 934, 1290, 330],
-                    itemStyle: {
-                        normal: {
-                            barBorderRadius: [0, 4, 4, 0], //柱形图圆角，初始化效果
+                            barBorderRadius: [4, 4, 4, 4], //柱形图圆角，初始化效果
                         }
                     }
                 }
             ]
         };
         myChart.setOption(option);
+            }
+        }).error(function (err) {
+            console.log(err);
+        })
+
+
     };
     // 第二排 中间 -- 未处理告警
     $scope.untreatedAlarm = function (params) {
+        $http({
+            method: 'get',
+            url: './yiiapi/alert/untreated-alarm-type'
+        }).success(function (data) {
+            // console.log(data);
+            if (data.status == 0) {
+                $scope.untreated_alarm = {};
+                angular.forEach(data.data, function (item, index) {
+                    if (item.degree == 'low') {
+                        $scope.untreated_alarm.low = item.total_count
+                    }
+                    if (item.degree == 'medium') {
+                        $scope.untreated_alarm.medium = item.total_count
+                    }
+                    if (item.degree == 'high') {
+                        $scope.untreated_alarm.high = item.total_count
+                    }
+                })
+                var myChart = echarts.init(document.getElementById('untreatedalarm'));
+                var option = {
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: "{b}:{c}({d}%)"
+                    },
+                    grid: {
+                        show: true,
+                        left: 'center',
+                        right: 'center',
+                        top: 'center',
+                        bottom: 'center'
+                    },
+                    series: [{
+                        name: '未处理告警',
+                        type: 'pie',
+                        radius: '50%',
+                        center: ['50%', '50%'],
+                        hoverAnimation: false, //是否开启 hover 在扇区上的放大动画效果。
+                        hoverOffset: 0, //高亮扇区的偏移距离。
+                        selectedMode: 'single',
+                        data: [{
+                                value: $scope.untreated_alarm.high,
+                                name: '高危',
+                                itemStyle: {
+                                    normal: {
+                                        color: $scope.colorType.high
+                                    }
+                                }
+                            },
+                            {
+                                value: $scope.untreated_alarm.medium,
+                                name: '中危',
+                                itemStyle: {
+                                    normal: {
+                                        color: $scope.colorType.mid
+                                    }
+                                }
+                            },
+                            {
+                                value: $scope.untreated_alarm.low,
+                                name: '低危',
+                                itemStyle: {
+                                    normal: {
+                                        color: $scope.colorType.low
+                                    }
+                                }
+                            }
+                        ],
+                        itemStyle: {
+                            normal: {
+                                label: {
+                                    show: true,
+                                    formatter: '{b} : {c} \n ({d}%)'
+                                },
+                                labelLine: {
+                                    show: true
+                                }
+                            },
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }]
+                };
+                myChart.setOption(option);
+            }
+        }).error(function (err) {
+            console.log(err);
+        })
         // $http({
         //     method: 'GET',
         //     url: '/alert/untreated-alarm-type'
         // }).then(function (data, status, headers, config) {
-        var myChart = echarts.init(document.getElementById('untreatedalarm'));
-        var option = {
-            tooltip: {
-                trigger: 'item',
-                formatter: "{b}:{c}({d}%)"
-            },
-            grid: {
-                show: true,
-                left: 'center',
-                right: 'center',
-                top: 'center',
-                bottom: 'center'
-            },
-            series: [{
-                name: '未处理告警',
-                type: 'pie',
-                radius: '50%',
-                center: ['50%', '50%'],
-                hoverAnimation: false, //是否开启 hover 在扇区上的放大动画效果。
-                hoverOffset: 0, //高亮扇区的偏移距离。
-                selectedMode: 'single',
-                data: [{
-                        value: 123,
-                        name: '高危',
-                        itemStyle: {
-                            normal: {
-                                color: $scope.colorType.high
-                            }
-                        }
-                    },
-                    {
-                        value: 231,
-                        name: '中危',
-                        itemStyle: {
-                            normal: {
-                                color: $scope.colorType.mid
-                            }
-                        }
-                    },
-                    {
-                        value: 323,
-                        name: '低危',
-                        itemStyle: {
-                            normal: {
-                                color: $scope.colorType.low
-                            }
-                        }
-                    }
-                ],
-                itemStyle: {
-                    normal: {
-                        label: {
-                            show: true,
-                            formatter: '{b} : {c} \n ({d}%)'
-                        },
-                        labelLine: {
-                            show: true
-                        }
-                    },
-                    emphasis: {
-                        shadowBlur: 10,
-                        shadowOffsetX: 0,
-                        shadowColor: 'rgba(0, 0, 0, 0.5)'
-                    }
-                }
-            }]
-        };
-        myChart.setOption(option);
-        // }, function (error, status, headers, config) {
-        //     console.log(error);
-        // });
+
+
     };
     // 第二排左边边图表 -  告警数量
     $scope.alarmNum = function (params) {
-        var myChart = echarts.init(document.getElementById('alarm_number'));
-        var option = {
-            tooltip: {
-                trigger: 'axis',
-                axisPointer: { // 坐标轴指示器，坐标轴触发有效
-                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-                }
-            },
-            grid: {
-                left: '3%',
-                right: '4%',
-                bottom: '3%',
-                top: '5%',
-                containLabel: true
-            },
-            xAxis: {
-                type: 'category',
-                data: ['05-25', '05-26', '05-27', '05-28', '05-29', '05-30', '05-31'],
-                axisTick: {
-                    show: false
-                },
-                axisLabel: {
-                    margin: 5,
-                    textStyle: {
-                        fontSize: 10
-                    }
-                }
-            },
-            yAxis: [{
-                type: 'value',
-                axisTick: {
-                    show: false
-                },
-                axisLabel: {
-                    margin: 5,
-                    textStyle: {
-                        fontSize: 10
-                    }
-                }
-            }],
-            series: [{
-                    name: '高危',
-                    type: 'bar',
-                    barWidth: 20,
-                    stack: '搜索引擎',
-                    itemStyle: {
-                        normal: {
-                            barBorderRadius: [0, 0, 4, 4], //柱形图圆角，初始化效果
-                            color: $scope.colorType.high
+        $http({
+            method: 'get',
+            url: './yiiapi/alert/get-last7-days-alarm'
+        }).success(function (data) {
+            if (data.status == 0) {
+                $scope.last7_alarm = {};
+                $scope.last7_alarm.date = [];
+                $scope.last7_alarm.high = [];
+                $scope.last7_alarm.low = [];
+                $scope.last7_alarm.medium = [];
+                angular.forEach(data.data, function (item, index) {
+                    $scope.last7_alarm.date.push(item.statistics_time);
+                    $scope.last7_alarm.high.push(item.alert_count_details.high);
+                    $scope.last7_alarm.low.push(item.alert_count_details.low);
+                    $scope.last7_alarm.medium.push(item.alert_count_details.medium);
+                });
+                var myChart = echarts.init(document.getElementById('alarm_number'));
+                var option = {
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                            type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
                         }
                     },
-                    data: [13, 23, 32, 32, 44, 34, 21]
-                },
-                {
-                    name: '中危',
-                    type: 'bar',
-                    stack: '搜索引擎',
-                    itemStyle: {
-                        normal: {
-                            color: $scope.colorType.mid
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        top: '5%',
+                        containLabel: true
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: $scope.last7_alarm.date,
+                        axisTick: {
+                            show: false
+                        },
+                        axisLabel: {
+                            margin: 5,
+                            textStyle: {
+                                fontSize: 10
+                            }
                         }
                     },
-                    data: [22, 24, 15, 36, 13, 23, 34]
-                },
-                {
-                    name: '低危',
-                    type: 'bar',
-                    stack: '搜索引擎',
-                    itemStyle: {
-                        normal: {
-                            barBorderRadius: [4, 4, 0, 0], //柱形图圆角，初始化效果
-                            color: $scope.colorType.low
+                    yAxis: [{
+                        type: 'value',
+                        axisTick: {
+                            show: false
+                        },
+                        axisLabel: {
+                            margin: 5,
+                            textStyle: {
+                                fontSize: 10
+                            }
                         }
-                    },
-                    data: [21, 22, 24, 15, 36, 18, 27]
-                }
-            ]
-        };
-        myChart.setOption(option);
+                    }],
+                    series: [{
+                            name: '高危',
+                            type: 'bar',
+                            barWidth: 20,
+                            stack: '搜索引擎',
+                            itemStyle: {
+                                normal: {
+                                    barBorderRadius: [0, 0, 4, 4], //柱形图圆角，初始化效果
+                                    color: $scope.colorType.high
+                                }
+                            },
+                            data: $scope.last7_alarm.high
+                        },
+                        {
+                            name: '中危',
+                            type: 'bar',
+                            stack: '搜索引擎',
+                            itemStyle: {
+                                normal: {
+                                    color: $scope.colorType.mid
+                                }
+                            },
+                            data: $scope.last7_alarm.medium
+                        },
+                        {
+                            name: '低危',
+                            type: 'bar',
+                            stack: '搜索引擎',
+                            itemStyle: {
+                                normal: {
+                                    barBorderRadius: [4, 4, 0, 0], //柱形图圆角，初始化效果
+                                    color: $scope.colorType.low
+                                }
+                            },
+                            data: $scope.last7_alarm.low
+                        }
+                    ]
+                };
+                myChart.setOption(option);
+            }
+        }).error(function (err) {
+            console.log(err);
+        })
     };
     // 第三排
     // top5威胁
     $scope.top_threaten = function () {
-        $scope.top_threaten_data = [{
-            client_ip: '192.1.32.132',
-            style: {
-                width: '90%',
-                borderRadius: '5px',
-                backgroundColor: $scope.colorType.rgbaHigh8
+        $http({
+            method: 'get',
+            url: './yiiapi/alert/threat-type'
+        }).success(function (data) {
+            // console.log(data);
+            if (data.status == 0) {
+                $scope.threat_type = data.data
             }
-        }, {
-            client_ip: '12.1.32.322',
-            style: {
-                width: '78%',
-                borderRadius: '5px',
-                backgroundColor: 'rgba(254,127,0,.8)'
-            }
-        }, {
-            client_ip: '10.1.32.232',
-            style: {
-                width: '70%',
-                borderRadius: '5px',
-                backgroundColor: '#FE9B20'
-            }
-        }, {
-            client_ip: '192.10.23.32',
-            style: {
-                width: '66%',
-                borderRadius: '5px',
-                backgroundColor: '#FEBB11'
-            }
-        }, {
-            client_ip: '122.1.32.32',
-            style: {
-                width: '54%',
-                borderRadius: '5px',
-                backgroundColor: '#FECC01'
-            }
-        }]
+        }).error(function (err) {
+            console.log(err);
+        })
     }
     //top风险资产
     $scope.risk_property = function () {
@@ -706,7 +825,29 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
         }]
     }
     //最新告警
-
+$scope.new_alarm = function(){
+    $scope.params_data = {
+        start_time: moment().subtract(365, 'days').unix(),
+        end_time:  moment().unix(),
+        src_ip: '',
+        dest_ip: '',
+        status: '',
+        page: 1,
+        rows: '5'
+    };
+    $http({
+        method: 'get',
+        url: './yiiapi/alert/list',
+        params: $scope.params_data,
+    }).success(function (data) {
+        // console.log(data);
+        if (data.status == 0) {
+            $scope.new_alarm_data = data.data.data;
+        }
+    }).error(function (err) {
+        console.log(err);
+    })
+}
 
     // 第四排 ——流量统计
 
