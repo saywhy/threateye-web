@@ -2,6 +2,7 @@
 app.controller('Set_ruleController', ['$scope', '$http', '$state', function ($scope, $http, $state) {
     // 初始化
     
+    
     $scope.init = function (params) {
         $scope.selected = 0;
         $scope.tab_data =[{

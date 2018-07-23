@@ -4,8 +4,12 @@ app.controller('Safety_iocController', ['$scope', '$http', '$state', function ($
     // 初始化
     $scope.init = function (params) {
         console.log('Safety_iocController');
-
-      
+        $("#avatval").click(function(){
+            $("input[type='file']").trigger('click');
+        });
+        $("input[type='file']").change(function(){
+            $("#avatval").val($(this).val());
+        });
     };
     // 下载模版
     $scope.download_temp = function () {
@@ -25,14 +29,17 @@ app.controller('Safety_iocController', ['$scope', '$http', '$state', function ($
     };
     // 上传文件
     $scope.uploadPic = function () {
+        console.log(1);
         var form = document.getElementById('upload'),
             formData = new FormData(form);
+            console.log(form);
+            console.log(formData);
         $.ajax({
             url: "./yiiapi/investigate/upload-file",
             type: "post",
             data: formData,
-            processData: false,
-            contentType: false,
+            processData: false,  // 告诉jQuery不要去处理发送的数据
+             contentType: false,   // 告诉jQuery不要去设置Content-Type请求头
             success: function (res) {
                 if (res) {
                     // alert("上传成功！");

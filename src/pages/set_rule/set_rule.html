@@ -4,7 +4,6 @@
         <div class="col-md-12 ">
             <div class="set_content">
                 <div class="row">
-                    
                     <div class="col-md-12">
                         <div class="box box-solid">
                             <div class="box-header with-border" style="border:0">
@@ -18,7 +17,7 @@
                                 </ul>
                             </div>
                             <div id="myTabContent" class="tab-content" ng-if="selected == $index" ng-repeat="item in tab_data">
-                                    <div style="cursor: pointer;" ng-if="selected == 0">
+                                <div style="cursor: pointer;" ng-if="selected == 0">
                                     <div style="margin:5px 20px">
                                         <div class="form-group" style="margin-bottom:5px 20px">
                                             <label for="InputFile"></label>
@@ -28,6 +27,14 @@
                                             <span ng-bind="sensorVersion.FileName" style="font-size: 14px;" class="ng-binding"></span>
                                             <p class="help-block">上传的文件请按照模板的格式</p>
                                         </div>
+                                    </div>
+                                </div>
+                                <div style="cursor: pointer;" ng-if="selected == 1">
+                                    guizeku
+                                </div>
+                                <div style="cursor: pointer;" ng-if="selected == 2">
+                                    <div style="margin:5px 20px">
+                                        gui
                                     </div>
                                 </div>
                             </div>

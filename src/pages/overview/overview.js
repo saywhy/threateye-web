@@ -388,36 +388,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
                 }
             ]
         };
-
         myChart.setOption(option);
-
-        setTimeout(function(){
-            console.log( myChart.getDataURL());
-        },1000)
-     
-        function getFullCanvasDataURL(divId) {
-            //将第一个画布作为基准。
-            var baseCanvas = $("#" + divId).find("canvas").first()[0];
-            if (!baseCanvas) {
-                return false;
-            };
-            var width = baseCanvas.width;
-            var height = baseCanvas.height;
-            var ctx = baseCanvas.getContext("2d");
-            //遍历，将后续的画布添加到在第一个上
-            $("#" + divId).find("canvas").each(function (i, canvasObj) {
-                if (i > 0) {
-                    var canvasTmp = $(canvasObj)[0];
-                    ctx.drawImage(canvasTmp, 0, 0, width, height);
-                }
-            });
-            //获取base64位的url
-            return baseCanvas.toDataURL();
-        }
-        // getCanvasDataURL(myChart) 
-        console.log(1111)
-        console.log(getFullCanvasDataURL('safetyequipment'));
-
     };
     // 第二排 右边图表 - 威胁类型
     $scope.threaten_type = function (params) {
@@ -655,8 +626,6 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
         };
         myChart.setOption(option);
     };
-
-
     // 第三排
     // top5威胁
     $scope.top_threaten = function () {

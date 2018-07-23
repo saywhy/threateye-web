@@ -26,7 +26,6 @@ app.controller('Safety_directionController', ['$scope', '$http', '$state', funct
             endTime: moment().unix()
         };
         $scope.timerange(); // 时间插件初始化
-
         // 假数据
         $scope.pages = [{
                 time: '2018-07-10 10:00:00 - 2018-07-14 10:00:00 ',

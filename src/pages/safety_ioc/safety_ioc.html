@@ -1,6 +1,4 @@
 <div class="safety_ioc" ng-controller="Safety_iocController" ng-init="app.settings.container = false;" ng-cloak>
-
-    <span id="aaa">ssss</span>
     <div class="row">
         <div class="col-md-12">
             <div class="nav-tabs-custom" style="margin-bottom: 0px;">
@@ -11,20 +9,31 @@
                     </li>
                 </ul>
                 <div style="margin:5px 20px">
-                    <form id="upload" enctype="multipart/form-data" method="post">
+            
+                    <div class="input-file">
+                        <form id="upload" method="post" enctype="multipart/form-data">
+                            <input type="text" id="avatval" placeholder="请选择文件···" readonly="readonly" style="vertical-align: middle;" />
+                            <input type="file" name="file" id="avatar" />
+                            <a href="javascript:void(0);" ng-click="uploadPic()" class="button-selectimg" id="avatsel1">上传文件</a>
+                            <!-- <span>上传成功！</span> -->
+                        </form>
+                    </div>
+                        
+                    <!-- <form id="upload" enctype="multipart/form-data" method="post">
                         <input type="file" name="file" id="pic" />
                         <input type="button" value="提交" ng-click="uploadPic()" />
                         <span class="showUrl"></span>
                         <img src="" class="showPic" alt="">
-                    </form>
-                    <div class="form-group" style="margin-bottom:5px 20px">
+                    </form> -->
+
+                    <!-- <div class="form-group" style="margin-bottom:5px 20px">
                         <label for="InputFile">上传IOC</label>
                         <input type="file" id="InputFile" style="display: none;" accept="application/x-msdownload" data-url="addversion" name="file">
                         <br>
                         <label class="glyphicon glyphicon-plus-sign text-green" style="font-size: 48px" for="InputFile"></label>
                         <span ng-bind="sensorVersion.FileName" style="font-size: 14px;" class="ng-binding"></span>
 
-                    </div>
+                    </div> -->
                 </div>
                 <div style="margin:20px">
                     <a ng-click="download_temp()"> 下载模版</a>
