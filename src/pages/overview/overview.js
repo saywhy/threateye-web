@@ -1,6 +1,4 @@
 'use strict';
-
-/* Controllers */
 // overview controller
 app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', function ($scope, $http, $state, $modal) {
     // 初始化
@@ -236,6 +234,20 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
     };
     // 流量
     $scope.flowTotal = function (params) {
+        $http({
+            method: 'GET',
+            url: './yiiapi/alert/get-last24-file'
+        }).success(function (data) {
+            console.log(data);
+            if (data.status == 0) {
+                zeroModal.success('删除成功！');
+            }
+            if (data.status == 1) {
+                zeroModal.error(data.msg);
+            }
+        }).error(function (err) {
+            console.log(err);
+        })
         var myChart = echarts.init(document.getElementById('flowtotal'));
         var option = {
             grid: {
@@ -244,20 +256,6 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
                 top: 15,
                 bottom: 25
             },
-            // tooltip: {
-            //     trigger: 'axis',
-            //     axisPointer: {
-            //         lineStyle: {
-            //             color: '#ddd'
-            //         }
-            //     },
-            //     backgroundColor: 'rgba(255,255,255,1)',
-            //     padding: [5, 10],
-            //     textStyle: {
-            //         color: '#7588E4',
-            //     },
-            //     extraCssText: 'box-shadow: 0 0 5px rgba(0,0,0,0.3)'
-            // },
             xAxis: {
                 type: 'category',
                 data: ['05-23', '05-24', '05-25', '05-26', '05-27', '05-28', '05-29'],
@@ -324,6 +322,19 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
     };
     // 第一排右边 图表 协议统计
     $scope.safetyequipment = function (params) {
+        $http({
+            method: 'GET',
+            url: './yiiapi/alert/protocol-flow-statistics'
+        }).success(function (data) {
+            console.log(data);
+            if (data.status == 0) {
+            }
+            if (data.status == 1) {
+                zeroModal.error(data.msg);
+            }
+        }).error(function (err) {
+            console.log(err);
+        })
         var myChart = echarts.init(document.getElementById('safetyequipment'));
         var option = {
             grid: {
@@ -756,17 +767,16 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
             console.log(err);
         })
     };
-
     // 第三排
     // top5威胁
     $scope.top_threaten = function () {
         $http({
             method: 'get',
-            url: './yiiapi/alert/threat-type'
+            url: './yiiapi/alert/threat-top5'
         }).success(function (data) {
             // console.log(data);
             if (data.status == 0) {
-                $scope.threat_type = data.data
+                $scope.top_threaten_data = data.data
             }
         }).error(function (err) {
             console.log(err);
@@ -774,42 +784,52 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
     };
     //top风险资产
     $scope.risk_property = function () {
-        $scope.risk_property_data = [{
-            client_ip: '192.1.32.132',
-            style: {
-                width: '90%',
-                borderRadius: '5px',
-                backgroundColor: $scope.colorType.rgbaHigh8
+        $http({
+            method: 'get',
+            url: './yiiapi//alert/risk-asset-top5'
+        }).success(function (data) {
+            // console.log(data);
+            if (data.status == 0) {
+                $scope.risk_property_data = [{
+                    client_ip: data.data[0].asset_ip,
+                    style: {
+                        width: data.data[0].count + '%',
+                        borderRadius: '5px',
+                        backgroundColor: $scope.colorType.rgbaHigh8
+                    }
+                }, {
+                    client_ip: data.data[1].asset_ip,
+                    style: {
+                        width: data.data[1].count + '%',
+                        borderRadius: '5px',
+                        backgroundColor: 'rgba(254,127,0,.8)'
+                    }
+                }, {
+                    client_ip: data.data[2].asset_ip,
+                    style: {
+                        width: data.data[2].count + '%',
+                        borderRadius: '5px',
+                        backgroundColor: '#FE9B20'
+                    }
+                }, {
+                    client_ip: data.data[3].asset_ip,
+                    style: {
+                        width: data.data[3].count + '%',
+                        borderRadius: '5px',
+                        backgroundColor: '#FEBB11'
+                    }
+                }, {
+                    client_ip: data.data[4].asset_ip,
+                    style: {
+                        width: data.data[4].count + '%',
+                        borderRadius: '5px',
+                        backgroundColor: '#FECC01'
+                    }
+                }]
             }
-        }, {
-            client_ip: '12.1.32.322',
-            style: {
-                width: '78%',
-                borderRadius: '5px',
-                backgroundColor: 'rgba(254,127,0,.8)'
-            }
-        }, {
-            client_ip: '10.1.32.232',
-            style: {
-                width: '70%',
-                borderRadius: '5px',
-                backgroundColor: '#FE9B20'
-            }
-        }, {
-            client_ip: '192.10.23.32',
-            style: {
-                width: '66%',
-                borderRadius: '5px',
-                backgroundColor: '#FEBB11'
-            }
-        }, {
-            client_ip: '122.1.32.32',
-            style: {
-                width: '54%',
-                borderRadius: '5px',
-                backgroundColor: '#FECC01'
-            }
-        }]
+        }).error(function (err) {
+            console.log(err);
+        })
     };
     //最新告警
     $scope.new_alarm = function () {
@@ -835,11 +855,9 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
             console.log(err);
         })
     };
-
     // 第四排 ——流量统计
     // 弹窗内容拓扑图
     $scope.change_password = function (size) {
-        console.log(6666);
         $scope.showpop = true; //  显示弹窗
         setTimeout(function () {
             $scope.graph_echart();

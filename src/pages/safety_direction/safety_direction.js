@@ -1,5 +1,3 @@
-
-
 'use strict';
 /* Controllers */
 app.controller('Safety_directionController', ['$scope', '$http', '$state', function ($scope, $http, $state) {
@@ -31,23 +29,23 @@ app.controller('Safety_directionController', ['$scope', '$http', '$state', funct
                 time: '2018-07-10 10:00:00 - 2018-07-14 10:00:00 ',
                 source_ip: '201.199.29.1',
                 dns_ip: '201.199.29.1',
-                host: 'ftp',
+                host: 'ftp'
             },
             {
                 time: '2018-07-16 10:00:00 - 2018-07-19 10:00:00 ',
                 source_ip: '201.199.29.1',
                 dns_ip: '201.199.29.1',
-                host: 'https',
+                host: 'https'
             }, {
                 time: '2018-07-11 10:00:00 - 2018-07-12 10:00:00 ',
                 source_ip: '201.199.29.1',
                 dns_ip: '201.199.29.1',
-                host: 'http',
+                host: 'http'
             }, {
                 time: '2018-07-13 10:00:00 - 2018-07-15 10:00:00 ',
                 source_ip: '201.199.29.1',
                 dns_ip: '201.199.29.1',
-                host: 'smtp',
+                host: 'smtp'
             }
         ]
     };

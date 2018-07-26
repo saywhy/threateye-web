@@ -18,7 +18,7 @@
                             <input type="text" class="form-control item_input" id="net_ip" placeholder="" ng-model="net_ip_mask">
                         </div>
                         <div class="col-sm-1">
-                            <button class="form-control btn btn-primary" style="max-width: 80px;" ng-click="keep()">添&nbsp;加</button>
+                            <button class="form-control btn btn-primary" style="max-width: 80px;" ng-click="add()">添&nbsp;加</button>
                         </div>
                     </div>
                 </div>
@@ -31,23 +31,13 @@
                                         <th style="width:40px">序号</th>
                                         <th>IP段</th>
                                         <th>掩码</th>
-                                        <th>更新时间</th>
+                                        <!-- <th>更新时间</th> -->
                                         <th>操作</th>
                                     </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>f34a9d6df5c26f311c6cb3cc5fbd4186</td>
-                                        <td>2018-05-08 10:32</td>
-                                        <td>2018-05-08 10:47</td>
-                                        <td class="cursor">&nbsp;&nbsp;
-                                            <img src="../src/images/icos/delate.png" ng-click="del(item.id)" width="16" height="16" alt="">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>f34a9d6df5c26f311c6cb3cc5fbd4186</td>
-                                        <td>2018-05-08 10:32</td>
-                                        <td>2018-05-08 10:47</td>
+                                    <tr ng-repeat="item in pages.data">
+                                        <td ng-bind="$index+1">1</td>
+                                        <td ng-bind="item.ip_segment"></td>
+                                        <td ng-bind="item.net_mask"></td>
                                         <td class="cursor">&nbsp;&nbsp;
                                             <img src="../src/images/icos/delate.png" ng-click="del(item.id)" width="16" height="16" alt="">
                                         </td>
@@ -56,41 +46,41 @@
                                 <!-- angularjs分页 -->
                                 <div style="border-top: 1px solid #f4f4f4;padding: 10px;">
                                     <em>共有
-                                        <span ng-bind="pages0.count"></span>条</em>
+                                        <span ng-bind="pages.count"></span>条</em>
                                     <!-- angularjs分页 -->
                                     <ul class="pagination pagination-sm no-margin pull-right ng-cloak">
                                         <li>
-                                            <a href="javascript:void(0);" ng-click="getPage0(pages0.pageNow-1)" ng-if="pages0.pageNow>1">上一页</a>
+                                            <a href="javascript:void(0);" ng-click="getPage(pages.pageNow-1)" ng-if="pages.pageNow>1">上一页</a>
                                         </li>
                                         <li>
-                                            <a href="javascript:void(0);" ng-click="getPage0(1)" ng-if="pages0.pageNow>1">1</a>
+                                            <a href="javascript:void(0);" ng-click="getPage(1)" ng-if="pages.pageNow>1">1</a>
                                         </li>
                                         <li>
-                                            <a href="javascript:void(0);" ng-if="pages0.pageNow>4">...</a>
+                                            <a href="javascript:void(0);" ng-if="pages.pageNow>4">...</a>
                                         </li>
                                         <li>
-                                            <a href="javascript:void(0);" ng-click="getPage0(pages0.pageNow-2)" ng-bind="pages0.pageNow-2" ng-if="pages0.pageNow>3"></a>
+                                            <a href="javascript:void(0);" ng-click="getPage0(pages.pageNow-2)" ng-bind="pages.pageNow-2" ng-if="pages.pageNow>3"></a>
                                         </li>
                                         <li>
-                                            <a href="javascript:void(0);" ng-click="getPage0(pages0.pageNow-1)" ng-bind="pages0.pageNow-1" ng-if="pages0.pageNow>2"></a>
+                                            <a href="javascript:void(0);" ng-click="getPage(pages.pageNow-1)" ng-bind="pages.pageNow-1" ng-if="pages.pageNow>2"></a>
                                         </li>
                                         <li class="active">
-                                            <a href="javascript:void(0);" ng-bind="pages0.pageNow"></a>
+                                            <a href="javascript:void(0);" ng-bind="pages.pageNow"></a>
                                         </li>
                                         <li>
-                                            <a href="javascript:void(0);" ng-click="getPage0(pages0.pageNow+1)" ng-bind="pages0.pageNow+1" ng-if="pages0.pageNow<pages0.maxPage-1"></a>
+                                            <a href="javascript:void(0);" ng-click="getPage(pages.pageNow+1)" ng-bind="pages.pageNow+1" ng-if="pages.pageNow<pages.maxPage-1"></a>
                                         </li>
                                         <li>
-                                            <a href="javascript:void(0);" ng-click="getPage0(pages0.pageNow+2)" ng-bind="pages0.pageNow+2" ng-if="pages0.pageNow<pages0.maxPage-2"></a>
+                                            <a href="javascript:void(0);" ng-click="getPage(pages.pageNow+2)" ng-bind="pages.pageNow+2" ng-if="pages.pageNow<pages.maxPage-2"></a>
                                         </li>
                                         <li>
-                                            <a href="javascript:void(0);" ng-if="pages0.pageNow<pages0.maxPage-3">...</a>
+                                            <a href="javascript:void(0);" ng-if="pages.pageNow<pages.maxPage-3">...</a>
                                         </li>
                                         <li>
-                                            <a href="javascript:void(0);" ng-click="getPage0(pages0.maxPage)" ng-bind="pages0.maxPage" ng-if="pages0.pageNow<pages0.maxPage"></a>
+                                            <a href="javascript:void(0);" ng-click="getPage(pages.maxPage)" ng-bind="pages.maxPage" ng-if="pages.pageNow<pages.maxPage"></a>
                                         </li>
                                         <li>
-                                            <a href="javascript:void(0);" ng-click="getPage0(pages0.pageNow+1)" ng-if="pages0.pageNow<pages0.maxPage">下一页</a>
+                                            <a href="javascript:void(0);" ng-click="getPage(pages.pageNow+1)" ng-if="pages.pageNow<pages.maxPage">下一页</a>
                                         </li>
                                     </ul>
                                 </div>

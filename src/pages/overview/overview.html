@@ -68,8 +68,6 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="row equipment-content">
-
-
                     <div class="equipment-right col-md-12">
                         <div id="safetyequipment"></div>
                     </div>
@@ -140,14 +138,14 @@
                     <div class="top5">
                         <table class="table table-striped">
                             <tr>
-                                <th>排名</th>
+                                <th style="width: 40px">排名</th>
                                 <th>威胁</th>
                                 <th>威胁类型</th>
                             </tr>
-                            <tr ng-repeat="(index,item) in threat_type">
+                            <tr ng-repeat="(index,item) in top_threaten_data">
                                 <td ng-bind="index+1">1</td>
                                 <td ng-bind="item.alert_type"></td>
-                                <td ng-bind="item.total_count"></td>
+                                <td ng-bind="item.category"></td>
                             </tr>
                         </table>
                     </div>
@@ -182,7 +180,6 @@
                             </tr>
                         </table>
                     </div>
-
                 </div>
             </div>
         </div>
