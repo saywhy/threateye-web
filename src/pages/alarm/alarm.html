@@ -65,7 +65,7 @@
                                     <td ng-bind="item.dest_ip"></td>
                                     <td ng-bind="item.alert_description"></td>
                                     <td ng-bind="item.application"></td>
-                                    <td >
+                                    <td  class="overflow_alarm">
                                         <div class="btn-group {{(ariaID == item.id)?'open':''}}">
                                             <button type="button" class="btn btn-{{status_str[item.status].css}} btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false"
                                                 ng-click="setAriaID(item,$event);" ng-blur="delAriaID($event);" set-focus>

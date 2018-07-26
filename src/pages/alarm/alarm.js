@@ -63,22 +63,33 @@ app.controller('AlarmController', [
                 console.log(err);
             })
         }
-         // 默认是未解决
-    $scope.selectedName = 0;
-    $scope.setAriaID = function (item, $event) {
-        $event.stopPropagation();
-        if ($scope.ariaID == item.id) {
-            $scope.ariaID = null;
-        } else {
-            $scope.ariaID = item.id;
-        }
-    };
-    $scope.delAriaID = function ($event) {
-        $event.stopPropagation();
-        setTimeout(function () {
-            $scope.ariaID = null;
-        }, 10);
-    };
+        $scope.status_str = [{
+            css: 'success',
+            label: '新告警'
+        }, {
+            css: 'danger',
+            label: '未解决'
+        }, {
+            css: 'default',
+            label: '已解决'
+        }];
+        // 默认是未解决
+        $scope.selectedName = 0;
+        $scope.setAriaID = function (item, $event) {
+            $event.stopPropagation();
+            if ($scope.ariaID == item.id) {
+                $scope.ariaID = null;
+            } else {
+                $scope.ariaID = item.id;
+            }
+        };
+        $scope.delAriaID = function ($event) {
+            $event.stopPropagation();
+            setTimeout(function () {
+                $scope.ariaID = null;
+            }, 10);
+        };
+
         // 搜索按钮
         $scope.search = function () {
             $scope.getPage();
@@ -227,7 +238,6 @@ app.controller('AlarmController', [
                 data: params
             });
         };
-
         $scope.init();
     },
 ]);
