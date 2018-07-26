@@ -86,7 +86,6 @@
                                         </div>
                                         <!-- /.angularjs分页 -->
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -99,19 +98,16 @@
                                             <input class="form-control" ng-model="newUser.username">
                                             <p class="help-block">请填写用户名</p>
                                         </div>
-
                                         <div class=" {{passworderror ? 'has-error':''}}">
                                             <label for="InputVersion">设置密码：</label>
                                             <input type="password" class="form-control" ng-model="newUser.password">
                                             <p class="help-block">请填写8-30位密码,包含大写字母、小写字母、数字、特称字符</p>
                                         </div>
-
                                         <div class="form-group {{repassworderror ? 'has-error':''}}">
                                             <label for="InputVersion">确认密码：</label>
                                             <input type="password" class="form-control" ng-model="newUser.repassword">
                                             <p class="help-block" ng-bind="repassworderror ? '密码不一致' : '　'"></p>
                                         </div>
-
                                         <div>
                                             <label for="InputVersion">角色：</label>
                                             <!-- <input name='UserRole' type='radio' id="isshare" ng-checked="newUser.role == 'share'" ng-click="newUser.role = 'share';" style="margin: 4px 4px 4px 15px" /> -->
@@ -127,26 +123,23 @@
                                 </form>
                             </div>
                             <div id="resetPassword">
-                                    <div class="box-body">
-                                        <div class=" {{resetUser_passworderror ? 'has-error':''}}">
-                                            <label for="InputVersion">设置密码：</label>
-                                            <input type="password" class="form-control" ng-model="resetUser.password">
-                                            <p class="help-block">请填写8-30位密码,包含大写字母、小写字母、数字、特称字符</p>
-                                        </div>
-
-                                        <div class=" {{resetUser_repassworderror ? 'has-error':''}}">
-                                            <label for="InputVersion">确认密码：</label>
-                                            <input type="password" class="form-control" ng-model="resetUser.repassword">
-                                            <p class="help-block" ng-bind="resetUser_repassworderror ? '密码不一致' : '　'"></p>
-                                        </div>
+                                <div class="box-body">
+                                    <div class=" {{resetUser_passworderror ? 'has-error':''}}">
+                                        <label for="InputVersion">设置密码：</label>
+                                        <input type="password" class="form-control" ng-model="resetUser.password">
+                                        <p class="help-block">请填写8-30位密码,包含大写字母、小写字母、数字、特称字符</p>
                                     </div>
+                                    <div class=" {{resetUser_repassworderror ? 'has-error':''}}">
+                                        <label for="InputVersion">确认密码：</label>
+                                        <input type="password" class="form-control" ng-model="resetUser.repassword">
+                                        <p class="help-block" ng-bind="resetUser_repassworderror ? '密码不一致' : '　'"></p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </div>

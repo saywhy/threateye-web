@@ -3,7 +3,7 @@
 /* Controllers */
 // signin controller
 app.controller('SigninFormController', ['$scope', '$http', '$state', function ($scope, $http, $state) {
-    console.log('成功链接服务器230');
+    console.log('成功链接服务器123');
     $scope.init = function () {
         // $scope.particvle();
         $scope.login_show = false;
@@ -11,8 +11,10 @@ app.controller('SigninFormController', ['$scope', '$http', '$state', function ($
         $scope.creat = {};
         $scope.frist_login();
     };
+    
     // 第一次登录判断有无用户
     $scope.frist_login = function () {
+        var loading = zeroModal.loading(4);
         $http({
             method: 'POST',
             url: './yiiapi/site/login'
@@ -20,11 +22,14 @@ app.controller('SigninFormController', ['$scope', '$http', '$state', function ($
             console.log(data.data);
             if(data.data.status == 207){
                 console.log('未注册');
+                zeroModal.close(loading);
                 $scope.login_show = true;
             }else if(data.data.status == 202){
                 console.log('已登陆');
                 $state.go('app.overview');
+                zeroModal.close(loading);
             }else{
+                zeroModal.close(loading);
                 $scope.login_show = false;
             }
         }, function errorCallback(data) {

@@ -1,34 +1,107 @@
 <div class="set" ng-controller="Set_net_ipController" ng-init="app.settings.container = false;" ng-cloak>
     <!-- Main content -->
     <div class="row">
-            <div class="col-md-12 ">
-                <div class="set_content">
-                     <!-- 内部网络IP段 -->
-                <div class="email_item">
-                        <div class="email_item_header row">
-                            <h4 class="col-md-1" style="min-width:150px">内部网络IP段</h4>
+        <div class="col-md-12 ">
+            <div class="set_content">
+                <!-- 内部网络IP段 -->
+                <div class="net_ip_item">
+                    <div class="net_ip_item_header row">
+                        <h4 class="col-md-1" style="min-width:150px">内部网络IP段</h4>
+                    </div>
+                    <div class="form-group row item_form">
+                        <label for="port" class="col-sm-2 control-label" style="min-width:120px">内部网络的IP段</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control item_input" id="net_ip" placeholder="" ng-model="net_ip">
                         </div>
-                        <div class="form-group row item_form">
-                            <label for="port" class="col-sm-2 control-label" style="min-width:120px">内部网络的IP段</label>
-                            <div class="col-sm-3">
-                                <input type="text" class="form-control item_input" id="net_ip" placeholder="" ng-model="net_ip">
-                            </div>
+                        <label for="port" class="col-sm-2 control-label" style="min-width:120px">内部网络的掩码</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control item_input" id="net_ip" placeholder="" ng-model="net_ip_mask">
                         </div>
-                        <div class="row">
-                            <div class="form-group col-md-1 col-md-offset-5">
-                                <label style="width: 100%;">&nbsp;</label>
-                                <button class="form-control btn btn-primary" style="max-width: 80px;" ng-click="keep()">保&nbsp;存</button>
-                            </div>
+                        <div class="col-sm-1">
+                            <button class="form-control btn btn-primary" style="max-width: 80px;" ng-click="keep()">添&nbsp;加</button>
                         </div>
                     </div>
-                <div>
-                    序号
-                    IP段
-                    掩码
-                    操作（删除）
                 </div>
+                <div class="box box-solid" style="margin-top:10px;">
+                    <div id="myTabContent" class="tab-content">
+                        <div class="tab-pane fade in active">
+                            <div class="box-body">
+                                <table class="table table-hover  ng-cloak">
+                                    <tr>
+                                        <th style="width:40px">序号</th>
+                                        <th>IP段</th>
+                                        <th>掩码</th>
+                                        <th>更新时间</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>f34a9d6df5c26f311c6cb3cc5fbd4186</td>
+                                        <td>2018-05-08 10:32</td>
+                                        <td>2018-05-08 10:47</td>
+                                        <td class="cursor">&nbsp;&nbsp;
+                                            <img src="../src/images/icos/delate.png" ng-click="del(item.id)" width="16" height="16" alt="">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>f34a9d6df5c26f311c6cb3cc5fbd4186</td>
+                                        <td>2018-05-08 10:32</td>
+                                        <td>2018-05-08 10:47</td>
+                                        <td class="cursor">&nbsp;&nbsp;
+                                            <img src="../src/images/icos/delate.png" ng-click="del(item.id)" width="16" height="16" alt="">
+                                        </td>
+                                    </tr>
+                                </table>
+                                <!-- angularjs分页 -->
+                                <div style="border-top: 1px solid #f4f4f4;padding: 10px;">
+                                    <em>共有
+                                        <span ng-bind="pages0.count"></span>条</em>
+                                    <!-- angularjs分页 -->
+                                    <ul class="pagination pagination-sm no-margin pull-right ng-cloak">
+                                        <li>
+                                            <a href="javascript:void(0);" ng-click="getPage0(pages0.pageNow-1)" ng-if="pages0.pageNow>1">上一页</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);" ng-click="getPage0(1)" ng-if="pages0.pageNow>1">1</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);" ng-if="pages0.pageNow>4">...</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);" ng-click="getPage0(pages0.pageNow-2)" ng-bind="pages0.pageNow-2" ng-if="pages0.pageNow>3"></a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);" ng-click="getPage0(pages0.pageNow-1)" ng-bind="pages0.pageNow-1" ng-if="pages0.pageNow>2"></a>
+                                        </li>
+                                        <li class="active">
+                                            <a href="javascript:void(0);" ng-bind="pages0.pageNow"></a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);" ng-click="getPage0(pages0.pageNow+1)" ng-bind="pages0.pageNow+1" ng-if="pages0.pageNow<pages0.maxPage-1"></a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);" ng-click="getPage0(pages0.pageNow+2)" ng-bind="pages0.pageNow+2" ng-if="pages0.pageNow<pages0.maxPage-2"></a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);" ng-if="pages0.pageNow<pages0.maxPage-3">...</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);" ng-click="getPage0(pages0.maxPage)" ng-bind="pages0.maxPage" ng-if="pages0.pageNow<pages0.maxPage"></a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);" ng-click="getPage0(pages0.pageNow+1)" ng-if="pages0.pageNow<pages0.maxPage">下一页</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- /.angularjs分页 -->
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
 
 </div>

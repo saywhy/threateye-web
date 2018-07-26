@@ -1,0 +1,31 @@
+.rule_item{
+    padding: 10px;
+}
+.rule_item_header{
+    font-size: 16px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee;
+}
+
+a[class="button-selectimg"] {
+    color: #00A2D4;
+    padding: 4px 6px;
+    border: 1px dashed #00A2D4;
+    border-radius: 2px;
+}
+input[id="avatval"] {
+    padding: 3px 6px;
+    padding-left: 10px;
+    border: 1px solid #E7EAEC;
+    width: 230px;
+    height: 25px;
+    line-height: 25px;
+    border-left: 3px solid #3FB7EB;
+    background: #FAFAFB;
+    border-radius: 2px;
+}
+
+input[type='file'] {
+    border: 0px;
+    display: none;
+}

@@ -51,19 +51,22 @@ app.controller('Safety_dnsController', ['$scope', '$http', '$state', function ($
             current_page: pageNow,
             per_page_count: '10'
         };
-        var loading = zeroModal.loading(4);
+        console.log( $scope.params_data);
+        // var loading = zeroModal.loading(4);
+
         $http({
             method: 'get',
             url: './yiiapi/investigate/dns-investigation',
             params: $scope.params_data,
         }).success(function (data) {
+            console.log(data);
             if (data.status == 0) {
                 $scope.pages = data.data;
                 console.log($scope.pages);
             }
-            zeroModal.close(loading);
+            // zeroModal.close(loading);
         }).error(function () {
-            zeroModal.close(loading);
+            // zeroModal.close(loading);
         })
     };
 

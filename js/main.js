@@ -73,7 +73,7 @@ angular.module('app')
                     }).then(function successCallback(data) {
                         console.log(data.data);
                         if (data.data.status == 202) {
-                            // console.log('已登陆');
+                            console.log('已登陆');
                             $state.go('app.overview');
                         }
                     }, function errorCallback(data) {
