@@ -1,6 +1,4 @@
 'use strict';
-
-/* Controllers */
 // Alarm controller
 app.controller('Alarm_detailController', [
     '$scope',

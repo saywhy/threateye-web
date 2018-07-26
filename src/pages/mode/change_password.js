@@ -1,6 +1,5 @@
 'use strict';
 angular.module('app')
-    /* Controllers */
     // overview controller
     .controller('Modal_change_passwordCtrl', ['$scope', '$http', '$state', '$modalInstance', 'data', function ($scope, $http, $state, $modalInstance, data) {
         $scope.data = data;
