@@ -17,38 +17,38 @@
                 <div class="row part">
                     <div class="part_detail">
                         <p >
-                            <span>源地址:</span>
-                            <span class="part_detail_span">源地址 </span>
+                            <span class="alarm_detai_span">源地址:</span>
+                            <span class="part_detail_span" ng-bind ="alert_details.src_ip">源地址 </span>
                         </p>
                         <p>
-                            <span>目的地址:</span>
-                            <span class="part_detail_span">目的地址 </span>
+                            <span class="alarm_detai_span">目的地址:</span>
+                            <span class="part_detail_span" ng-bind ="alert_details.dest_ip">目的地址 </span>
                         </p>
                         <p>
-                            <span>告警时间:</span>
-                            <span class="part_detail_span">告警时间 </span>
+                            <span class="alarm_detai_span">告警时间:</span>
+                            <span class="part_detail_span" ng-bind ="alert_details.alert_time*1000 | date:'yyyy-MM-dd HH:mm:ss'">告警时间 </span>
                         </p>
                         <p>
-                            <span>应用:</span>
-                            <span class="part_detail_span">是什么应用的流量，例如URL告警可能是HTTP或者HTTPS，邮件可能是SMTP或者POP3，恶意文件可能是FTP </span>
+                            <span class="alarm_detai_span">应用:</span>
+                            <span class="part_detail_span" ng-bind ="alert_details.application"> </span>
                         </p>
                         <p>
-                            <span>告警类型:</span>
-                            <span class="part_detail_span">与告警页面威胁类型同步 </span>
+                            <span class="alarm_detai_span">告警类型:</span>
+                            <span class="part_detail_span" ng-bind ="alert_details.alert_type">与告警页面威胁类型同步 </span>
                         </p>
                         <p>
-                            <span>告警描述:</span>
-                            <span class="part_detail_span">与告警页面内容一致 </span>
+                            <span class="alarm_detai_span">告警描述:</span>
+                            <span class="part_detail_span" ng-bind ="alert_details.alert_raw">与告警页面内容一致 </span>
                         </p>
                         <p>
-                            <span>检测引擎:</span>
-                            <span class="part_detail_span">被那个引擎或者规则检测出的告警 </span>
+                            <span class="alarm_detai_span">检测引擎:</span>
+                            <span class="part_detail_span" ng-bind ="alert_details.detect_engine">被那个引擎或者规则检测出的告警 </span>
                         </p>
                     </div>
                     <div class="part_detail">
                         <h4>Object information</h4>
                         <p>
-                            <span>IP、URL、域名类告警:</span>
+                            <span >IP、URL、域名类告警:</span>
                             <span class="part_detail_span">目前通过威胁情报匹配产生，使用威胁情报信息内容进行展示，参照iConnect的展示信息即可
                             </span>
                         </p>
@@ -58,12 +58,12 @@
                             </span>
                         </p>
                         <p>
-                            <span>IP、URL、域名类告警:</span>
+                            <span >IP、URL、域名类告警:</span>
                             <span class="part_detail_span">目前通过威胁情报匹配产生，使用威胁情报信息内容进行展示，参照iConnect的展示信息即可
                             </span>
                         </p>
                         <p>
-                            <span>IP、URL、域名类告警:</span>
+                            <span class="alarm_detai_span">IP、URL、域名类告警:</span>
                             <span class="part_detail_span">目前通过威胁情报匹配产生，使用威胁情报信息内容进行展示，参照iConnect的展示信息即可
                             </span>
                         </p>

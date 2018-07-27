@@ -19,15 +19,22 @@ app.controller('Set_userController', ['$scope', '$http', '$state', function ($sc
     };
     // 获取用户列表
     $scope.getPage = function (pageNow) {
+        var loading = zeroModal.loading(4);
         pageNow = pageNow ? pageNow : 1;
         $http.post('./yiiapi/user/page', {
             page: pageNow
         }).then(function success(rsp) {
             console.log(rsp.data);
             if (rsp.data.status == 0) {
+                zeroModal.close(loading);
                 $scope.pages = rsp.data.data;
             }
-        }, function err(rsp) {});
+            if(rsp.data.status == 1){
+                zeroModal.error(rsp.data.msg);
+            }
+        }, function err(rsp) {
+            zeroModal.close(loading);
+        });
     };
     // 添加用户
     $scope.add = function () {

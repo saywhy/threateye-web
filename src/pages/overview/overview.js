@@ -22,8 +22,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
         };
         // 第一排
         $scope.sysState();
-        $scope.file(); // 中间 文件数量
-        $scope.flowTotal(); //中间流量总数
+        $scope.file_flow_info(); // 中间 文件/流量信息
         $scope.safetyequipment(); // 右边 图表
         // 第二排
         $scope.alarmNum(); //告警数量
@@ -142,105 +141,159 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
         myChart.setOption(option);
     };
     // 第一排 中间图表--流量文件信息
-    //文件
-    $scope.file = function (params) {
-        //获取文件数量
-        var myChart = echarts.init(document.getElementById('flowinfo'));
-        var option = {
-            grid: {
-                left: 45,
-                right: 30,
-                top: 15,
-                bottom: 25
-            },
-            tooltip: {
-                trigger: 'axis',
-                axisPointer: {
-                    lineStyle: {
-                        color: '#ddd'
-                    }
-                },
-                backgroundColor: 'rgba(255,255,255,1)',
-                padding: [5, 10],
-                textStyle: {
-                    color: '#7588E4',
-                },
-                extraCssText: 'box-shadow: 0 0 5px rgba(0,0,0,0.3)'
-            },
-            xAxis: {
-                type: 'category',
-                data: ['05-23', '05-24', '05-25', '05-26', '05-27', '05-28', '05-29'],
-                boundaryGap: false,
-                splitLine: {
-                    show: false,
-                    interval: 0, //0：表示全部显示不间隔；auto:表示自动根据刻度个数和宽度自动设置间隔个数
-                    maxInterval: 3600 * 24 * 1000,
-                },
-                axisTick: {
-                    show: false
-                },
-                axisLabel: {
-                    margin: 5,
-                    textStyle: {
-                        fontSize: 10
-                    }
-                }
-            },
-            yAxis: {
-                type: 'value',
-                axisTick: {
-                    show: false
-                },
-                axisLabel: {
-                    margin: 5,
-                    textStyle: {
-                        fontSize: 10
-                    }
-                }
-            },
-            series: [{
-                name: '文件',
-                type: 'line',
-                smooth: true,
-                showSymbol: false,
-                symbol: 'circle',
-                symbolSize: 6,
-                data: [10, 22, 12, 33, 54, 32, 12],
-                areaStyle: {
-                    normal: {
-                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                            offset: 0,
-                            color: $scope.colorType.rgbaHigh8
-                        }, {
-                            offset: 1,
-                            color: $scope.colorType.rgbaHigh2
-                        }], false)
-                    }
-                },
-                itemStyle: {
-                    normal: {
-                        color: $scope.colorType.rgbaHigh10
-                    }
-                },
-                lineStyle: {
-                    normal: {
-                        width: 3
-                    }
-                }
-            }]
-        };
-        myChart.setOption(option);
-        // 当相应准备就绪时调用
-    };
-    // 流量
-    $scope.flowTotal = function (params) {
+    //文件 流量信息
+    $scope.file_flow_info = function (params) {
         $http({
             method: 'GET',
-            url: './yiiapi/alert/get-last24-file'
+            url: './yiiapi/alert/flow-file-statistics'
         }).success(function (data) {
             console.log(data);
+            $scope.flow_file = {};
             if (data.status == 0) {
-                zeroModal.success('删除成功！');
+                $scope.flow_file = data.data;
+                //获取文件数量
+                var myChart_file = echarts.init(document.getElementById('flowinfo'));
+                var option_file = {
+                    grid: {
+                        left: 45,
+                        right: 30,
+                        top: 15,
+                        bottom: 25
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data:  $scope.flow_file.statistics_time,
+                        boundaryGap: false,
+                        splitLine: {
+                            show: false,
+                            interval: 'auto', //0：表示全部显示不间隔；auto:表示自动根据刻度个数和宽度自动设置间隔个数
+                            maxInterval: 3600 * 24 * 1000,
+                        },
+                        axisTick: {
+                            show: false
+                        },
+                        axisLabel: {
+                            margin: 5,
+                            textStyle: {
+                                fontSize: 10
+                            }
+                        }
+                    },
+                    yAxis: {
+                        type: 'value',
+                        axisTick: {
+                            show: false
+                        },
+                        axisLabel: {
+                            margin: 5,
+                            textStyle: {
+                                fontSize: 10
+                            }
+                        }
+                    },
+                    series: [{
+                        name: '文件',
+                        type: 'line',
+                        smooth: true,
+                        showSymbol: false,
+                        symbol: 'circle',
+                        symbolSize: 6,
+                        data: $scope.flow_file.file_count_diff,
+                        areaStyle: {
+                            normal: {
+                                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                    offset: 0,
+                                    color: $scope.colorType.rgbaHigh8
+                                }, {
+                                    offset: 1,
+                                    color: $scope.colorType.rgbaHigh2
+                                }], false)
+                            }
+                        },
+                        itemStyle: {
+                            normal: {
+                                color: $scope.colorType.rgbaHigh10
+                            }
+                        },
+                        lineStyle: {
+                            normal: {
+                                width: 3
+                            }
+                        }
+                    }]
+                };
+                myChart_file.setOption(option_file);
+                var myChart_flow = echarts.init(document.getElementById('flowtotal'));
+                var option_flow = {
+                    grid: {
+                        left: 45,
+                        right: 30,
+                        top: 15,
+                        bottom: 25
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: $scope.flow_file.statistics_time,
+                        boundaryGap: false,
+                        splitLine: {
+                            show: false,
+                            interval: 'auto', //0：表示全部显示不间隔；auto:表示自动根据刻度个数和宽度自动设置间隔个数
+                            maxInterval: 3600 * 24 * 1000,
+                        },
+                        axisTick: {
+                            show: false
+                        },
+                        axisLabel: {
+                            margin: 5,
+                            textStyle: {
+                                fontSize: 10
+                            }
+                        }
+                    },
+                    yAxis: {
+                        type: 'value',
+                        axisTick: {
+                            show: false
+                        },
+                        axisLabel: {
+                            margin: 5,
+                            textStyle: {
+                                fontSize: 10
+                            }
+                        }
+                    },
+                    series: [{
+                        name: '流量',
+                        type: 'line',
+                        smooth: true,
+                        showSymbol: false,
+                        symbol: 'circle',
+                        symbolSize: 6,
+                        data: $scope.flow_file.flow_diff,
+                        areaStyle: {
+                            normal: {
+                                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                    offset: 0,
+                                    color: $scope.colorType.rgbaLow8
+                                }, {
+                                    offset: 1,
+                                    color: $scope.colorType.rgbaLow2
+                                }], false)
+                            }
+                        },
+                        itemStyle: {
+                            normal: {
+                                color: $scope.colorType.rgbaLow10
+                            }
+                        },
+                        lineStyle: {
+                            normal: {
+                                width: 3
+                            }
+                        }
+                    }]
+                };
+                myChart_flow.setOption(option_flow);
             }
             if (data.status == 1) {
                 zeroModal.error(data.msg);
@@ -248,78 +301,12 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
         }).error(function (err) {
             console.log(err);
         })
-        var myChart = echarts.init(document.getElementById('flowtotal'));
-        var option = {
-            grid: {
-                left: 45,
-                right: 30,
-                top: 15,
-                bottom: 25
-            },
-            xAxis: {
-                type: 'category',
-                data: ['05-23', '05-24', '05-25', '05-26', '05-27', '05-28', '05-29'],
-                boundaryGap: false,
-                splitLine: {
-                    show: false,
-                    interval: 0, //0：表示全部显示不间隔；auto:表示自动根据刻度个数和宽度自动设置间隔个数
-                    maxInterval: 3600 * 24 * 1000,
-                },
-                axisTick: {
-                    show: false
-                },
-                axisLabel: {
-                    margin: 5,
-                    textStyle: {
-                        fontSize: 10
-                    }
-                }
-            },
-            yAxis: {
-                type: 'value',
-                axisTick: {
-                    show: false
-                },
-                axisLabel: {
-                    margin: 5,
-                    textStyle: {
-                        fontSize: 10
-                    }
-                }
-            },
-            series: [{
-                name: '流量',
-                type: 'line',
-                smooth: true,
-                showSymbol: false,
-                symbol: 'circle',
-                symbolSize: 6,
-                data: [654, 234, 543, 343, 541, 322, 276],
-                areaStyle: {
-                    normal: {
-                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                            offset: 0,
-                            color: $scope.colorType.rgbaLow8
-                        }, {
-                            offset: 1,
-                            color: $scope.colorType.rgbaLow2
-                        }], false)
-                    }
-                },
-                itemStyle: {
-                    normal: {
-                        color: $scope.colorType.rgbaLow10
-                    }
-                },
-                lineStyle: {
-                    normal: {
-                        width: 3
-                    }
-                }
-            }]
-        };
-        myChart.setOption(option);
+
     };
+  
+    // hhtp
+    // HTTPS
+    // Dns  ssh  ftp 
     // 第一排右边 图表 协议统计
     $scope.safetyequipment = function (params) {
         $http({
@@ -327,8 +314,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
             url: './yiiapi/alert/protocol-flow-statistics'
         }).success(function (data) {
             console.log(data);
-            if (data.status == 0) {
-            }
+            if (data.status == 0) {}
             if (data.status == 1) {
                 zeroModal.error(data.msg);
             }

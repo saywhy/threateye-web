@@ -142,7 +142,7 @@
                                 <th>威胁</th>
                                 <th>威胁类型</th>
                             </tr>
-                            <tr ng-repeat="(index,item) in top_threaten_data">
+                            <tr ng-repeat="(index,item) in top_threaten_data" style="height: 37px;">
                                 <td ng-bind="index+1">1</td>
                                 <td ng-bind="item.alert_type"></td>
                                 <td ng-bind="item.category"></td>
@@ -203,7 +203,7 @@
                                 <th>目的地址</th>
                                 <th>告警描述</th>
                             </tr>
-                            <tr ng-repeat="item in new_alarm_data">
+                            <tr ng-repeat="item in new_alarm_data" style="height: 37px;">
                                 <td ng-bind="item.alert_type"></td>
                                 <td ng-bind="item.alert_time*1000 |date:'yyyy-MM-dd HH:mm:ss'"></td>
                                 <td ng-bind="item.degree"></td>

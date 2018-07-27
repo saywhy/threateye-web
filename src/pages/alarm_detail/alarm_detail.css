@@ -49,14 +49,20 @@
 }
 .alarm_detail .part .part_detail{
     padding: 10px 0;
-    border-bottom: 1px solid #666;
+    border-top: 1px solid #666;
 }
 .alarm_detail .part p{
     margin: 5px 0;
     height: 30px;
     line-height: 30px;
-    border-bottom: 1px solid #ddd;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .alarm_detail .part_detail_span{
    padding-left: 15px;
+}
+.alarm_detai_span{
+    width: 50px;
+    display: inline-block;
 }

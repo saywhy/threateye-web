@@ -41,7 +41,7 @@
                             </div>
                             <div class="download_position ">
                                 <span>
-                                    <img src="../src/images/icos/download.png" ng-click="download(item.id)" width="16" height="16" alt="">
+                                    <img src="../src/images/icos/download.png" ng-click="export_alarm()" width="16" height="16" alt="">
                                 </span>
                             </div>
                         </div>
@@ -74,7 +74,7 @@
                                                 <span ng-if="item.status == 2">&nbsp;</span>
                                                 <span class="caret" ng-if="item.status != 2"></span>
                                             </button>
-                                            <ul class="dropdown-menu" role="menu" style="min-width:70px" ng-if="item.status != 2">
+                                            <ul class="dropdown-menu" role="menu" style="min-width:60px" ng-if="item.status != 2">
                                                 <li>
                                                     <a href="javascript:void(0);" style="padding: 3px 7px" ng-click="update(item);$event.stopPropagation();">已解决</a>
                                                 </li>

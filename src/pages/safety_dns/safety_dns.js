@@ -31,11 +31,9 @@ app.controller('Safety_dnsController', ['$scope', '$http', '$state', function ($
         $scope.getPage(1);
     };
     //搜索
-
     $scope.search = function () {
         $scope.getPage(1);
     };
-
     // 获取数据
     $scope.getPage = function (pageNow) {
         pageNow = pageNow ? pageNow : 1;
@@ -51,9 +49,8 @@ app.controller('Safety_dnsController', ['$scope', '$http', '$state', function ($
             current_page: pageNow,
             per_page_count: '10'
         };
-        console.log( $scope.params_data);
+        console.log($scope.params_data);
         // var loading = zeroModal.loading(4);
-
         $http({
             method: 'get',
             url: './yiiapi/investigate/dns-investigation',
@@ -64,17 +61,19 @@ app.controller('Safety_dnsController', ['$scope', '$http', '$state', function ($
                 $scope.pages = data.data;
                 console.log($scope.pages);
             }
+            if (data.status == 1) {
+                zeroModal.error(data.msg);
+            }
             // zeroModal.close(loading);
         }).error(function () {
             // zeroModal.close(loading);
         })
     };
-
     //导出csv 
     $scope.export = function (params) {
         console.log($scope.dns);
         console.log($scope.searchData);
-    }
+    };
     // 时间插件
     $scope.timerange = function (params) {
         $('.timerange').daterangepicker({
@@ -102,8 +101,5 @@ app.controller('Safety_dnsController', ['$scope', '$http', '$state', function ($
             console.log($scope.default_time.endTime);
         });
     };
-
     $scope.init();
-
-
 }]);

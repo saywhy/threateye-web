@@ -21,8 +21,7 @@ app.controller('AlarmController', [
                 num: 0,
                 type: '未解决'
             }];
-            $scope.timepicker();
-            $scope.alarmEchart(); // 折线图表
+            $scope.selectedName = 0;
             $scope.pages = {
                 data: [],
                 count: 0,
@@ -34,17 +33,20 @@ app.controller('AlarmController', [
                 startTime: moment().subtract(365, 'days').unix(),
                 endTime: moment().unix()
             };
+            $scope.timepicker();
+            $scope.alarmEchart(); // 折线图表
             $scope.getPage();
         };
         // 告警列表
         $scope.getPage = function (pageNow) {
+            var loading = zeroModal.loading(4);
             pageNow = pageNow ? pageNow : 1;
             $scope.params_data = {
                 start_time: $scope.searchData.startTime,
                 end_time: $scope.searchData.endTime,
                 src_ip: $scope.searchData.src_ip,
                 dest_ip: $scope.searchData.dest_ip,
-                status: $scope.searchData.status,
+                status:  $scope.selectedName,
                 page: pageNow,
                 rows: '10'
             };
@@ -55,11 +57,13 @@ app.controller('AlarmController', [
                 params: $scope.params_data,
             }).success(function (data) {
                 console.log(data);
+                zeroModal.close(loading);
                 if (data.status == 0) {
                     $scope.pages = data.data;
                 }
                 console.log($scope.pages);
             }).error(function (err) {
+             zeroModal.close(loading);
                 console.log(err);
             })
         }
@@ -74,7 +78,7 @@ app.controller('AlarmController', [
             label: '已解决'
         }];
         // 默认是未解决
-        $scope.selectedName = 0;
+     
         $scope.setAriaID = function (item, $event) {
             $event.stopPropagation();
             if ($scope.ariaID == item.id) {
@@ -93,109 +97,126 @@ app.controller('AlarmController', [
         // 搜索按钮
         $scope.search = function () {
             $scope.getPage();
-        }
+        };
+    // 操作 已解决
+    $scope.update = function(item){
+        var loading = zeroModal.loading(4);
+        var dataJson = {
+            id: item.id,
+            status: '2'
+        };
+        $http({
+            method: 'put',
+            url: './yiiapi/alert/do-alarm',
+            data: dataJson,
+        }).success(function (data) {
+            console.log(data);
+            zeroModal.close(loading);
+            if (data.status == 0) {
+                $scope.getPage();
+            }
+        }).error(function (err) {
+            zeroModal.close(loading);
+            console.log(err);
+        })
+    }
+
         // 折线图表
         $scope.alarmEchart = function (params) {
-            var data = {
-                data: {
-                    alert_count: [13, 23, 16, 32, 43, 31, 131, 313, 133, 313, 132, 56, 44, 63, 55, 32, 45, 52, 23, 55],
-                    times: ['2018-07-22 01:00',
-                        '2018-07-22 02:00',
-                        '2018-07-22 03:00',
-                        '2018-07-22 04:00',
-                        '2018-07-22 05:00',
-                        '2018-07-22 06:00',
-                        '2018-07-22 07:00',
-                        '2018-07-22 08:00',
-                        '2018-07-22 09:00',
-                        '2018-07-22 10:00',
-                        '2018-07-22 11:00',
-                        '2018-07-22 12:00',
-                        '2018-07-22 13:00',
-                        '2018-07-22 14:00',
-                        '2018-07-22 15:00',
-                        '2018-07-22 16:00',
-                        '2018-07-22 17:00',
-                        '2018-07-22 18:00',
-                        '2018-07-22 19:00',
-                        '2018-07-22 12:00'
-                    ]
+            var loading = zeroModal.loading(4);
+            $http({
+                method: 'get',
+                url: './yiiapi/alert/alert-trend'
+            }).success(function (data) {
+                console.log(data);
+                zeroModal.close(loading);
+                if (data.status == 0) {
+                    $scope.alarmEchart_time = [];
+                    $scope.alarmEchart_data = [];
+                   angular.forEach(data.data,function(item,index){
+                    $scope.alarmEchart_time.unshift(item.statistics_time);
+                    $scope.alarmEchart_data.unshift(item.alert_count);
+                   });
+                   var myChart = echarts.init(document.getElementById('alarm_echart'));
+                   var option = {
+                       grid: {
+                           bottom: 80,
+                           top: 50,
+                           left: 50,
+                           right: 50
+                       },
+                       tooltip: {
+                           trigger: 'axis',
+                       },
+                       dataZoom: [{
+                               show: true,
+                               realtime: true,
+                               start: 80,
+                               end: 100
+                           },
+                           {
+                               type: 'inside',
+                               realtime: true,
+                               start: 80,
+                               end: 100
+                           }
+                       ],
+                       xAxis: [{
+                           type: 'category',
+                           boundaryGap: false,
+                           axisLine: {
+                               onZero: false
+                           },
+                           data:$scope.alarmEchart_time.map(function (str) {
+                               return str.replace(' ', '\n')
+                           }),
+                           axisTick: {
+                               show: false
+                           }
+                       }],
+                       yAxis: [{
+                           name: '告警',
+                           type: 'value',
+                           axisTick: {
+                               show: false
+                           }
+                       }],
+                       series: [{
+                               name: '告警',
+                               type: 'line',
+                               smooth: true,
+                               showSymbol: false,
+                               symbol: 'circle',
+                               symbolSize: 3,
+                               areaStyle: {
+                                   normal: {
+                                       color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                           offset: 0,
+                                           color: 'rgba(150,33,22,.8)'
+                                       }, {
+                                           offset: 1,
+                                           color: 'rgba(150,33,22,.5)'
+                                       }], false)
+                                   }
+                               },
+                               animation: true,
+                               lineStyle: {
+                                   normal: {
+                                       width: 3
+                                   }
+                               },
+                               data:  $scope.alarmEchart_data
+                           }
+                       ]
+                   };
+                   myChart.setOption(option);
                 }
-            };
-            var myChart = echarts.init(document.getElementById('alarm_echart'));
-            var option = {
-                grid: {
-                    bottom: 80,
-                    top: 50,
-                    left: 50,
-                    right: 50
-                },
-                tooltip: {
-                    trigger: 'axis',
-                },
-                dataZoom: [{
-                        show: true,
-                        realtime: true,
-                        start: 80,
-                        end: 100
-                    },
-                    {
-                        type: 'inside',
-                        realtime: true,
-                        start: 80,
-                        end: 100
-                    }
-                ],
-                xAxis: [{
-                    type: 'category',
-                    boundaryGap: false,
-                    axisLine: {
-                        onZero: false
-                    },
-                    data: data.data.times.map(function (str) {
-                        return str.replace(' ', '\n')
-                    }),
-                    axisTick: {
-                        show: false
-                    }
-                }],
-                yAxis: [{
-                    name: '告警',
-                    type: 'value',
-                    axisTick: {
-                        show: false
-                    }
-                }],
-                series: [{
-                        name: '告警',
-                        type: 'line',
-                        smooth: true,
-                        showSymbol: false,
-                        symbol: 'circle',
-                        symbolSize: 3,
-                        areaStyle: {
-                            normal: {
-                                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                                    offset: 0,
-                                    color: 'rgba(150,33,22,.8)'
-                                }, {
-                                    offset: 1,
-                                    color: 'rgba(150,33,22,.5)'
-                                }], false)
-                            }
-                        },
-                        animation: true,
-                        lineStyle: {
-                            normal: {
-                                width: 3
-                            }
-                        },
-                        data: data.data.alert_count
-                    }
+            }).error(function (err) {
+                zeroModal.close(loading);
+                console.log(err);
+            })
 
-                ]
-            };
-            myChart.setOption(option);
+          
         };
         // 时间插件初始化
         $scope.timepicker = function (params) {
@@ -232,11 +253,70 @@ app.controller('AlarmController', [
         };
         // 跳转详情页面
         $scope.detail = function (params) {
-            console.log(params);
+            // console.log(params);
             params = escape(JSON.stringify(params));
             $state.go('app.alarm_detail', {
                 data: params
             });
+        };
+        //导出告警列表
+        $scope.export_alarm = function(){
+            zeroModal.confirm({
+                content: "确定下载告警列表吗？",
+                okFn: function () {
+                    $scope.download_alarm();
+                },
+                cancelFn: function () {}
+            });
+
+        }
+        $scope.download_alarm = function () {
+            var url = './yiiapi/alert/export-alerts';
+            /**
+             * 使用form表单来发送请求
+             * 1.method属性用来设置请求的类型——post还是get
+             * 2.action属性用来设置请求路径。
+             */
+            var form = $("<form>"); //定义一个form表单
+            form.attr("style", "display:none");
+            form.attr("target", "");
+            form.attr("method", "get"); //请求类型
+            form.attr("action", url); //请求地址
+            $("body").append(form); //将表单放置在web中
+            /**
+             * input标签主要用来传递请求所需的参数：
+             * 1.name属性是传递请求所需的参数名.
+             * 2.value属性是传递请求所需的参数值.
+             * 3.当为get类型时，请求所需的参数用input标签来传递，直接写在URL后面是无效的。
+             * 4.当为post类型时，queryString参数直接写在URL后面，formData参数则用input标签传递
+             *       有多少数据则使用多少input标签
+             */
+            var input1 = $("<input>");
+            input1.attr("type", "hidden");
+            input1.attr("name", "start_time");
+            input1.attr("value",  $scope.params_data.start_time);
+            form.append(input1);
+            var input2 = $("<input>");
+            input2.attr("type", "hidden");
+            input2.attr("name", "end_time");
+            input2.attr("value",  $scope.params_data.end_time);
+            form.append(input2);
+            var input3 = $("<input>");
+            input3.attr("type", "hidden");
+            input3.attr("name", "src_ip");
+            input3.attr("value", $scope.params_data.src_ip);
+            form.append(input3);
+            var input4 = $("<input>");
+            input4.attr("type", "hidden");
+            input4.attr("name", "dest_ip");
+            input4.attr("value", $scope.params_data.dest_ip);
+            form.append(input4);
+            var input5 = $("<input>");
+            input5.attr("type", "hidden");
+            input5.attr("name", "status");
+            input5.attr("value", $scope.params_data.status);
+            form.append(input5);
+            form.submit(); //表单提交
         };
         $scope.init();
     },
