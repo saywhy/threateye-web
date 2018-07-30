@@ -3,15 +3,6 @@
     <div class="row">
         <div class="col-md-12 ">
             <div class="set_content">
-                <div class="row">
-                    <!-- <div class="col-md-12">
-                        实时更新
-                        确定
-                        离线更新
-                        确定
-                    
-                    </div> -->
-                </div>
                 <div class="rule_item">
                     <div class="rule_item_header row">
                         <h4 class="col-md-1" style="min-width:150px">实时更新</h4>
@@ -19,7 +10,7 @@
                     <div class="row">
                         <div class="form-group col-md-1 col-md-offset-5">
                             <label style="width: 100%;">&nbsp;</label>
-                            <button class="form-control btn btn-primary" style="max-width: 80px;" ng-click="keep()">更&nbsp;新</button>
+                            <button class="form-control btn btn-primary" style="max-width: 80px;" ng-click="real_time_update()">更&nbsp;新</button>
                         </div>
                     </div>
                 </div>
@@ -31,29 +22,20 @@
                         <div class="input-file">
                             <form id="upload" method="post" enctype="multipart/form-data">
                                 <input type="text" id="avatval" placeholder="请选择文件···" readonly="readonly" style="vertical-align: middle;" />
-                                <input type="file" name="file" id="avatar" />
-                                <a href="javascript:void(0);" ng-click="uploadPic()" class="button-selectimg" id="avatsel1">上传文件</a>
-                                <!-- <span>上传成功！</span> -->
+                                <input type="file" name="file" id="avatar" accept="tar.gz" />
+                                <button ng-click="uploadPic()" class="btn btn-primary upload_button" ng-disabled="upload_true" id="avatsel1">上传文件</button>
                             </form>
                         </div>
-                        <!-- <div class="progress">
-                            <div class="progress-bar progress-bar-success" role="progressbar"
-                                 aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-                                 style="width: 90%;">
-                                <span class="sr-only">90% 完成（成功）</span>
-                            </div>
-                        </div> -->
                         <div ng-show="progress_if" class="progress progress-striped active" style="margin: 20px 0;border-radius: 5px;width: 300px">
                             <div class="progress-bar progress-bar-success" id="progress" role="progressbar" 
                                aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" >
                             </div>
                          </div>
                     </div>
-
                     <div class="row">
                         <div class="form-group col-md-1 col-md-offset-5">
                             <label style="width: 100%;">&nbsp;</label>
-                            <button class="form-control btn btn-primary" style="max-width: 80px;" ng-click="keep()">更&nbsp;新</button>
+                            <button class="form-control btn btn-primary" style="max-width: 80px;" ng-click="offline_update()">更&nbsp;新</button>
                         </div>
                     </div>
                 </div>

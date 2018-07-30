@@ -1,5 +1,4 @@
 <div class="safety_url" ng-controller="Safety_urlController" ng-init="app.settings.container = false;" ng-cloak>
-
     <div class="row">
         <div class="col-md-12">
             <div class="nav-tabs-custom" style="margin-bottom: 0px">
@@ -9,35 +8,35 @@
                             <i class="fa fa-bell-o"></i> IP/URL通讯调查</a>
                     </li>
                 </ul>
-
                 <div class="tab-content" style="padding-top:0px;border-bottom:0px;">
-                    <!-- protect -->
                     <div class="tab-pane active" id="protect">
                         <div class="row margin">
                             <div class="form-group col-md-2">
-                                <label>源IP</label>
-                                <input type="text" class="form-control input_radius" ng-model="url.source_ip" ng-keyup="myKeyup($event)">
+                                <label>源地址</label>
+                                <input type="text" class="form-control input_radius" ng-model="url.src_ip" ng-keyup="myKeyup($event)">
                             </div>
                             <div class="form-group col-md-2">
                                 <label>源端口</label>
-                                <input type="text" class="form-control input_radius" ng-model="url.source_port" ng-keyup="myKeyup($event)">
+                                <input type="text" class="form-control input_radius" ng-model="url.src_port" ng-keyup="myKeyup($event)">
                             </div>
                             <div class="form-group col-md-2">
                                 <label>目的地址</label>
-                                <input type="text" class="form-control input_radius" ng-model="url.target_addr" ng-keyup="myKeyup($event)">
+                                <input type="text" class="form-control input_radius" ng-model="url.dst_ip" ng-keyup="myKeyup($event)">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label>目的端口</label>
+                                <input type="text" class="form-control input_radius" ng-model="url.dst_port" ng-keyup="myKeyup($event)">
                             </div>
                             <div class="form-group col-md-2">
                                 <label>Email地址</label>
-                                <input type="text" class="form-control input_radius" ng-model="url.email_addr" ng-keyup="myKeyup($event)">
+                                <input type="text" class="form-control input_radius" ng-model="url.email" ng-keyup="myKeyup($event)">
                             </div>
-
                         </div>
                         <div class="row margin download_relative">
                             <div class="form-group col-md-4" style="max-width: 300px;">
                                 <label>时间</label>
                                 <input type="text" class="form-control timerange input_radius" readonly style="background-color: #fff;">
                             </div>
-
                             <div class="form-group col-md-1">
                                 <label style="width: 100%;">&nbsp;</label>
                                 <button class="form-control btn btn-primary" style="max-width: 80px;" ng-click="search()">搜&nbsp;索</button>
@@ -52,21 +51,21 @@
                             <table class="table table-hover ng-cloak">
                                 <tr>
                                     <th>时间</th>
-                                    <th>源IP</th>
+                                    <th>源地址</th>
                                     <th>源端口</th>
                                     <th>目的地址</th>
                                     <th>目的端口</th>
                                     <th>Email地址</th>
                                     <th>应用</th>
                                 </tr>
-                                <tr style="cursor: pointer;" ng-repeat="item in pages" ng-click="detail(item)">
-                                    <td class="td_content" ng-bind="item.time"></td>
-                                    <td class="td_content" ng-bind="item.source_ip"></td>
-                                    <td class="td_content" ng-bind="item.dns_ip"></td>
-                                    <td class="td_content" ng-bind="item.host_ip"></td>
-                                    <td class="td_content" ng-bind="item.type"></td>
-                                    <td class="td_content" ng-bind="item.query"></td>
-                                    <td class="td_content" ng-bind="item.host"></td>
+                                <tr style="cursor: pointer;" ng-repeat="item in pages.data.data">
+                                    <td class="td_content" ng-bind="item.timestamp"></td>
+                                    <td class="td_content" ng-bind="item.src_ip"></td>
+                                    <td class="td_content" ng-bind="item.src_port"></td>
+                                    <td class="td_content" ng-bind="item.dest_ip"></td>
+                                    <td class="td_content" ng-bind="item.dest_port"></td>
+                                    <td class="td_content" ng-bind="item.email"></td>
+                                    <td class="td_content" ng-bind="item.application"></td>
                                 </tr>
                             </table>
                             <!-- angularjs分页 -->

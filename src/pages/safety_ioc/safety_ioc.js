@@ -3,13 +3,28 @@
 app.controller('Safety_iocController', ['$scope', '$http', '$state', function ($scope, $http, $state) {
     // 初始化
     $scope.init = function (params) {
-        console.log('Safety_iocController');
+        $scope.upload_true = true; //初始化禁用提交按钮
         $("#avatval").click(function(){
             $("input[type='file']").trigger('click');
+            $scope.$apply(function(){
+                $('#progress')[0].style='width:0%';
+                $scope.progress_if=false;
+            })
         });
-        $("input[type='file']").change(function(){
+        $("input[type='file']").change(function(target){
             $("#avatval").val($(this).val());
+            if(target.target.value.split('.')[1].indexOf('txt') == -1 && target.target.value.split('.')[1].indexOf('ioc') == -1 ){
+                zeroModal.error(' 请重新选择.txt或.ioc格式的文件上传');
+                $scope.$apply(function(){
+                    $scope.upload_true = true;
+                })
+            }else{
+                $scope.$apply(function(){
+                    $scope.upload_true = false;
+                })
+            }
         });
+        $scope.progress_if=false;
     };
     // 下载模版
     $scope.download_temp = function () {
@@ -29,7 +44,7 @@ app.controller('Safety_iocController', ['$scope', '$http', '$state', function ($
     };
     // 上传文件
     $scope.uploadPic = function () {
-        console.log(1);
+        $scope.progress_if=true;
         var form = document.getElementById('upload'),
             formData = new FormData(form);
             console.log(form);
@@ -38,16 +53,27 @@ app.controller('Safety_iocController', ['$scope', '$http', '$state', function ($
             url: "./yiiapi/investigate/upload-file",
             type: "post",
             data: formData,
+            xhr: function () {　　　　
+                var xhr = $.ajaxSettings.xhr();　　　　
+                if (xhr.upload) {　　　　　　
+                    xhr.upload.onprogress = function (progress) {
+                        if (progress.lengthComputable) {
+                                $('#progress')[0].style='width:'+ parseInt(progress.loaded / progress.total * 100) +'%';
+                        }
+                    };
+                    xhr.upload.onloadstart = function () {
+                        console.log('started...');
+                    };　　　
+                }
+                return xhr;　
+            },
             processData: false,  // 告诉jQuery不要去处理发送的数据
              contentType: false,   // 告诉jQuery不要去设置Content-Type请求头
             success: function (res) {
+                console.log(res);
                 if (res) {
                     // alert("上传成功！");
                 }
-                console.log(res);
-                $("#pic").val("");
-                $(".showUrl").html(res);
-                $(".showPic").attr("src", res);
             },
             error: function (err) {
                 alert("网络连接失败,稍后重试", err);

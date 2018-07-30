@@ -197,10 +197,7 @@ app.controller('Safety_dnsController', ['$scope', '$http', '$state', function ($
             }
         }, function (start, end, label) {
             $scope.default_time.startTime = start.unix();
-            console.log($scope.default_time.startTime);
-
             $scope.default_time.endTime = end.unix();
-            console.log($scope.default_time.endTime);
         });
     };
     $scope.init();
