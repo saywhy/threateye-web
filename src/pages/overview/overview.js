@@ -20,6 +20,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
             rgbaLow8: 'rgba(74,164,110,.8)',
             rgbaLow2: 'rgba(74,164,110,.2)',
         };
+
         // 第一排
         $scope.sysState();
         $scope.file_flow_info(); // 中间 文件/流量信息
@@ -47,98 +48,111 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
     };
     // 第一排 左边图表--系统状态
     $scope.sysState = function (params) {
-        $scope.system = [{
-                name: '预警',
-                color: 'box-block-red',
-                num: 0
-            },
-            {
-                name: '健康',
-                color: 'box-block-green',
-                num: 3
-            },
-            {
-                name: '离线',
-                color: 'box-block-gray',
-                num: 0
-            }
-        ];
-        var myChart = echarts.init(document.getElementById('sys'));
-        var option = {
-            series: [{
-                    name: '访问来源',
-                    type: "pie",
-                    silent: 'true', //不响应hover事件
-                    radius: ["50%", "75%"],
-                    center: ["50%", "50%"],
-                    hoverAnimation: false, //是否开启 hover 在扇区上的放大动画效果。
-                    legendHoverLink: false, //是否启用图例 hover 时的联动高亮。
-                    hoverOffset: 0, //高亮扇区的偏移距离。
-                    avoidLabelOverlap: false,
-                    label: {
-                        normal: {
-                            show: false,
-                            position: "center"
-                        }
+        $http({
+            method: 'GET',
+            url: './yiiapi/alert/system-state'
+        }).success(function (data) {
+            console.log(data);
+            if (data.status == 0) {
+                $scope.sysState_data = data.data;
+                $scope.system = [{
+                        name: '预警',
+                        color: 'box-block-red',
+                        num: $scope.sysState_data.warning_count
                     },
-                    labelLine: {
-                        normal: {
-                            show: false
-                        }
+                    {
+                        name: '健康',
+                        color: 'box-block-green',
+                        num: $scope.sysState_data.healthy_count
                     },
-                    data: [{
-                            value: "10",
-                            name: '硬盘',
-                            itemStyle: {
+                    {
+                        name: '离线',
+                        color: 'box-block-gray',
+                        num: $scope.sysState_data.offline_count
+                    }
+                ];
+                var myChart = echarts.init(document.getElementById('sys'));
+                var option = {
+                    series: [{
+                            name: '访问来源',
+                            type: "pie",
+                            silent: 'true', //不响应hover事件
+                            radius: ["50%", "75%"],
+                            center: ["50%", "50%"],
+                            hoverAnimation: false, //是否开启 hover 在扇区上的放大动画效果。
+                            legendHoverLink: false, //是否启用图例 hover 时的联动高亮。
+                            hoverOffset: 0, //高亮扇区的偏移距离。
+                            avoidLabelOverlap: false,
+                            label: {
                                 normal: {
-                                    color: 'rgba(131,186,174,.8)'
+                                    show: false,
+                                    position: "center"
                                 }
-                            }
+                            },
+                            labelLine: {
+                                normal: {
+                                    show: false
+                                }
+                            },
+                            data: [{
+                                    value: $scope.sysState_data.warning_count,
+                                    name: '预警',
+                                    itemStyle: {
+                                        normal: {
+                                            color: $scope.colorType.rgbaHigh8
+                                        }
+                                    }
+                                },
+                                {
+                                    value: $scope.sysState_data.healthy_count,
+                                    name: '健康',
+                                    itemStyle: {
+                                        normal: {
+                                            color: 'rgba(131,186,174,.8)'
+                                        }
+                                    }
+                                },
+                                {
+                                    value: $scope.sysState_data.offline_count,
+                                    name: '离线',
+                                    itemStyle: {
+                                        normal: {
+                                            color: '#666'
+                                        }
+                                    }
+                                }
+                            ]
                         },
                         {
-                            value: "10",
-                            name: '内存',
-                            itemStyle: {
+                            name: '姓名',
+                            type: 'pie',
+                            radius: '50%',
+                            center: ['50%', '50%'],
+                            silent: 'true', //不响应hover事件
+                            hoverAnimation: false, //是否开启 hover 在扇区上的放大动画效果。
+                            legendHoverLink: false, //是否启用图例 hover 时的联动高亮。
+                            hoverOffset: 0, //高亮扇区的偏移距离。
+                            labelLine: {
                                 normal: {
-                                    color: 'rgba(131,186,174,.8)'
+                                    show: false
                                 }
-                            }
-                        },
-                        {
-                            value: "10",
-                            name: 'cpu',
+                            },
+                            data: [11],
                             itemStyle: {
                                 normal: {
-                                    color: 'rgba(131,186,174,.8)'
+                                    color: 'rgba(131,186,174,1)'
                                 }
                             }
                         }
                     ]
-                },
-                {
-                    name: '姓名',
-                    type: 'pie',
-                    radius: '50%',
-                    center: ['50%', '50%'],
-                    silent: 'true', //不响应hover事件
-                    hoverAnimation: false, //是否开启 hover 在扇区上的放大动画效果。
-                    legendHoverLink: false, //是否启用图例 hover 时的联动高亮。
-                    hoverOffset: 0, //高亮扇区的偏移距离。
-                    labelLine: {
-                        normal: {
-                            show: false
-                        }
-                    },
-                    data: [11],
-                    itemStyle: {
-                        normal: {
-                            color: 'rgba(131,186,174,1)'
-                        }
-                    }
-                }
-            ]
-        };
-        myChart.setOption(option);
+                };
+                myChart.setOption(option);
+            }
+        }).error(function (err) {
+            console.log(err);
+        })
+
+
     };
     // 第一排 中间图表--流量文件信息
     //文件 流量信息
@@ -162,7 +176,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
                     },
                     xAxis: {
                         type: 'category',
-                        data:  $scope.flow_file.statistics_time,
+                        data: $scope.flow_file.statistics_time,
                         boundaryGap: false,
                         splitLine: {
                             show: false,
@@ -303,7 +317,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
         })
 
     };
-  
+
     // hhtp
     // HTTPS
     // Dns  ssh  ftp 
@@ -856,6 +870,37 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
         $scope.iotcontent = false; //  隐藏弹窗
     };
     $scope.graph_echart = function () {
+        $scope.graph_echart_array = [];
+        $scope.graph_echart_array.item = {
+            name: '节点1',
+            x: 900,
+            y: 300,
+            symbol: $scope.oracle_base64,
+            tooltip: {
+                formatter: `设备名称：引擎/探针<br/>
+                IP地址：10.12.32.123<br/>
+                状态：在线`
+            },
+            //节点上面的文字	
+            label: {
+                normal: {
+                    position: "bottom",
+                    show: true,
+                    textStyle: {
+                        fontSize: 12,
+                        color: '#666',
+                        align: 'center',
+                    },
+                    formatter: '引擎/探针'
+                }
+            }
+        }
+        angular.forEach($scope.sysState_data.dev_info, function (item, index) {
+            if(item.dev_type == '1'){
+                $scope.graph_echart_array.name = '探针';
+
+            }
+        })
         var myChart = echarts.init(document.getElementById('graph'));
         var option = {
             tooltip: {},

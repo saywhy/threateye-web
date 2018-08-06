@@ -18,11 +18,13 @@
                             </div>
                             <div class="form-group col-md-3">
                                 <label>流量方向</label>
-                                <select class="form-control input_radius" style="background-color: #fff;" ng-model="direction.flow_direction" ng-options="x.num as x.type for x in statusData"></select>
+                                <select class="form-control input_radius" style="background-color: #fff;" 
+                                ng-init="direction.flow_direction=0"
+                                ng-model="direction.flow_direction" ng-options="x.num as x.type for x in statusData"></select>
                             </div>
                             <div class="form-group col-md-2">
                                 <label>主机IP</label>
-                                <input type="text" class="form-control input_radius" ng-model="url.source_port" ng-keyup="myKeyup($event)">
+                                <input type="text" class="form-control input_radius" ng-model="direction.host_ip" ng-keyup="myKeyup($event)">
                             </div>
                             <div class="form-group col-md-1">
                                 <label style="width: 100%;">&nbsp;</label>
@@ -40,17 +42,17 @@
                                     <th>时间</th>
                                     <th>主机IP</th>
                                     <th>流量</th>
-                                    <th>链接时长</th>
+                                    <th>流量方向</th>
                                     <th>目的地址</th>
                                     <th>应用</th>
                                 </tr>
-                                <tr style="cursor: pointer;" ng-repeat="item in pages" ng-click="detail(item)">
-                                    <td class="td_content" ng-bind="item.time"></td>
-                                    <td class="td_content" ng-bind="item.source_ip"></td>
-                                    <td class="td_content" ng-bind="item.dns_ip"></td>
-                                    <td class="td_content" ng-bind="item.dns_ip"></td>
-                                    <td class="td_content" ng-bind="item.dns_ip"></td>
-                                    <td class="td_content" ng-bind="item.host"></td>
+                                <tr style="cursor: pointer;" ng-repeat="item in pages.data.data" ng-click="detail(item)">
+                                    <td class="td_content" ng-bind="item.timestamp"></td>
+                                    <td class="td_content" ng-bind="item.host_ip"></td>
+                                    <td class="td_content" ng-bind="item.flow_bytes"></td>
+                                    <td class="td_content" ng-bind="item.flow_duration"></td>
+                                    <td class="td_content" ng-bind="item.dest_ip"></td>
+                                    <td class="td_content" ng-bind="item.application"></td>
                                 </tr>
                             </table>
                             <!-- angularjs分页 -->

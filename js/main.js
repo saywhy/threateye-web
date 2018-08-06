@@ -60,9 +60,15 @@ angular.module('app')
             //-------------------------------------------------------
             $scope.init_main = function () {
                 $scope.new_data_info = 0;
-                // setInterval(function(){
                 $scope.get_news();
-                // },100)
+                // 默认参数
+                $scope.app.settings = {
+                    navbarHeaderColor:'bg-black',
+                    navbarCollapseColor:'bg-white-only',
+                    asideColor:'bg-black',
+                    headerFixed:true,
+                    asideFixed:true
+                };
             }
             $scope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
                 // console.log(toState);
