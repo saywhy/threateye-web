@@ -768,6 +768,7 @@ body {
   float: left;
   width: 100%;
   padding-bottom: 50px;
+  min-height: 620px
 }
 
 .app-footer {

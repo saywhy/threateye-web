@@ -205,14 +205,14 @@ angular.module('app')
                             ]
                         }
                     })
-                    // 设置-基础设置
-                    .state('app.set_basic', {
-                        url: '/set_basic',
-                        templateUrl: 'src/pages/set_basic/set_basic.html',
+                    // 设置-yara
+                    .state('app.set_yara', {
+                        url: '/set_yara',
+                        templateUrl: 'src/pages/set_yara/set_yara.html',
                         resolve: {
                             deps: ['$ocLazyLoad',
                                 function ($ocLazyLoad) {
-                                    return $ocLazyLoad.load(['src/pages/set_basic/set_basic.js']);
+                                    return $ocLazyLoad.load(['src/pages/set_yara/set_yara.js']);
                                 }
                             ]
                         }

@@ -46,28 +46,53 @@
                         </p>
                     </div>
                     <div class="part_detail">
-                        <h4>Object information</h4>
-                        <p>
-                            <span >IP、URL、域名类告警:</span>
-                            <span class="part_detail_span">目前通过威胁情报匹配产生，使用威胁情报信息内容进行展示，参照iConnect的展示信息即可
-                            </span>
-                        </p>
-                        <p>
-                            <span>文件类告警:</span>
-                            <span class="part_detail_span">主要通过威胁情报、SDK、沙箱、Yara来进行检测
-                            </span>
-                        </p>
-                        <p>
-                            <span >IP、URL、域名类告警:</span>
-                            <span class="part_detail_span">目前通过威胁情报匹配产生，使用威胁情报信息内容进行展示，参照iConnect的展示信息即可
-                            </span>
-                        </p>
-                        <p>
-                            <span class="alarm_detai_span">IP、URL、域名类告警:</span>
-                            <span class="part_detail_span">目前通过威胁情报匹配产生，使用威胁情报信息内容进行展示，参照iConnect的展示信息即可
-                            </span>
-                        </p>
+                        <!-- <h4>Object information</h4> -->
+                        <h4>关联信息</h4>
+                        <table class="table table-hover ng-cloak">
+                                <tr>
+                                    <th>文件名</th>
+                                    <th>文件大小</th>
+                                    <th>MD5</th>
+                                    <th>SHA256</th>
+                                    <th>威胁名称</th>
+                                </tr>
+                                <tr style="cursor: pointer;" ng-click="detail(item)">
+                                    <td >a232gh232a2323s23 </td>
+                                    <td > 395KB</td>
+                                    <td >1e09ea42b23b123a23bd232e3</td>
+                                    <td >23b123a23bd232e3gh232a1e09ea42</td>
+                                    <td >威胁名称</td>
+                                </tr>
+                                <tr style="cursor: pointer;" ng-click="detail(item)">
+                                        <td >a232gh232a2323s23 </td>
+                                        <td > 395KB</td>
+                                        <td >1e09ea42b23b123a23bd232e3</td>
+                                        <td >23b123a23bd232e3gh232a1e09ea42</td>
+                                        <td >威胁名称</td>
+                                    </tr>
+                            </table>
                     </div>
+                    <div class="part_detail">
+                            <h4>网络事件</h4>
+                            <table class="table table-hover ng-cloak">
+                                    <tr>
+                                        <th>方法</th>
+                                        <th>源地址</th>
+                                        <th>目的地址</th>
+                                        <th>URL</th>
+                                        <th>用户代理</th>
+                                        <th>推荐人</th>
+                                    </tr>
+                                    <tr style="cursor: pointer;" ng-click="detail(item)">
+                                        <td >GET</td>
+                                        <td > 10.28.0.111.22</td>
+                                        <td >10.68.16.85</td>
+                                        <td >http://xxxx//xxx/xx.exe</td>
+                                        <td >Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN) AppleWebKit/533.21.1 (KHTML, like Gecko) Version/5.0.5 Safari/533.21.1</td>
+                                        <td >http://xxxx//xxx/xx.exe</td>
+                                    </tr>
+                                </table>
+                        </div>
                     <div class="part_detail">
                         <div class="box box-solid">
                             <div class="box-header with-border" style="border:0">

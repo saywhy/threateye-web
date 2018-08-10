@@ -13,15 +13,17 @@ app.controller('Safety_iocController', ['$scope', '$http', '$state', function ($
         });
         $("input[type='file']").change(function (target) {
             $("#avatval").val($(this).val());
-            if (target.target.value.split('.')[1].indexOf('txt') == -1 && target.target.value.split('.')[1].indexOf('ioc') == -1) {
-                zeroModal.error(' 请重新选择.txt或.ioc格式的文件上传');
-                $scope.$apply(function () {
-                    $scope.upload_true = true;
-                })
-            } else {
-                $scope.$apply(function () {
-                    $scope.upload_true = false;
-                })
+            if (target.target.value) {
+                if (target.target.value.split('.')[1].indexOf('txt') == -1 && target.target.value.split('.')[1].indexOf('ioc') == -1) {
+                    zeroModal.error(' 请重新选择.txt或.ioc格式的文件上传');
+                    $scope.$apply(function () {
+                        $scope.upload_true = true;
+                    })
+                } else {
+                    $scope.$apply(function () {
+                        $scope.upload_true = false;
+                    })
+                }
             }
         });
         $scope.progress_if = false;
@@ -49,6 +51,9 @@ app.controller('Safety_iocController', ['$scope', '$http', '$state', function ($
             console.log(data);
             if (data.status == 0) {
                 $scope.pages = data.data;
+                angular.forEach( $scope.pages.data,function(item,index){
+                    item.create_percent = item.create_percent +'%';
+                });
             }
             zeroModal.close(loading);
         }).error(function () {
@@ -107,7 +112,7 @@ app.controller('Safety_iocController', ['$scope', '$http', '$state', function ($
         })
     };
     //搜索
-    $scope.search = function(){
+    $scope.search = function () {
         $scope.getPage();
     };
     //下载列表文件
@@ -118,8 +123,8 @@ app.controller('Safety_iocController', ['$scope', '$http', '$state', function ($
                 $http({
                     method: 'get',
                     url: './yiiapi/investigate/ioc-scanning-download-test',
-                    params:{
-                        'id':id
+                    params: {
+                        'id': id
                     }
                 }).success(function (data) {
                     console.log(data);

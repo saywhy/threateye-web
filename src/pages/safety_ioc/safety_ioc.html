@@ -22,11 +22,11 @@
                     </div>
                 </div>
                 <div style="margin:20px">
-                    <span> 请上传.txt（
-                        <a ng-click="download_temp()"> 下载模版</a>）或者.ioc格式文件。</span>
+                    <span> 请选择.txt（
+                        <a ng-click="download_temp()"> 下载模版</a>）或者.ioc的格式文件上传。</span>
                 </div>
                 <div class="form-group col-md-1">
-                    <button class="form-control btn btn-primary" style="max-width: 80px;" ng-click="search()">搜&nbsp;&nbsp;索</button>
+                    <button class="form-control btn btn-primary btn_style" style="max-width: 80px;" ng-click="search()">搜&nbsp;&nbsp;索</button>
                 </div>
                 <div class="col-md-6" style="margin-top: 10px">
                <span>文件上传成功之后，请点击搜索按钮，进行文件筛选。</span>     
@@ -50,7 +50,7 @@
                                                     </tr>
                                                     <tr ng-repeat="item in pages.data">
                                                         <td ng-bind="item.upload_file_name">ioc文件</td>
-                                                        <td ng-bind="item.create_percent">50%</td>
+                                                        <td ng-bind="item.create_percent ">50%</td>
                                                         <td ng-bind="item.create_status == 0?'失败':'成功'">完成</td>
                                                         <td class="cursor">
                                                             <img src="../src/images/icos/download.png" ng-click="download(item.id)" width="16" height="16" alt="">
@@ -94,7 +94,6 @@
                                                         <li>
                                                             <a href="javascript:void(0);" ng-if="pages.pageNow<pages.maxPage-3">...</a>
                                                         </li>
-
                                                         <li>
                                                             <a href="javascript:void(0);" ng-click="getPage(pages.maxPage)" ng-bind="pages.maxPage" ng-if="pages.pageNow<pages.maxPage"></a>
                                                         </li>

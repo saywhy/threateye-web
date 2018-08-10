@@ -235,7 +235,11 @@
     <div class="iot_pop" ng-show="iotcontent">
         <div class="iot_pop_content">
             <p class="iot_pop_content_head">
-                <i class="fa fa-windows"></i> 192.168.1.1 的健康状况 </p>
+                <i class="fa fa-windows"></i> 
+                <span ng-bind="iot_detail_title.data.name"></span>
+                <span ng-bind="iot_detail_title.data.dev_ip"></span>
+                <span>的健康情况</span>
+             </p>
             <span class="closed" ng-click="ito_popfasle(event)">
                 <i class="glyphicon glyphicon-remove"></i>
             </span>

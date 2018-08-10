@@ -3,6 +3,7 @@ app.controller('Set_ruleController', ['$scope', '$http', '$state', function ($sc
     // 初始化
     $scope.init = function (params) {
         $scope.upload_true = true;
+        $scope.offline_update_button = true;
         $("#avatval").click(function () {
             $("input[type='file']").trigger('click');
             $scope.$apply(function(){
@@ -12,17 +13,26 @@ app.controller('Set_ruleController', ['$scope', '$http', '$state', function ($sc
         });
         $("input[type='file']").change(function (target) {
             $("#avatval").val($(this).val());
-            if(target.target.value.split('.')[1].indexOf('tar') == -1){
-                zeroModal.error(' 请重新选择.tar.gz格式的文件上传');
-                $scope.$apply(function(){
-                    $scope.upload_true = true;
-                })
+            if(target.target.value){
+                if(target.target.value.split('.')[1].indexOf('tgz') == -1){
+                    zeroModal.error(' 请重新选择.tgz格式的文件上传');
+                      // 请上传名为sdk.tgz、ips.tgz、sandbox.tgz或yara.tgz的文件
+                    $scope.$apply(function(){
+                        $scope.upload_true = true;
+                        $scope.offline_update_button = true;
+                    })
+                }else{
+                    $scope.$apply(function(){
+                        $scope.upload_true = false;
+                    })
+                }
             }else{
                 $scope.$apply(function(){
-                    $scope.upload_true = false;
+                    $scope.upload_true = true;
+                    $scope.offline_update_button = true;
                 })
-              
             }
+         
         });
         $scope.progress_if=false;
     };
@@ -66,9 +76,11 @@ app.controller('Set_ruleController', ['$scope', '$http', '$state', function ($sc
             zeroModal.error('更新失败！');
         })
     };
+  
     // 上传文件
     $scope.uploadPic = function () {
         $scope.progress_if=true;
+        $scope.offline_update_button = true;
         var form = document.getElementById('upload'),
             formData = new FormData(form);
         $.ajax({
@@ -96,6 +108,10 @@ app.controller('Set_ruleController', ['$scope', '$http', '$state', function ($sc
                 console.log(res);
                 if (res.status== 0) {
                     zeroModal.success('上传成功');
+                    $scope.$apply(function(){
+                        $scope.offline_update_button = false;
+                    })
+                   
                 }else if(res.status== 1){
                     zeroModal.error(res.msg);
                 }
@@ -105,7 +121,5 @@ app.controller('Set_ruleController', ['$scope', '$http', '$state', function ($sc
             }
         })
     };
-
-
     $scope.init();
 }]);

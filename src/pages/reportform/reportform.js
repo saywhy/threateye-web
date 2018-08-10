@@ -88,7 +88,7 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter', 
             // 获取echarts数据
             console.log($scope.selectedName);
             if ($scope.selectedName == 'docx') {
-                // var loading = zeroModal.loading(4);
+                // docx 报表
                 $http({
                     method: 'get',
                     url: './yiiapi/report/create-echarts-img',
@@ -99,12 +99,25 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter', 
                         report_type: $scope.selectedName
                     }
                 }).success(function (data) {
-                    console.log(data.data.threat_level);
+                    console.log(data);
                     if (data.status == 0) {
                         zeroModal.close(loading);
                         // 未处理告警
-                        $scope.threat_level = data.data.threat_level;
-                        $scope.untreatedAlarm($scope.threat_level);
+                        if (data.data.threat_level) {
+                            $scope.untreatedAlarm(data.data.threat_level);
+                        }
+                        //威胁使用应用协议
+                        if (data.data.threat_protocol) {
+                            $scope.application_protocol(data.data.threat_protocol);
+                        }
+                        //告警趋势
+                        if (data.data.alert_trend) {
+                            $scope.alert_trend(data.data.alert_trend);
+                        }
+                        //告警类型
+                        if(data.data.alert_type){
+                            $scope.alert_type(data.data.alert_type);
+                        }
                         var loading = zeroModal.loading(4);
                         $http({
                             method: 'post',
@@ -114,7 +127,10 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter', 
                                 etime: new Date($scope.endTime).valueOf() / 1000,
                                 report_name: $scope.reportName,
                                 report_type: $scope.selectedName,
-                                threat_level: $scope.base64_untreatedAlarm
+                                threat_level: $scope.base64_untreatedAlarm,
+                                alert_type: $scope.base64_alert_type,
+                                alert_trend: $scope.base64_alert_trend,
+                                threat_protocol: $scope.base64_application_protocol,
                             }
                         }).success(function (data) {
                             console.log(data);
@@ -122,8 +138,8 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter', 
                                 // 生成成功
                                 zeroModal.success("保存成功!");
                                 $scope.getDataInfo(1);
-                                zeroModal.close(loading);
                             }
+                            zeroModal.close(loading);
                         }).error(function () {
                             zeroModal.error("保存失败!");
                             zeroModal.close(loading);
@@ -134,6 +150,7 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter', 
                     zeroModal.close(loading);
                 })
             } else {
+                // cvs 报表
                 var loading = zeroModal.loading(4);
                 $http({
                     method: 'post',
@@ -148,10 +165,13 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter', 
                     console.log(data);
                     if (data.data.status == 0) {
                         // 添加成功，刷新数据 
-                        zeroModal.close(loading);
                         zeroModal.success("保存成功!");
                         $scope.getDataInfo(1);
                     }
+                    if(data.data.status == 1){
+                        zeroModal.error(data.data.msg);
+                    }
+                    zeroModal.close(loading);
                 }, function (error, status, headers, config) {
                     zeroModal.close(loading);
                     zeroModal.error("保存失败!");
@@ -221,7 +241,7 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter', 
                 name: '未处理告警',
                 type: 'pie',
                 animation: false,
-                radius: '50%',
+                radius: '60%',
                 center: ['50%', '50%'],
                 hoverAnimation: false, //是否开启 hover 在扇区上的放大动画效果。
                 hoverOffset: 0, //高亮扇区的偏移距离。
@@ -274,8 +294,220 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter', 
         };
         myChart.setOption(option);
         $scope.base64_untreatedAlarm = myChart.getDataURL();
-        console.log(myChart.getDataURL());
+        // console.log(myChart.getDataURL());
     };
+    // 柱状图-威胁应用协议
+    $scope.application_protocol = function (params) {
+        console.log(params);
+        $scope.application_protocol_name = [];
+        $scope.application_protocol_value = [];
+        angular.forEach(params, function (item, index) {
+            $scope.application_protocol_name.push(item.application);
+            $scope.application_protocol_value.push(item.count);
+        });
+        var myChart = echarts.init(document.getElementById('application_protocol'));
+        var option = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                top: '5%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: $scope.application_protocol_name,
+                axisTick: {
+                    show: false
+                },
+                axisLabel: {
+                    margin: 5,
+                    textStyle: {
+                        fontSize: 16
+                    }
+                }
+            },
+            yAxis: [{
+                type: 'value',
+                axisTick: {
+                    show: false
+                },
+                axisLabel: {
+                    margin: 5,
+                    textStyle: {
+                        fontSize: 16
+                    }
+                }
+            }],
+            series: [{
+                // name: '高危',
+                type: 'bar',
+                barWidth: 20,
+                stack: '搜索引擎',
+                itemStyle: {
+                    normal: {
+                        barBorderRadius: [4, 4, 4, 4], //柱形图圆角，初始化效果
+                        color: 'rgba(150,33,22,.8)'
+                    }
+                },
+                data: $scope.application_protocol_value
+            }]
+        };
+        myChart.setOption(option);
+        $scope.base64_application_protocol = myChart.getDataURL();
+    };
+    //告警趋势
+    $scope.alert_trend = function (params) {
+        $scope.alert_trend_name = [];
+        $scope.alert_trend_value = [];
+        angular.forEach(params, function (item, index) {
+            $scope.alert_trend_name.push(item.date_time);
+            $scope.alert_trend_value.push(item.count);
+        })
+        var myChart = echarts.init(document.getElementById('alert_trend'));
+        var option_file = {
+            grid: {
+                left: 45,
+                right: 30,
+                top: 15,
+                bottom: 25
+            },
+            xAxis: {
+                type: 'category',
+                data: $scope.alert_trend_name,
+                boundaryGap: false,
+                splitLine: {
+                    show: false,
+                    interval: 'auto', //0：表示全部显示不间隔；auto:表示自动根据刻度个数和宽度自动设置间隔个数
+                    maxInterval: 3600 * 24 * 1000,
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLabel: {
+                    margin: 5,
+                    textStyle: {
+                        fontSize: 16
+                    }
+                }
+            },
+            yAxis: {
+                type: 'value',
+                axisTick: {
+                    show: false
+                },
+                axisLabel: {
+                    margin: 5,
+                    textStyle: {
+                        fontSize: 16
+                    }
+                }
+            },
+            series: [{
+                name: '文件',
+                type: 'line',
+                smooth: true,
+                showSymbol: false,
+                symbol: 'circle',
+                symbolSize: 6,
+                data: $scope.alert_trend_value,
+                areaStyle: {
+                    normal: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                            offset: 0,
+                            color: 'rgba(150,33,22,.8)'
+                        }, {
+                            offset: 1,
+                            color: 'rgba(150,33,22,.2)'
+                        }], false)
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        color: 'rgba(150,33,22,1)'
+                    }
+                },
+                lineStyle: {
+                    normal: {
+                        width: 3
+                    }
+                }
+            }]
+        };
+        myChart.setOption(option_file);
+        $scope.base64_alert_trend = myChart.getDataURL();
+    };
+    //告警类型
+    $scope.alert_type = function(params){
+        $scope.alert_type_name = [];
+        $scope.alert_type_value = [];
+        angular.forEach(params, function (item, index) {
+            $scope.alert_type_name.push(item.alert_type);
+            $scope.alert_type_value.push(item.alert_count);
+        });
+        var myChart = echarts.init(document.getElementById('alert_type'));
+        var option = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                top: '5%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: $scope.alert_type_name,
+                axisTick: {
+                    show: false
+                },
+                axisLabel: {
+                    margin: 5,
+                    textStyle: {
+                        fontSize: 16
+                    }
+                }
+            },
+            yAxis: [{
+                type: 'value',
+                axisTick: {
+                    show: false
+                },
+                axisLabel: {
+                    margin: 5,
+                    textStyle: {
+                        fontSize: 16
+                    }
+                }
+            }],
+            series: [{
+                // name: '高危',
+                type: 'bar',
+                barWidth: 20,
+                stack: '搜索引擎',
+                itemStyle: {
+                    normal: {
+                        barBorderRadius: [4, 4, 4, 4], //柱形图圆角，初始化效果
+                        color: 'rgba(150,33,22,.8)'
+                    }
+                },
+                data: $scope.alert_type_value
+            }]
+        };
+        myChart.setOption(option);
+        $scope.base64_alert_type = myChart.getDataURL();
+    }
     // 下载报表
     $scope.download = function (params) {
         zeroModal.confirm({

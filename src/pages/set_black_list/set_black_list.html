@@ -10,10 +10,10 @@
                                 <h4>白名单</h4>
                             </div>
                             <div class="form-group col-md-2 col-md-offset-7 form_class">
-                                <button class="form-control btn btn-primary" style="max-width: 93px;margin-top: 3px;" ng-click="search()">添加白名单</button>
+                                <button class="form-control btn btn-primary btn_style" style="max-width: 93px;margin-top: 3px;" ng-click="search()">添加白名单</button>
                             </div>
                             <div class="form-group col-md-2  form_class">
-                                <button class="form-control btn btn-primary" style="max-width: 93px;margin-top: 3px;" ng-click="search()">批量导入</button>
+                                <button class="form-control btn btn-primary btn_style" style="max-width: 93px;margin-top: 3px;" ng-click="search()">批量导入</button>
                             </div>
                         </div>
                         <div class="box box-solid" style="margin-top:10px;">
@@ -23,13 +23,15 @@
                                         <table class="table table-hover  ng-cloak">
                                             <tr>
                                                 <th style="width:40px">序号</th>
-                                                <th>MD5</th>
+                                                <th>指标</th>
+                                                <th>类型</th>
                                                 <th>创建时间</th>
                                                 <th>更新时间</th>
                                                 <th>操作</th>
                                             </tr>
                                             <tr>
                                                 <td>1</td>
+                                                <td>f34a9d6df5c26f311c6cb3cc5fbd4186</td>
                                                 <td>f34a9d6df5c26f311c6cb3cc5fbd4186</td>
                                                 <td>2018-05-08 10:32</td>
                                                 <td>2018-05-08 10:47</td>
@@ -39,6 +41,7 @@
                                             </tr>
                                             <tr>
                                                 <td>2</td>
+                                                <td>f34a9d6df5c26f311c6cb3cc5fbd4186</td>
                                                 <td>f34a9d6df5c26f311c6cb3cc5fbd4186</td>
                                                 <td>2018-05-08 10:32</td>
                                                 <td>2018-05-08 10:47</td>
@@ -88,98 +91,6 @@
                                                 </li>
                                             </ul>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="form-group col-md-1 form_class">
-                                <h4>黑名单</h4>
-                            </div>
-                            <div class="form-group col-md-2 col-md-offset-7 form_class">
-                                <button class="form-control btn btn-primary" style="max-width: 93px;margin-top: 3px;" ng-click="search()">添加黑名单</button>
-                            </div>
-                            <div class="form-group col-md-2  form_class">
-                                <button class="form-control btn btn-primary" style="max-width: 93px;margin-top: 3px;" ng-click="search()">批量导入</button>
-                            </div>
-                        </div>
-                        <div class="box box-solid" style="margin-top:10px;">
-                            <div id="myTabContent" class="tab-content">
-                                <div class="tab-pane fade in active">
-                                    <div class="box-body">
-                                        <table class="table table-hover  ng-cloak">
-                                            <tr>
-                                                <th style="width:40px">序号</th>
-                                                <th>MD5</th>
-                                                <th>创建时间</th>
-                                                <th>更新时间</th>
-                                                <th>操作</th>
-                                            </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>f34a9d6df5c26f311c6cb3cc5fbd4186</td>
-                                                <td>2018-05-08 10:32</td>
-                                                <td>2018-05-08 10:47</td>
-                                                <td class="cursor">&nbsp;&nbsp;
-                                                    <img src="../src/images/icos/delate.png" ng-click="del(item.id)" width="16" height="16" alt="">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>f34a9d6df5c26f311c6cb3cc5fbd4186</td>
-                                                <td>2018-05-08 10:32</td>
-                                                <td>2018-05-08 10:47</td>
-                                                <td class="cursor">&nbsp;&nbsp;
-                                                    <img src="../src/images/icos/delate.png" ng-click="del(item.id)" width="16" height="16" alt="">
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <!-- angularjs分页 -->
-                                        <div style="border-top: 1px solid #f4f4f4;padding: 10px;">
-                                            <em>共有
-                                                <span ng-bind="pages0.count"></span>条</em>
-                                            <!-- angularjs分页 -->
-                                            <ul class="pagination pagination-sm no-margin pull-right ng-cloak">
-                                                <li>
-                                                    <a href="javascript:void(0);" ng-click="getPage0(pages0.pageNow-1)" ng-if="pages0.pageNow>1">上一页</a>
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:void(0);" ng-click="getPage0(1)" ng-if="pages0.pageNow>1">1</a>
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:void(0);" ng-if="pages0.pageNow>4">...</a>
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:void(0);" ng-click="getPage0(pages0.pageNow-2)" ng-bind="pages0.pageNow-2" ng-if="pages0.pageNow>3"></a>
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:void(0);" ng-click="getPage0(pages0.pageNow-1)" ng-bind="pages0.pageNow-1" ng-if="pages0.pageNow>2"></a>
-                                                </li>
-                                                <li class="active">
-                                                    <a href="javascript:void(0);" ng-bind="pages0.pageNow"></a>
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:void(0);" ng-click="getPage0(pages0.pageNow+1)" ng-bind="pages0.pageNow+1" ng-if="pages0.pageNow<pages0.maxPage-1"></a>
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:void(0);" ng-click="getPage0(pages0.pageNow+2)" ng-bind="pages0.pageNow+2" ng-if="pages0.pageNow<pages0.maxPage-2"></a>
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:void(0);" ng-if="pages0.pageNow<pages0.maxPage-3">...</a>
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:void(0);" ng-click="getPage0(pages0.maxPage)" ng-bind="pages0.maxPage" ng-if="pages0.pageNow<pages0.maxPage"></a>
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:void(0);" ng-click="getPage0(pages0.pageNow+1)" ng-if="pages0.pageNow<pages0.maxPage">下一页</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <!-- /.angularjs分页 -->
                                     </div>
                                 </div>
                             </div>

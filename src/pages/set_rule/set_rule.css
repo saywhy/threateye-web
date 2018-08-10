@@ -1,7 +1,8 @@
-.rule_item{
-    padding: 10px;
+.rule_item {
+    padding: 20px;
 }
-.rule_item_header{
+
+.rule_item_header {
     font-size: 16px;
     padding-bottom: 5px;
     border-bottom: 1px solid #eee;
@@ -13,6 +14,7 @@ a[class="button-selectimg"] {
     border: 1px dashed #00A2D4;
     border-radius: 2px;
 }
+
 input[id="avatval"] {
     padding: 3px 6px;
     padding-left: 10px;
@@ -30,10 +32,10 @@ input[type='file'] {
     display: none;
 }
 
-.upload_button{
-    height: 25px;
-    font-size: 10px;
-    line-height: 25px;
+.upload_button {
+    height: 25px !important;
+    font-size: 10px !important;
+    line-height: 25px !important;
     padding: 0;
     width: 70px;
 }

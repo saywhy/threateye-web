@@ -71,8 +71,6 @@ app.controller('SigninFormController', ['$scope', '$http', '$state', function ($
                 zeroModal.close(loading);
             });
         }
-      
-      
     };
     // 登录
     $scope.login = function () {

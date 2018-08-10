@@ -210,8 +210,5 @@ app.controller('Set_userController', ['$scope', '$http', '$state', function ($sc
             zeroModal.close(loading);
         });
     };
-
-
-
     $scope.init();
 }]);

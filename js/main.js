@@ -17,7 +17,22 @@ angular.module('app')
                 version: '1.0.0',
                 http: 'http://192.168.1.253',
                 https: 'http://192.168.1.253',
-            }
+            };
+            $scope.colorType = {
+                high: '#962116',
+                mid: '#F5BF41',
+                low: '#4AA46E',
+                rgbaHigh10: 'rgba(150,33,22,1)',
+                rgbaHigh8: 'rgba(150,33,22,.8)',
+                rgbaHigh2: 'rgba(150,33,22,.2)',
+                rgbaMid: 'rgba(245,191,65,1)',
+                rgbaMid8: 'rgba(245,191,65,.8)',
+                rgbaMid2: 'rgba(245,191,65,.2)',
+                rgbaLow10: 'rgba(74,164,110,1)',
+                rgbaLow8: 'rgba(74,164,110,.8)',
+                rgbaLow2: 'rgba(74,164,110,.2)',
+            };
+       
             // save settings to local storage
             if (angular.isDefined($localStorage.settings)) {
                 $scope.app.settings = $localStorage.settings;

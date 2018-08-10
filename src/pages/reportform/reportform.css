@@ -99,7 +99,7 @@
 .echarts{
     display: none;
 }
-#untreatedalarm_report {
+#untreatedalarm_report,#application_protocol,#alert_trend,#alert_type{
     width: 1000px;
     height: 600px;
 }
