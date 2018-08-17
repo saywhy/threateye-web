@@ -35,6 +35,7 @@ app.controller('Safety_directionController', ['$scope', '$http', '$state', funct
     // 获取数据
     $scope.getPage = function (pageNow) {
         pageNow = pageNow ? pageNow : 1;
+        $scope.index_num = (pageNow-1) * 10;
         $scope.params_data = {
             flow_direction: $scope.direction.flow_direction,
             host_ip: $scope.direction.host_ip,

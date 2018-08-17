@@ -41,7 +41,8 @@
                         <div class="row margin">
                             <table class="table table-hover ng-cloak">
                                 <tr>
-                                    <th>时间</th>
+                                    <th style="width:40px">序号</th>
+                                    <th style="width:145px">时间</th>
                                     <th>文件名</th>
                                     <th>哈希值</th>
                                     <th>来源</th>
@@ -49,6 +50,7 @@
                                     <th>应用</th>
                                 </tr>
                                 <tr style="cursor: pointer;" ng-repeat="item in pages.data.data">
+                                    <td ng-bind="$index + 1 + index_num">1</td>
                                     <td class="td_content" ng-bind="item.timestamp"></td>
                                     <td class="td_content" ng-bind="item.file_name"></td>
                                     <td class="td_content" ng-bind="item.md5"></td>

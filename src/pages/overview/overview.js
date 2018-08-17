@@ -1014,14 +1014,13 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
                 $scope.$apply(function () {
                     $scope.iotcontent = true;
                     setTimeout(function () {
-                        $scope.iot_detail_top(params); //iot具体cpu/内存/硬盘
-                        $scope.iot_detail_bom(params); // iot具体流量
+                        $scope.iot_detail_top(params); //iot具体cpu/内存/硬盘/流量
                     }, 10);
                 })
             }
         });
     };
-    // iot_detail -  iot具体cpu/内存/硬盘
+    // iot_detail - 
     $scope.iot_detail_top = function (params) {
         console.log(params.data.dev_ip);
         $http({
@@ -1045,6 +1044,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
                     $scope.sys_detail_flow.unshift(item.flow);
                     $scope.sys_detail_time.unshift(item.statistics_time);
                 })
+                // iot具体cpu/内存/硬盘
                 var myChart = echarts.init(document.getElementById('iot_detail_top'));
                 var option = {
                     grid: {
@@ -1220,6 +1220,121 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
                 };
                 myChart.setOption(option);
                 myChart.resize();
+                // iot具体流量
+                var myChart_detail_flow = echarts.init(document.getElementById('iot_detail_bom'));
+                var option_detail_flow = {
+                    grid: {
+                        left: 40,
+                        right: 20,
+                        top: 15,
+                        bottom: 85
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            lineStyle: {
+                                color: '#ddd'
+                            }
+                        },
+                        backgroundColor: 'rgba(255,255,255,1)',
+                        padding: [5, 10],
+                        textStyle: {
+                            color: '#7588E4',
+                        },
+                        extraCssText: 'box-shadow: 0 0 5px rgba(0,0,0,0.3)'
+                    },
+                    legend: {
+                        bottom: 20,
+                        left: 20,
+                        orient: 'horizontal',
+                        selected: {
+                            // 选中'系列1'
+                            '流量': true
+                        },
+                        data: ['流量']
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: $scope.sys_detail_time,
+                        boundaryGap: false,
+                        splitLine: {
+                            show: false,
+                            interval: 'auto',
+                            lineStyle: {
+                                color: ['#D4DFF5']
+                            }
+                        },
+                        axisTick: {
+                            show: false
+                        },
+                        axisLine: {
+                            lineStyle: {
+                                color: '#666'
+                            }
+                        },
+                        axisLabel: {
+                            margin: 10,
+                            textStyle: {
+                                fontSize: 10
+                            }
+                        }
+                    },
+                    yAxis: {
+                        type: 'value',
+                        splitLine: {
+                            lineStyle: {
+                                color: ['#D4DFF5']
+                            }
+                        },
+                        axisTick: {
+                            show: false
+                        },
+                        axisLine: {
+                            lineStyle: {
+                                color: '#666'
+                            }
+                        },
+                        axisLabel: {
+                            margin: 10,
+                            textStyle: {
+                                fontSize: 10
+                            }
+                        }
+                    },
+                    series: [{
+                        name: '流量',
+                        type: 'line',
+                        smooth: true,
+                        showSymbol: false,
+                        symbol: 'circle',
+                        symbolSize: 6,
+                        data: $scope.sys_detail_flow,
+                        areaStyle: {
+                            normal: {
+                                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                    offset: 0,
+                                    color: $scope.colorType.rgbaLow8
+                                }, {
+                                    offset: 1,
+                                    color: $scope.colorType.rgbaLow2
+                                }], false)
+                            }
+                        },
+                        itemStyle: {
+                            normal: {
+                                color: $scope.colorType.rgbaLow10
+                            }
+                        },
+                        lineStyle: {
+                            normal: {
+                                width: 3
+                            }
+                        }
+                    }]
+                };
+                myChart_detail_flow.setOption(option_detail_flow);
+                myChart_detail_flow.resize();
+
             }
             if(data.status == 1){
                 zeroModal.error(data.msg);
@@ -1227,122 +1342,6 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
         }).error(function (err) {
             console.log(err);
         })
-    };
-    // iot_detail -  iot具体流量
-    $scope.iot_detail_bom = function (params) {
-        var myChart = echarts.init(document.getElementById('iot_detail_bom'));
-        var option = {
-            grid: {
-                left: 40,
-                right: 20,
-                top: 15,
-                bottom: 85
-            },
-            tooltip: {
-                trigger: 'axis',
-                axisPointer: {
-                    lineStyle: {
-                        color: '#ddd'
-                    }
-                },
-                backgroundColor: 'rgba(255,255,255,1)',
-                padding: [5, 10],
-                textStyle: {
-                    color: '#7588E4',
-                },
-                extraCssText: 'box-shadow: 0 0 5px rgba(0,0,0,0.3)'
-            },
-            legend: {
-                bottom: 20,
-                left: 20,
-                orient: 'horizontal',
-                selected: {
-                    // 选中'系列1'
-                    '流量': true
-                },
-                data: ['流量']
-            },
-            xAxis: {
-                type: 'category',
-                data: ['00:00', '2:00', '4:00', '6:00', '8:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', "22:00"],
-                boundaryGap: false,
-                splitLine: {
-                    show: false,
-                    interval: 'auto',
-                    lineStyle: {
-                        color: ['#D4DFF5']
-                    }
-                },
-                axisTick: {
-                    show: false
-                },
-                axisLine: {
-                    lineStyle: {
-                        color: '#666'
-                    }
-                },
-                axisLabel: {
-                    margin: 10,
-                    textStyle: {
-                        fontSize: 10
-                    }
-                }
-            },
-            yAxis: {
-                type: 'value',
-                splitLine: {
-                    lineStyle: {
-                        color: ['#D4DFF5']
-                    }
-                },
-                axisTick: {
-                    show: false
-                },
-                axisLine: {
-                    lineStyle: {
-                        color: '#666'
-                    }
-                },
-                axisLabel: {
-                    margin: 10,
-                    textStyle: {
-                        fontSize: 10
-                    }
-                }
-            },
-            series: [{
-                name: '流量',
-                type: 'line',
-                smooth: true,
-                showSymbol: false,
-                symbol: 'circle',
-                symbolSize: 6,
-                data: ['1200', '1400', '1008', '1411', '1026', '1288', '1300', '800', '1100', '1000', '1118', '1322'],
-                areaStyle: {
-                    normal: {
-                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                            offset: 0,
-                            color: $scope.colorType.rgbaLow8
-                        }, {
-                            offset: 1,
-                            color: $scope.colorType.rgbaLow2
-                        }], false)
-                    }
-                },
-                itemStyle: {
-                    normal: {
-                        color: $scope.colorType.rgbaLow10
-                    }
-                },
-                lineStyle: {
-                    normal: {
-                        width: 3
-                    }
-                }
-            }]
-        };
-        myChart.setOption(option);
-        myChart.resize();
     };
     //弹窗系统状态图表
     $scope.sysEchart = function (params) {

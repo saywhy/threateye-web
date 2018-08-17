@@ -50,7 +50,8 @@
                         <div class="row margin">
                             <table class="table table-hover ng-cloak">
                                 <tr>
-                                    <th>时间</th>
+                                    <th style="width:40px">序号</th>
+                                    <th style="width:145px">时间</th>
                                     <th>源地址</th>
                                     <th>源端口</th>
                                     <th>目的地址</th>
@@ -59,6 +60,7 @@
                                     <th>应用</th>
                                 </tr>
                                 <tr style="cursor: pointer;" ng-repeat="item in pages.data.data">
+                                    <td ng-bind="$index + 1 + index_num">1</td>
                                     <td class="td_content" ng-bind="item.timestamp"></td>
                                     <td class="td_content" ng-bind="item.src_ip"></td>
                                     <td class="td_content" ng-bind="item.src_port"></td>

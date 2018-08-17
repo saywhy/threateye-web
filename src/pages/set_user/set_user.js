@@ -21,6 +21,7 @@ app.controller('Set_userController', ['$scope', '$http', '$state', function ($sc
     $scope.getPage = function (pageNow) {
         var loading = zeroModal.loading(4);
         pageNow = pageNow ? pageNow : 1;
+        $scope.index_num = (pageNow-1) * 10;
         $http.post('./yiiapi/user/page', {
             page: pageNow
         }).then(function success(rsp) {

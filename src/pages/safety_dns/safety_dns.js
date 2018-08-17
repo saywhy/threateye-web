@@ -37,6 +37,7 @@ app.controller('Safety_dnsController', ['$scope', '$http', '$state', function ($
     // 获取数据
     $scope.getPage = function (pageNow) {
         pageNow = pageNow ? pageNow : 1;
+        $scope.index_num = (pageNow-1) * 10;
         $scope.params_data = {
             host_ip: $scope.dns.host_ip,
             dns_ip: $scope.dns.server_ip,

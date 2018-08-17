@@ -50,6 +50,7 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter', 
     // 分页
     $scope.getPage = function (pageNow) {
         $scope.pages.pageNow = pageNow;
+        $scope.index_num = (pageNow-1) * 10;
         $scope.getDataInfo($scope.pages);
     };
     //获取报表 记录

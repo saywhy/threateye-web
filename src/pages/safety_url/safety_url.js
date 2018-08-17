@@ -20,6 +20,7 @@ app.controller('Safety_urlController', ['$scope', '$http', '$state', function ($
     // 获取数据
     $scope.getPage = function (pageNow) {
         pageNow = pageNow ? pageNow : 1;
+        $scope.index_num = (pageNow-1) * 10;
         $scope.params_data = {
             src_ip: $scope.url.src_ip,
             dst_ip: $scope.url.dst_ip,

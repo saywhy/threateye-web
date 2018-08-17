@@ -196,20 +196,22 @@
                     <div class="top5">
                         <table class="table table-striped">
                             <tr>
-                                <th>告警类型</th>
                                 <th>时间</th>
-                                <th>告警等级</th>
+                                <th>告警类型</th>
+                                <th>告警描述</th>
                                 <th>源地址</th>
                                 <th>目的地址</th>
-                                <th>告警描述</th>
+                                <th>应用</th>
+                                <th>告警等级</th>
                             </tr>
                             <tr ng-repeat="item in new_alarm_data" style="height: 37px;">
-                                <td ng-bind="item.alert_type"></td>
                                 <td ng-bind="item.alert_time*1000 |date:'yyyy-MM-dd HH:mm:ss'"></td>
-                                <td ng-bind="item.degree"></td>
+                                <td ng-bind="item.category"></td>
+                                <td ng-bind="item.alert_description"></td>
                                 <td ng-bind="item.src_ip"></td>
                                 <td ng-bind="item.dest_ip"></td>
-                                <td ng-bind="item.alert_description"></td>
+                                <td ng-bind="item.application"></td>
+                                <td ng-bind="item.degree"></td>
                             </tr>
                         </table>
                     </div>

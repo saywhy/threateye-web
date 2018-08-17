@@ -21,13 +21,75 @@ app.controller('Set_netController', ['$scope', '$http', '$state', function ($sco
         ];
         $scope.net.type.ip_type = 0;
         $scope.net.type.enable = 'no';
+        $scope.get_network();//获取网络配置
     }
     //获取网络配置
+    $scope.get_network = function(){
+        var loading = zeroModal.loading(4);
+        $http({
+            method: 'get',
+            url: './yiiapi/seting/get-network'
+        }).success(function (data) {
+            console.log(data);
+            if (data.status == 0) {
+
+            }
+            if (data.status == 1) {
+                zeroModal.error(data.msg);
+            }
+            zeroModal.close(loading);
+        }).error(function (error) {
+            console.log(error);
+            zeroModal.close(loading);
+        })
+    }
+
+
+    //设置网络配置
+    $scope.set_network = function () {
+        var loading = zeroModal.loading(4);
+        $http({
+            method: 'put',
+            url: './yiiapi/seting/set-network',
+            data: {
+                "ens192": {
+                    "BOOTPROTO": "static",
+                    "BROWSER_ONLY": "no",
+                    "DEFROUTE": "yes",
+                    "DEVICE": "ens192",
+                    "DNS1": "8.8.8.8",
+                    "DNS2": "114.114.114.77",
+                    "GATEWAY": "192.168.1.2",
+                    "IPADDR": "192.168.1.243",
+                    "IPV4_FAILURE_FATAL": "no",
+                    "IPV6INIT": "no",
+                    "NAME": "ens192",
+                    "NETMASK": "255.255.255.0",
+                    "ONBOOT": "yes",
+                    "PREFIX": "24",
+                    "PROXY_METHOD": "none",
+                    "TYPE": "Ethernet",
+                    "UUID": "0fe5ff3d-4508-47ad-b2a5-336cf26e0354"
+                }
+            }
+        }).success(function (data) {
+            console.log(data);
+            if (data.status == 0) {
+
+            }
+            if (data.status == 1) {
+                zeroModal.error(data.msg);
+            }
+            zeroModal.close(loading);
+        }).error(function (error) {
+            console.log(error);
+            zeroModal.close(loading);
+        })
+    }
 
 
 
 
-    
     //获取代理设置
     $scope.getProxy = function (params) {
         $http.get('/seting/proxy/status/proxy').then(function success(rsp) {

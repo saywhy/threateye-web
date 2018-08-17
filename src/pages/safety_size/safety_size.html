@@ -42,14 +42,16 @@
                         <div class="row margin">
                             <table class="table table-hover ng-cloak">
                                 <tr>
-                                    <th style="width: 270px;" >时间</th>
+                                    <th style="width:40px">序号</th>
+                                    <th style="width: 270px;">时间</th>
                                     <th>主机IP</th>
                                     <th>流量</th>
                                     <th>链接时长</th>
                                     <th>应用</th>
                                 </tr>
                                 <tr style="cursor: pointer;" ng-repeat="item in pages.data.data" ng-click="detail(item)">
-                                    <td class="td_content"  ng-bind="item.timestamp"></td>
+                                    <td ng-bind="$index + 1 + index_num">1</td>
+                                    <td class="td_content" ng-bind="item.timestamp"></td>
                                     <td class="td_content" ng-bind="item.host_ip"></td>
                                     <td class="td_content" ng-bind="item.flow_bytes"></td>
                                     <td class="td_content" ng-bind="item.flow_duration"></td>

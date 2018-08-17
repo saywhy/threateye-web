@@ -21,6 +21,7 @@ app.controller('Safety_sizeController', ['$scope', '$http', '$state', function (
     // 获取数据
     $scope.getPage = function (pageNow) {
         pageNow = pageNow ? pageNow : 1;
+        $scope.index_num = (pageNow-1) * 10;
         $scope.params_data = {
             flow_size: $scope.size.flow_size,
             flow_duration: $scope.size.flow_duration,

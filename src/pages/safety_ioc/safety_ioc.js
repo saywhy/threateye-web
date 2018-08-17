@@ -39,6 +39,7 @@ app.controller('Safety_iocController', ['$scope', '$http', '$state', function ($
     $scope.getPage = function (pageNow) {
         var loading = zeroModal.loading(4);
         pageNow = pageNow ? pageNow : 1;
+        $scope.index_num = (pageNow-1) * 10;
         $scope.params_data = {
             page: pageNow,
             rows: 10
@@ -104,6 +105,9 @@ app.controller('Safety_iocController', ['$scope', '$http', '$state', function ($
                 console.log(res);
                 if (res.status == 0) {
                     zeroModal.success('上传成功');
+                }
+                if(res.status == 1){
+                    zeroModal.error(res.msg);
                 }
             },
             error: function (err) {

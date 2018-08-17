@@ -20,6 +20,7 @@ app.controller('Safety_fileController', ['$scope', '$http', '$state', function (
     // 获取数据
     $scope.getPage = function (pageNow) {
         pageNow = pageNow ? pageNow : 1;
+        $scope.index_num = (pageNow-1) * 10;
         $scope.params_data = {
             file_name: $scope.file.file_name,
             md5: $scope.file.md5,

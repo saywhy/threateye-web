@@ -56,28 +56,24 @@
                         <div class="row margin">
                             <table class="table table-hover ng-cloak">
                                 <tr>
-                                    <th>时间</th>
+                                    <th style="width:40px">序号</th>
+                                    <th style="width:145px">时间</th>
                                     <th>DNS服务器IP</th>
-                                    <th>主机IP</th>
+                                    <th>主机地址</th>
                                     <th>类型</th>
-                                    <!-- <th>查询</th> -->
                                     <th>域名</th>
-                                    <th> 解析IP</th>
-                                    <!-- <th> 反向IP</th> -->
-                                    <!-- <th> 名称</th> -->
+                                    <th> 解析地址</th>
                                     <th> TTL</th>
                                     <th> 解析结果</th>
                                 </tr>
                                 <tr style="cursor: pointer;" ng-repeat="item in pages.data" ng-click="detail(item)">
+                                        <td ng-bind="$index + 1 + index_num">1</td>
                                     <td class="td_content" ng-bind="item.timestamp"></td>
                                     <td class="td_content" ng-bind="item.dns_ip"></td>
                                     <td class="td_content" ng-bind="item.host_ip"></td>
                                     <td class="td_content" ng-bind="item.type"></td>
-                                    <!-- <td class="td_content" ng-bind="item.query"></td> -->
                                     <td class="td_content" ng-bind="item.rrname"></td>
                                     <td class="td_content" ng-bind="item.rdata"></td>
-                                    <!-- <td class="td_content" ng-bind="item.reverse_addr"></td> -->
-                                    <!-- <td class="td_content" ng-bind="item.name"></td> -->
                                     <td class="td_content" ng-bind="item.ttl"></td>
                                     <td class="td_content" ng-bind="item.des_query"></td>
                                 </tr>

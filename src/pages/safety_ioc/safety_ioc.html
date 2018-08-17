@@ -41,6 +41,7 @@
                                             <div class="box-body">
                                                 <table class="table table-hover  ng-cloak">
                                                     <tr>
+                                                            <th style="width:40px">序号</th>
                                                         <th>搜索</th>
                                                         <th>进度</th>
                                                         <th>状态</th>
@@ -49,6 +50,7 @@
                                                         <th>操作</th>
                                                     </tr>
                                                     <tr ng-repeat="item in pages.data">
+                                                            <td ng-bind="$index + 1 + index_num">1</td>
                                                         <td ng-bind="item.upload_file_name">ioc文件</td>
                                                         <td ng-bind="item.create_percent ">50%</td>
                                                         <td ng-bind="item.create_status == 0?'失败':'成功'">完成</td>

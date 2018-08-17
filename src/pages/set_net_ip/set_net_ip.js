@@ -16,6 +16,7 @@ app.controller('Set_net_ipController', ['$scope', '$http', '$state', function ($
     $scope.getPage = function (pageNow) {
         var loading = zeroModal.loading(4);
         pageNow = pageNow ? pageNow : 1;
+        $scope.index_num = (pageNow-1) * 10;
         $scope.params_data = {
             page: pageNow,
             rows: 10

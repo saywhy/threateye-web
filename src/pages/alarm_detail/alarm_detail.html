@@ -16,83 +16,220 @@
                 <!-- 详情 -->
                 <div class="row part">
                     <div class="part_detail">
-                        <p >
+                        <p>
                             <span class="alarm_detai_span">源地址:</span>
-                            <span class="part_detail_span" ng-bind ="alert_details.src_ip">源地址 </span>
+                            <span class="part_detail_span" ng-bind="alert_details.src_ip">源地址 </span>
                         </p>
                         <p>
                             <span class="alarm_detai_span">目的地址:</span>
-                            <span class="part_detail_span" ng-bind ="alert_details.dest_ip">目的地址 </span>
+                            <span class="part_detail_span" ng-bind="alert_details.dest_ip">目的地址 </span>
                         </p>
                         <p>
                             <span class="alarm_detai_span">告警时间:</span>
-                            <span class="part_detail_span" ng-bind ="alert_details.alert_time*1000 | date:'yyyy-MM-dd HH:mm:ss'">告警时间 </span>
+                            <span class="part_detail_span" ng-bind="alert_details.alert_time*1000 | date:'yyyy-MM-dd HH:mm:ss'">告警时间 </span>
                         </p>
                         <p>
                             <span class="alarm_detai_span">应用:</span>
-                            <span class="part_detail_span" ng-bind ="alert_details.application"> </span>
+                            <span class="part_detail_span" ng-bind="alert_details.application"> </span>
                         </p>
                         <p>
                             <span class="alarm_detai_span">告警类型:</span>
-                            <span class="part_detail_span" ng-bind ="alert_details.alert_type">与告警页面威胁类型同步 </span>
+                            <span class="part_detail_span" ng-bind="alert_details.category">与告警页面威胁类型同步 </span>
                         </p>
                         <p>
                             <span class="alarm_detai_span">告警描述:</span>
-                            <span class="part_detail_span" ng-bind ="alert_details.alert_raw">与告警页面内容一致 </span>
+                            <span class="part_detail_span" ng-bind="alert_details.alert_raw">与告警页面内容一致 </span>
                         </p>
                         <p>
                             <span class="alarm_detai_span">检测引擎:</span>
-                            <span class="part_detail_span" ng-bind ="alert_details.detect_engine">被那个引擎或者规则检测出的告警 </span>
+                            <span class="part_detail_span" ng-bind="alert_details.detect_engine">被那个引擎或者规则检测出的告警 </span>
                         </p>
                     </div>
+
+                    <!-- http -->
                     <div class="part_detail">
-                        <!-- <h4>Object information</h4> -->
-                        <h4>关联信息</h4>
+                        <h4>详细信息</h4>
                         <table class="table table-hover ng-cloak">
-                                <tr>
-                                    <th>文件名</th>
-                                    <th>文件大小</th>
-                                    <th>MD5</th>
-                                    <th>SHA256</th>
-                                    <th>威胁名称</th>
-                                </tr>
-                                <tr style="cursor: pointer;" ng-click="detail(item)">
-                                    <td >a232gh232a2323s23 </td>
-                                    <td > 395KB</td>
-                                    <td >1e09ea42b23b123a23bd232e3</td>
-                                    <td >23b123a23bd232e3gh232a1e09ea42</td>
-                                    <td >威胁名称</td>
-                                </tr>
-                                <tr style="cursor: pointer;" ng-click="detail(item)">
-                                        <td >a232gh232a2323s23 </td>
-                                        <td > 395KB</td>
-                                        <td >1e09ea42b23b123a23bd232e3</td>
-                                        <td >23b123a23bd232e3gh232a1e09ea42</td>
-                                        <td >威胁名称</td>
-                                    </tr>
-                            </table>
-                    </div>
-                    <div class="part_detail">
+                            <tr>
+                                <th>文件名</th>
+                                <th>文件大小</th>
+                                <th>MD5</th>
+                                <th>SHA256</th>
+                                <th>威胁名称</th>
+                            </tr>
+                            <tr style="cursor: pointer;" ng-click="detail(item)">
+                                <td>a232gh232a2323s23 </td>
+                                <td> 395KB</td>
+                                <td>1e09ea42b23b123a23bd232e3</td>
+                                <td>23b123a23bd232e3gh232a1e09ea42</td>
+                                <td>威胁名称</td>
+                            </tr>
+                        </table>
+                        <div>
                             <h4>网络事件</h4>
                             <table class="table table-hover ng-cloak">
-                                    <tr>
-                                        <th>方法</th>
-                                        <th>源地址</th>
-                                        <th>目的地址</th>
-                                        <th>URL</th>
-                                        <th>用户代理</th>
-                                        <th>推荐人</th>
-                                    </tr>
-                                    <tr style="cursor: pointer;" ng-click="detail(item)">
-                                        <td >GET</td>
-                                        <td > 10.28.0.111.22</td>
-                                        <td >10.68.16.85</td>
-                                        <td >http://xxxx//xxx/xx.exe</td>
-                                        <td >Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN) AppleWebKit/533.21.1 (KHTML, like Gecko) Version/5.0.5 Safari/533.21.1</td>
-                                        <td >http://xxxx//xxx/xx.exe</td>
-                                    </tr>
-                                </table>
+                                <tr>
+                                    <th>时间</th>
+                                    <th>方法</th>
+                                    <th>源地址</th>
+                                    <th>目的地址</th>
+                                    <th>URL</th>
+                                    <th>用户代理</th>
+                                    <th>推荐人</th>
+                                    <th>应用</th>
+                                </tr>
+                                <tr style="cursor: pointer;" ng-click="detail(item)">
+                                    <td>2018.08.12 23:22:12 </td>
+                                    <td>GET</td>
+                                    <td> 10.28.0.111.22</td>
+                                    <td>10.68.16.85</td>
+                                    <td>http://xxxx//xxx/xx.exe</td>
+                                    <td>Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN) AppleWebKit/533.21.1 (KHTML, like Gecko)
+                                        Version/5.0.5 Safari/533.21.1</td>
+                                    <td>http://xxxx//xxx/xx.exe</td>
+                                    <td>http</td>
+                                </tr>
+                            </table>
                         </div>
+                    </div>
+                    <!-- dns -->
+                    <div class="part_detail">
+                        <h4>详细信息</h4>
+                        <table class="table table-hover ng-cloak">
+                            <tr>
+                                <th>文件名</th>
+                                <th>文件大小</th>
+                                <th>MD5</th>
+                                <th>SHA256</th>
+                                <th>威胁名称</th>
+                            </tr>
+                            <tr style="cursor: pointer;" ng-click="detail(item)">
+                                <td>a232gh232a2323s23 </td>
+                                <td> 395KB</td>
+                                <td>1e09ea42b23b123a23bd232e3</td>
+                                <td>23b123a23bd232e3gh232a1e09ea42</td>
+                                <td>威胁名称</td>
+                            </tr>
+                        </table>
+                        <div>
+                            <h4>网络事件</h4>
+                            <table class="table table-hover ng-cloak">
+                                <tr>
+                                    <th>时间</th>
+                                    <th>DNS服务器地址</th>
+                                    <th>主机地址</th>
+                                    <th>类型</th>
+                                    <th>域名</th>
+                                    <th>解析地址</th>
+                                    <th>TTL</th>
+                                    <th>解析结果</th>
+                                    <th>应用</th>
+                                </tr>
+                                <tr style="cursor: pointer;" ng-click="detail(item)">
+                                    <td>2018.08.12 23:22:12 </td>
+                                    <td>47.104.9.174</td>
+                                    <td> 10.28.0.111.22</td>
+                                    <td>answer</td>
+                                    <td>qihooo.com</td>
+                                    <td>47.104.166.241</td>
+                                    <td>55</td>
+                                    <td>-</td>
+                                    <td>dns</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- SMTP/IMAP/Pop3 -->
+                    <div class="part_detail">
+                        <h4>详细信息</h4>
+                        <table class="table table-hover ng-cloak">
+                            <tr>
+                                <th>文件名</th>
+                                <th>文件大小</th>
+                                <th>MD5</th>
+                                <th>SHA256</th>
+                                <th>威胁名称</th>
+                            </tr>
+                            <tr style="cursor: pointer;" ng-click="detail(item)">
+                                <td>a232gh232a2323s23 </td>
+                                <td> 395KB</td>
+                                <td>1e09ea42b23b123a23bd232e3</td>
+                                <td>23b123a23bd232e3gh232a1e09ea42</td>
+                                <td>威胁名称</td>
+                            </tr>
+                        </table>
+                        <div>
+                            <h4>网络事件</h4>
+                            <table class="table table-hover ng-cloak">
+                                <tr>
+                                    <th>时间</th>
+                                    <th>源地址</th>
+                                    <th>目的地址</th>
+                                    <th>发件人</th>
+                                    <th>收件人</th>
+                                    <th>主题</th>
+                                    <th>应用</th>
+                                </tr>
+                                <tr style="cursor: pointer;" ng-click="detail(item)">
+                                    <td>2018.08.12 23:22:12 </td>
+                                    <td>47.104.9.174:80</td>
+                                    <td> 10.28.0.111.22:2087</td>
+                                    <td>eric &lt;liyi@hoohoolab.com &gt; </td>
+                                    <td>eric &lt;liyi@hoohoolab.com &gt; </td>
+                                    <td>-</td>
+                                    <td>dns</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Kerberos-->
+                    <div class="part_detail">
+                        <h4>详细信息</h4>
+                        <table class="table table-hover ng-cloak">
+                            <tr>
+                                <th>文件名</th>
+                                <th>文件大小</th>
+                                <th>MD5</th>
+                                <th>SHA256</th>
+                                <th>威胁名称</th>
+                            </tr>
+                            <tr style="cursor: pointer;" ng-click="detail(item)">
+                                <td>a232gh232a2323s23 </td>
+                                <td> 395KB</td>
+                                <td>1e09ea42b23b123a23bd232e3</td>
+                                <td>23b123a23bd232e3gh232a1e09ea42</td>
+                                <td>威胁名称</td>
+                            </tr>
+                        </table>
+                        <div>
+                            <h4>网络事件</h4>
+                            <table class="table table-hover ng-cloak">
+                                <tr>
+                                    <th>时间</th>
+                                    <th>源地址</th>
+                                    <th>目的地址</th>
+                                    <th>信息类型</th>
+                                    <th>cname</th>
+                                    <th>认证管理域</th>
+                                    <th>sname</th>
+                                    <th>应用</th>
+                                </tr>
+                                <tr style="cursor: pointer;" ng-click="detail(item)">
+                                    <td>2018.08.12 23:22:12 </td>
+                                    <td>47.104.9.174:80</td>
+                                    <td> 10.28.0.111.22:2087</td>
+                                    <td>eric &lt;liyi@hoohoolab.com &gt; </td>
+                                    <td>eric &lt;liyi@hoohoolab.com &gt; </td>
+                                    <td>-</td>
+                                    <td>dns</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+
+
                     <div class="part_detail">
                         <div class="box box-solid">
                             <div class="box-header with-border" style="border:0">
@@ -107,7 +244,133 @@
                             </div>
                             <div class="tab-content" ng-if="selected == $index" ng-repeat="item in tab_data">
                                 <div style="cursor: pointer;" ng-if="selected == 0">
-                                    <p>Event history</p>
+                                    <div class="row margin">
+                                        <table class="table table-hover ng-cloak">
+                                            <tr>
+                                                <th>时间</th>
+                                                <th>告警类型</th>
+                                                <th>告警描述</th>
+                                                <th>源地址</th>
+                                                <th>目的地址</th>
+                                                <th>应用</th>
+                                                <th>告警等级</th>
+                                            </tr>
+                                            <tr style="cursor: pointer;" ng-repeat="item in pages.data" ng-click="detail(item)">
+                                                <td ng-bind="item.alert_time"></td>
+                                                <td ng-bind="item.category"></td>
+                                                <td ng-bind="item.alert_description"></td>
+                                                <td ng-bind="item.src_ip"></td>
+                                                <td ng-bind="item.dest_ip"></td>
+                                                <td ng-bind="item.application"></td>
+                                                <td ng-bind="item.degree"></td>
+                                            </tr>
+                                        </table>
+                                        <!-- angularjs分页 -->
+                                        <div style="border-top: 1px solid #f4f4f4;padding: 10px;">
+                                            <em>共有
+                                                <span ng-bind="pages.count"></span>条告警</em>
+                                            <ul class="pagination pagination-sm no-margin pull-right ng-cloak">
+                                                <li>
+                                                    <a href="javascript:void(0);" ng-click="getPage(pages.pageNow-1)" ng-if="pages.pageNow>1">上一页</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0);" ng-click="getPage(1)" ng-if="pages.pageNow>1">1</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0);" ng-if="pages.pageNow>4">...</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0);" ng-click="getPage(pages.pageNow-2)" ng-bind="pages.pageNow-2" ng-if="pages.pageNow>3"></a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0);" ng-click="getPage(pages.pageNow-1)" ng-bind="pages.pageNow-1" ng-if="pages.pageNow>2"></a>
+                                                </li>
+                                                <li class="active">
+                                                    <a href="javascript:void(0);" ng-bind="pages.pageNow"></a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0);" ng-click="getPage(pages.pageNow+1)" ng-bind="pages.pageNow+1" ng-if="pages.pageNow<pages.maxPage-1"></a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0);" ng-click="getPage(pages.pageNow+2)" ng-bind="pages.pageNow+2" ng-if="pages.pageNow<pages.maxPage-2"></a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0);" ng-if="pages.pageNow<pages.maxPage-3">...</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0);" ng-click="getPage(pages.maxPage)" ng-bind="pages.maxPage" ng-if="pages.pageNow<pages.maxPage"></a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0);" ng-click="getPage(pages.pageNow+1)" ng-if="pages.pageNow<pages.maxPage">下一页</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 历史告警资产 -->
+                                <div style="cursor: pointer;" ng-if="selected == 1">
+                                    <div class="row margin">
+                                        <table class="table table-hover ng-cloak">
+                                            <tr>
+                                                <th>时间</th>
+                                                <th>告警类型</th>
+                                                <th>告警描述</th>
+                                                <th>源地址</th>
+                                                <th>目的地址</th>
+                                                <th>应用</th>
+                                                <th>告警等级</th>
+                                            </tr>
+                                            <tr style="cursor: pointer;" ng-repeat="item in pages1.data">
+                                                <td ng-bind="item.alert_time"></td>
+                                                <td ng-bind="item.category"></td>
+                                                <td ng-bind="item.alert_description"></td>
+                                                <td ng-bind="item.src_ip"></td>
+                                                <td ng-bind="item.dest_ip"></td>
+                                                <td ng-bind="item.application"></td>
+                                                <td ng-bind="item.degree"></td>
+                                            </tr>
+                                        </table>
+                                        <!-- angularjs分页 -->
+                                        <div style="border-top: 1px solid #f4f4f4;padding: 10px;">
+                                            <em>共有
+                                                <span ng-bind="pages1.count"></span>条告警</em>
+                                            <ul class="pagination pagination-sm no-margin pull-right ng-cloak">
+                                                <li>
+                                                    <a href="javascript:void(0);" ng-click="getPage1(pages1.pageNow-1)" ng-if="pages1.pageNow>1">上一页</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0);" ng-click="getPage1(1)" ng-if="pages1.pageNow>1">1</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0);" ng-if="pages1.pageNow>4">...</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0);" ng-click="getPage1(pages1.pageNow-2)" ng-bind="pages1.pageNow-2" ng-if="pages1.pageNow>3"></a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0);" ng-click="getPage1(pages1.pageNow-1)" ng-bind="pages1.pageNow-1" ng-if="pages1.pageNow>2"></a>
+                                                </li>
+                                                <li class="active">
+                                                    <a href="javascript:void(0);" ng-bind="pages1.pageNow"></a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0);" ng-click="getPage1(pages1.pageNow+1)" ng-bind="pages1.pageNow+1" ng-if="pages1.pageNow<pages1.maxPage-1"></a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0);" ng-click="getPage1(pages1.pageNow+2)" ng-bind="pages1.pageNow+2" ng-if="pages1.pageNow<pages1.maxPage-2"></a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0);" ng-if="pages1.pageNow<pages1.maxPage-3">...</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0);" ng-click="getPage1(pages1.maxPage)" ng-bind="pages1.maxPage" ng-if="pages1.pageNow<pages1.maxPage"></a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0);" ng-click="getPage1(pages1.pageNow+1)" ng-if="pages1.pageNow<pages1.maxPage">下一页</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
