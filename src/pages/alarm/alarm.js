@@ -41,7 +41,7 @@ app.controller('AlarmController', [
         $scope.getPage = function (pageNow) {
             var loading = zeroModal.loading(4);
             pageNow = pageNow ? pageNow : 1;
-            $scope.index_num = (pageNow-1) * 10;
+            $scope.index_num = (pageNow - 1) * 10;
             $scope.params_data = {
                 start_time: $scope.searchData.startTime,
                 end_time: $scope.searchData.endTime,

@@ -45,191 +45,51 @@
                             <span class="part_detail_span" ng-bind="alert_details.detect_engine">被那个引擎或者规则检测出的告警 </span>
                         </p>
                     </div>
-
-                    <!-- http -->
+                    <!-- 时间轴 -->
                     <div class="part_detail">
-                        <h4>详细信息</h4>
-                        <table class="table table-hover ng-cloak">
-                            <tr>
-                                <th>文件名</th>
-                                <th>文件大小</th>
-                                <th>MD5</th>
-                                <th>SHA256</th>
-                                <th>威胁名称</th>
-                            </tr>
-                            <tr style="cursor: pointer;" ng-click="detail(item)">
-                                <td>a232gh232a2323s23 </td>
-                                <td> 395KB</td>
-                                <td>1e09ea42b23b123a23bd232e3</td>
-                                <td>23b123a23bd232e3gh232a1e09ea42</td>
-                                <td>威胁名称</td>
-                            </tr>
-                        </table>
-                        <div>
+                        <h4>检测时间轴</h4>
+                        <ul class="time-horizontal">
+                            <li class="li_hover" ng-repeat="item in time_type" ng-if="$index<10" ng-click="isActive(item,$index)" ng-class=" li_index == $index ? 'li_active':'' ">
+                                <b></b>
+                                <span class="li_top" ng-bind="item.type">2018.08.12 23:22:12</span>
+                                <br>
+                                <span ng-bind="item.time">威胁情报</span>
+                            </li>
+                        </ul>
+                        <ul class="time-horizontal" style="margin-top: 100px" ng-if="time_type.length > 10">
+                            <li class="li_hover" ng-repeat="item in time_type" ng-if="$index>9" ng-click="isActive(item,$index)" ng-class="li_index == $index  ? 'li_active':'' ">
+                                <b></b>
+                                <span class="li_top" ng-bind="item.type">2018.08.12 23:22:12</span>
+                                <br>
+                                <span ng-bind="item.time">威胁情报</span>
+                            </li>
+                        </ul>
+                        <ul class="time-horizontal" style="margin-top: 100px" ng-if="time_type.length > 20">
+                            <li class="li_hover" ng-repeat="item in time_type" ng-if="$index>19" ng-click="isActive(item,$index)" ng-class="li_index == $index  ? 'li_active':'' ">
+                                <b></b>
+                                <span class="li_top" ng-bind="item.type">2018.08.12 23:22:12</span>
+                                <br>
+                                <span ng-bind="item.time">威胁情报</span>
+                            </li>
+                        </ul>
+                        <div class="time_content">
+                            <h4>详细信息</h4>
+                            <ul>
+                                <li class="time_content_li" ng-repeat="item in detail_infos">
+                                    <span class="time_content_span_title" ng-bind="item.key">文件名:</span>
+                                    <span ng-bind="item.value">a232gh232a2323s23</span>
+                                </li>
+                            </ul>
                             <h4>网络事件</h4>
-                            <table class="table table-hover ng-cloak">
-                                <tr>
-                                    <th>时间</th>
-                                    <th>方法</th>
-                                    <th>源地址</th>
-                                    <th>目的地址</th>
-                                    <th>URL</th>
-                                    <th>用户代理</th>
-                                    <th>推荐人</th>
-                                    <th>应用</th>
-                                </tr>
-                                <tr style="cursor: pointer;" ng-click="detail(item)">
-                                    <td>2018.08.12 23:22:12 </td>
-                                    <td>GET</td>
-                                    <td> 10.28.0.111.22</td>
-                                    <td>10.68.16.85</td>
-                                    <td>http://xxxx//xxx/xx.exe</td>
-                                    <td>Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN) AppleWebKit/533.21.1 (KHTML, like Gecko)
-                                        Version/5.0.5 Safari/533.21.1</td>
-                                    <td>http://xxxx//xxx/xx.exe</td>
-                                    <td>http</td>
-                                </tr>
-                            </table>
+                            <ul>
+                                <li class="time_content_li" ng-repeat="item in network_events.http">
+                                    <span class="time_content_span_title" ng-bind="item.key">时间:</span>
+                                    <span ng-bind="item.value">2018.08.12 23:22:12 </span>
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                    <!-- dns -->
-                    <div class="part_detail">
-                        <h4>详细信息</h4>
-                        <table class="table table-hover ng-cloak">
-                            <tr>
-                                <th>文件名</th>
-                                <th>文件大小</th>
-                                <th>MD5</th>
-                                <th>SHA256</th>
-                                <th>威胁名称</th>
-                            </tr>
-                            <tr style="cursor: pointer;" ng-click="detail(item)">
-                                <td>a232gh232a2323s23 </td>
-                                <td> 395KB</td>
-                                <td>1e09ea42b23b123a23bd232e3</td>
-                                <td>23b123a23bd232e3gh232a1e09ea42</td>
-                                <td>威胁名称</td>
-                            </tr>
-                        </table>
-                        <div>
-                            <h4>网络事件</h4>
-                            <table class="table table-hover ng-cloak">
-                                <tr>
-                                    <th>时间</th>
-                                    <th>DNS服务器地址</th>
-                                    <th>主机地址</th>
-                                    <th>类型</th>
-                                    <th>域名</th>
-                                    <th>解析地址</th>
-                                    <th>TTL</th>
-                                    <th>解析结果</th>
-                                    <th>应用</th>
-                                </tr>
-                                <tr style="cursor: pointer;" ng-click="detail(item)">
-                                    <td>2018.08.12 23:22:12 </td>
-                                    <td>47.104.9.174</td>
-                                    <td> 10.28.0.111.22</td>
-                                    <td>answer</td>
-                                    <td>qihooo.com</td>
-                                    <td>47.104.166.241</td>
-                                    <td>55</td>
-                                    <td>-</td>
-                                    <td>dns</td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                    <!-- SMTP/IMAP/Pop3 -->
-                    <div class="part_detail">
-                        <h4>详细信息</h4>
-                        <table class="table table-hover ng-cloak">
-                            <tr>
-                                <th>文件名</th>
-                                <th>文件大小</th>
-                                <th>MD5</th>
-                                <th>SHA256</th>
-                                <th>威胁名称</th>
-                            </tr>
-                            <tr style="cursor: pointer;" ng-click="detail(item)">
-                                <td>a232gh232a2323s23 </td>
-                                <td> 395KB</td>
-                                <td>1e09ea42b23b123a23bd232e3</td>
-                                <td>23b123a23bd232e3gh232a1e09ea42</td>
-                                <td>威胁名称</td>
-                            </tr>
-                        </table>
-                        <div>
-                            <h4>网络事件</h4>
-                            <table class="table table-hover ng-cloak">
-                                <tr>
-                                    <th>时间</th>
-                                    <th>源地址</th>
-                                    <th>目的地址</th>
-                                    <th>发件人</th>
-                                    <th>收件人</th>
-                                    <th>主题</th>
-                                    <th>应用</th>
-                                </tr>
-                                <tr style="cursor: pointer;" ng-click="detail(item)">
-                                    <td>2018.08.12 23:22:12 </td>
-                                    <td>47.104.9.174:80</td>
-                                    <td> 10.28.0.111.22:2087</td>
-                                    <td>eric &lt;liyi@hoohoolab.com &gt; </td>
-                                    <td>eric &lt;liyi@hoohoolab.com &gt; </td>
-                                    <td>-</td>
-                                    <td>dns</td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-
-                    <!-- Kerberos-->
-                    <div class="part_detail">
-                        <h4>详细信息</h4>
-                        <table class="table table-hover ng-cloak">
-                            <tr>
-                                <th>文件名</th>
-                                <th>文件大小</th>
-                                <th>MD5</th>
-                                <th>SHA256</th>
-                                <th>威胁名称</th>
-                            </tr>
-                            <tr style="cursor: pointer;" ng-click="detail(item)">
-                                <td>a232gh232a2323s23 </td>
-                                <td> 395KB</td>
-                                <td>1e09ea42b23b123a23bd232e3</td>
-                                <td>23b123a23bd232e3gh232a1e09ea42</td>
-                                <td>威胁名称</td>
-                            </tr>
-                        </table>
-                        <div>
-                            <h4>网络事件</h4>
-                            <table class="table table-hover ng-cloak">
-                                <tr>
-                                    <th>时间</th>
-                                    <th>源地址</th>
-                                    <th>目的地址</th>
-                                    <th>信息类型</th>
-                                    <th>cname</th>
-                                    <th>认证管理域</th>
-                                    <th>sname</th>
-                                    <th>应用</th>
-                                </tr>
-                                <tr style="cursor: pointer;" ng-click="detail(item)">
-                                    <td>2018.08.12 23:22:12 </td>
-                                    <td>47.104.9.174:80</td>
-                                    <td> 10.28.0.111.22:2087</td>
-                                    <td>eric &lt;liyi@hoohoolab.com &gt; </td>
-                                    <td>eric &lt;liyi@hoohoolab.com &gt; </td>
-                                    <td>-</td>
-                                    <td>dns</td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-
-
-
+                    <!-- //当前和历史告警资产 -->
                     <div class="part_detail">
                         <div class="box box-solid">
                             <div class="box-header with-border" style="border:0">

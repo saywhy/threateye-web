@@ -330,14 +330,14 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
                 console.log(data.data.http);
                 
                 angular.forEach(data.data.http, function (item, index) {
-                    $scope.flow_statistics.time.push(item.statistics_time);
-                    $scope.flow_statistics.http.push(item.flow);
+                    $scope.flow_statistics.time.unshift(item.statistics_time);
+                    $scope.flow_statistics.http.unshift(item.flow);
                 })
                 angular.forEach(data.data.https, function (item, index) {
-                    $scope.flow_statistics.https.push(item.flow);
+                    $scope.flow_statistics.https.unshift(item.flow);
                 })
                 angular.forEach(data.data.ssh, function (item, index) {
-                    $scope.flow_statistics.ssh.push(item.flow);
+                    $scope.flow_statistics.ssh.unshift(item.flow);
                 })
                 angular.forEach($scope.flow_statistics.title, function (item, index) {
                     if (item == 'http') {

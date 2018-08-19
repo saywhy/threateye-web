@@ -2,29 +2,24 @@
 app.controller('Set_netController', ['$scope', '$http', '$state', function ($scope, $http, $state) {
     // 初始化
     $scope.init = function (params) {
-        $scope.net = {
-            type: {}
-        };
-        $scope.statusData = [{
-            num: 0,
-            type: 'eth0'
-        }];
-        $scope.net.statusData = 0;
+        $scope.net = {};
+        $scope.net_detail={};
+        $scope.net_names = [];
         $scope.ip_type = [{
                 num: 0,
-                type: '自动获取'
+                name: '自动获取',
+                type: 'dhcp'
             },
             {
                 num: 1,
-                type: '手动获取'
+                name: '手动获取',
+                type: 'static'
             }
         ];
-        $scope.net.type.ip_type = 0;
-        $scope.net.type.enable = 'no';
-        $scope.get_network();//获取网络配置
+        $scope.get_network(); //获取网络配置
     }
     //获取网络配置
-    $scope.get_network = function(){
+    $scope.get_network = function () {
         var loading = zeroModal.loading(4);
         $http({
             method: 'get',
@@ -32,7 +27,15 @@ app.controller('Set_netController', ['$scope', '$http', '$state', function ($sco
         }).success(function (data) {
             console.log(data);
             if (data.status == 0) {
-
+                $scope.net_names = [];
+                $scope.net_info_array = data.data.data;
+                angular.forEach($scope.net_info_array, function (item) {
+                    $scope.net_names.push(item.NAME);
+                });
+                console.log($scope.net_names);
+                // 默认初始值
+                $scope.net.index = $scope.net_names[0];
+                $scope.net_detail = $scope.net_info_array[0];
             }
             if (data.status == 1) {
                 zeroModal.error(data.msg);
@@ -43,8 +46,14 @@ app.controller('Set_netController', ['$scope', '$http', '$state', function ($sco
             zeroModal.close(loading);
         })
     }
-
-
+    // 网卡切换
+    $scope.net_card = function (name) {
+        angular.forEach($scope.net_info_array, function (item) {
+            if (name == item.NAME) {
+                $scope.net_detail = item;
+            }
+        });
+    }
     //设置网络配置
     $scope.set_network = function () {
         var loading = zeroModal.loading(4);
@@ -52,30 +61,21 @@ app.controller('Set_netController', ['$scope', '$http', '$state', function ($sco
             method: 'put',
             url: './yiiapi/seting/set-network',
             data: {
-                "ens192": {
-                    "BOOTPROTO": "static",
-                    "BROWSER_ONLY": "no",
-                    "DEFROUTE": "yes",
-                    "DEVICE": "ens192",
-                    "DNS1": "8.8.8.8",
-                    "DNS2": "114.114.114.77",
-                    "GATEWAY": "192.168.1.2",
-                    "IPADDR": "192.168.1.243",
-                    "IPV4_FAILURE_FATAL": "no",
-                    "IPV6INIT": "no",
-                    "NAME": "ens192",
-                    "NETMASK": "255.255.255.0",
-                    "ONBOOT": "yes",
-                    "PREFIX": "24",
-                    "PROXY_METHOD": "none",
-                    "TYPE": "Ethernet",
-                    "UUID": "0fe5ff3d-4508-47ad-b2a5-336cf26e0354"
-                }
+                NAME: $scope.net.index,
+                ONBOOT: $scope.net_detail.ONBOOT,
+                BOOTPROTO: $scope.net_detail.BOOTPROTO,
+                IPADDR: $scope.net_detail.IPADDR,
+                MASK: $scope.net_detail.MASK,
+                GATEWAY: $scope.net_detail.GATEWAY,
+                DNS1: $scope.net_detail.DNS1,
+                DNS2: $scope.net_detail.DNS2,
             }
         }).success(function (data) {
+            console.log($scope.net_detail);
             console.log(data);
             if (data.status == 0) {
-
+                zeroModal.success('网络配置成功');
+                $scope.get_network(); //获取网络配置
             }
             if (data.status == 1) {
                 zeroModal.error(data.msg);
