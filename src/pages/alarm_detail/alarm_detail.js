@@ -598,12 +598,13 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
     // 当前告警资产
     $scope.getPage = function (pageNow) {
         pageNow = pageNow ? pageNow : 1;
+        console.log($scope.detail_data.indicator);
         $http({
             method: 'get',
             url: './yiiapi/alert/get-same-indicator-alert',
             params: {
-                'indicator': 'blog.csdn.net/qq_30753945/article/details/5e9',
-                // 'indicator': $scope.detail_data.indicator,
+                // 'indicator': 'blog.csdn.net/qq_30753945/article/details/5e9',
+                'indicator': $scope.detail_data.indicator,
                 'is_deal': 0,
                 'page': pageNow,
                 'row': 10,
@@ -624,8 +625,8 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
             method: 'get',
             url: './yiiapi/alert/get-same-indicator-alert',
             params: {
-                'indicator': 'blog.csdn.net/qq_30753945/article/details/5e9',
-                // 'indicator': $scope.detail_data.indicator,
+                // 'indicator': 'blog.csdn.net/qq_30753945/article/details/5e9',
+                'indicator': $scope.detail_data.indicator,
                 'is_deal': 2,
                 'page': pageNow,
                 'row': 10,
@@ -657,5 +658,7 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
 
         }
     };
+    // 获取时间轴详细数据
+    $scope.get_time_data = function(){};
     $scope.init();
 }, ]);

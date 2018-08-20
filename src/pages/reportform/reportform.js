@@ -50,7 +50,7 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter', 
     // 分页
     $scope.getPage = function (pageNow) {
         $scope.pages.pageNow = pageNow;
-        $scope.index_num = (pageNow-1) * 10;
+        $scope.index_num = (pageNow - 1) * 10;
         $scope.getDataInfo($scope.pages);
     };
     //获取报表 记录
@@ -105,6 +105,7 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter', 
                         zeroModal.close(loading);
                         // 未处理告警
                         if (data.data.threat_level) {
+                            console.log(data.data.threat_level);
                             $scope.untreatedAlarm(data.data.threat_level);
                         }
                         //威胁使用应用协议
@@ -116,7 +117,7 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter', 
                             $scope.alert_trend(data.data.alert_trend);
                         }
                         //告警类型
-                        if(data.data.alert_type){
+                        if (data.data.alert_type) {
                             $scope.alert_type(data.data.alert_type);
                         }
                         var loading = zeroModal.loading(4);
@@ -169,7 +170,7 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter', 
                         zeroModal.success("保存成功!");
                         $scope.getDataInfo(1);
                     }
-                    if(data.data.status == 1){
+                    if (data.data.status == 1) {
                         zeroModal.error(data.data.msg);
                     }
                     zeroModal.close(loading);
@@ -216,15 +217,23 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter', 
     };
     // 生成图表
     $scope.untreatedAlarm = function (params) {
-        angular.forEach(params, function (item) {
-            if (item.degree == "low") {
-                $scope.low_total_count = item.total_count
-            } else if (item.degree == "medium") {
-                $scope.medium_total_count = item.total_count
-            } else if (item.degree == "high") {
-                $scope.high_total_count = item.total_count
-            }
-        });
+        console.log(params);
+        if (params.length == 0) {
+            $scope.low_total_count = 0;
+            $scope.medium_total_count = 0;
+            $scope.high_total_count = 0;
+        } else {
+            angular.forEach(params, function (item) {
+                if (item.degree == "low") {
+                    $scope.low_total_count = item.total_count
+                } else if (item.degree == "medium") {
+                    $scope.medium_total_count = item.total_count
+                } else if (item.degree == "high") {
+                    $scope.high_total_count = item.total_count
+                }
+            });
+        }
+
         var myChart = echarts.init(document.getElementById('untreatedalarm_report'));
         var option = {
             tooltip: {
@@ -445,7 +454,7 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter', 
         $scope.base64_alert_trend = myChart.getDataURL();
     };
     //告警类型
-    $scope.alert_type = function(params){
+    $scope.alert_type = function (params) {
         $scope.alert_type_name = [];
         $scope.alert_type_value = [];
         angular.forEach(params, function (item, index) {

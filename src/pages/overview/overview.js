@@ -323,12 +323,19 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
                     http: [],
                     https: [],
                     ssh: [],
+                    ftp: [],
+                    dns: [],
+                    imap: [],
+                    smb: [],
+                    pop3: [],
+                    smtp: [],
+                    dhcp: [],
                 };
                 for ( var k in data.data) {
                     $scope.flow_statistics.title.push(k);
                 }
                 console.log(data.data.http);
-                
+                // ["http","https","ssh","ftp","dns","imap","smb","pop3","smtp","dhcp"]
                 angular.forEach(data.data.http, function (item, index) {
                     $scope.flow_statistics.time.unshift(item.statistics_time);
                     $scope.flow_statistics.http.unshift(item.flow);
@@ -338,6 +345,27 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
                 })
                 angular.forEach(data.data.ssh, function (item, index) {
                     $scope.flow_statistics.ssh.unshift(item.flow);
+                })
+                angular.forEach(data.data.ftp, function (item, index) {
+                    $scope.flow_statistics.ftp.unshift(item.flow);
+                })
+                angular.forEach(data.data.dns, function (item, index) {
+                    $scope.flow_statistics.dns.unshift(item.flow);
+                })
+                angular.forEach(data.data.imap, function (item, index) {
+                    $scope.flow_statistics.imap.unshift(item.flow);
+                })
+                angular.forEach(data.data.smb, function (item, index) {
+                    $scope.flow_statistics.smb.unshift(item.flow);
+                })
+                angular.forEach(data.data.pop3, function (item, index) {
+                    $scope.flow_statistics.pop3.unshift(item.flow);
+                })
+                angular.forEach(data.data.smtp, function (item, index) {
+                    $scope.flow_statistics.smtp.unshift(item.flow);
+                })
+                angular.forEach(data.data.dhcp, function (item, index) {
+                    $scope.flow_statistics.dhcp.unshift(item.flow);
                 })
                 angular.forEach($scope.flow_statistics.title, function (item, index) {
                     if (item == 'http') {
@@ -439,6 +467,237 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
                         }
                         $scope.flow_statistics.items.push($scope.flow_statistics.item);
                     }
+                    if (item == 'ftp') {
+                        $scope.flow_statistics.item = {
+                            name: 'FTP',
+                            type: 'line',
+                            smooth: true,
+                            showSymbol: false,
+                            symbol: 'circle',
+                            symbolSize: 6,
+                            data: $scope.flow_statistics.ftp,
+                            areaStyle: {
+                                normal: {
+                                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                        offset: 0,
+                                        color:'rgba(255,128,0,0.8)'
+                                    }, {
+                                        offset: 1,
+                                        color: 'rgba(255,128,0,0.2)'
+                                    }], false)
+                                }
+                            },
+                            itemStyle: {
+                                normal: {
+                                    color: 'rgba(255,128,0,0.9)'
+                                }
+                            },
+                            lineStyle: {
+                                normal: {
+                                    width: 3
+                                }
+                            }
+                        }
+                        $scope.flow_statistics.items.push($scope.flow_statistics.item);
+                    }
+                    if (item == 'dns') {
+                        $scope.flow_statistics.item = {
+                            name: 'DNS',
+                            type: 'line',
+                            smooth: true,
+                            showSymbol: false,
+                            symbol: 'circle',
+                            symbolSize: 6,
+                            data: $scope.flow_statistics.dns,
+                            areaStyle: {
+                                normal: {
+                                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                        offset: 0,
+                                        color: $scope.colorType.rgbaLow8
+                                    }, {
+                                        offset: 1,
+                                        color: $scope.colorType.rgbaLow2
+                                    }], false)
+                                }
+                            },
+                            itemStyle: {
+                                normal: {
+                                    color: $scope.colorType.rgbaLow10
+                                }
+                            },
+                            lineStyle: {
+                                normal: {
+                                    width: 3
+                                }
+                            }
+                        }
+                        $scope.flow_statistics.items.push($scope.flow_statistics.item);
+                    }
+                    if (item == 'imap') {
+                        $scope.flow_statistics.item = {
+                            name: 'IMAP',
+                            type: 'line',
+                            smooth: true,
+                            showSymbol: false,
+                            symbol: 'circle',
+                            symbolSize: 6,
+                            data: $scope.flow_statistics.imap,
+                            areaStyle: {
+                                normal: {
+                                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                        offset: 0,
+                                        color: 'rgba(0,0,255,0.8)'
+                                    }, {
+                                        offset: 1,
+                                        color: 'rgba(0,0,255,0.2)'
+                                    }], false)
+                                }
+                            },
+                            itemStyle: {
+                                normal: {
+                                    color: 'rgba(0,0,255,0.9)'
+                                }
+                            },
+                            lineStyle: {
+                                normal: {
+                                    width: 3
+                                }
+                            }
+                        }
+                        $scope.flow_statistics.items.push($scope.flow_statistics.item);
+                    }
+                    if (item == 'smb') {
+                        $scope.flow_statistics.item = {
+                            name: 'SMB',
+                            type: 'line',
+                            smooth: true,
+                            showSymbol: false,
+                            symbol: 'circle',
+                            symbolSize: 6,
+                            data: $scope.flow_statistics.imap,
+                            areaStyle: {
+                                normal: {
+                                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                        offset: 0,
+                                        color: 'rgba(204,204,153,0.8)'
+                                    }, {
+                                        offset: 1,
+                                        color: 'rgba(204,204,153,0.2)'
+                                    }], false)
+                                }
+                            },
+                            itemStyle: {
+                                normal: {
+                                    color: 'rgba(204,204,153,0.9)'
+                                }
+                            },
+                            lineStyle: {
+                                normal: {
+                                    width: 3
+                                }
+                            }
+                        }
+                        $scope.flow_statistics.items.push($scope.flow_statistics.item);
+                    }
+                    if (item == 'pop3') {
+                        $scope.flow_statistics.item = {
+                            name: 'POP3',
+                            type: 'line',
+                            smooth: true,
+                            showSymbol: false,
+                            symbol: 'circle',
+                            symbolSize: 6,
+                            data: $scope.flow_statistics.imap,
+                            areaStyle: {
+                                normal: {
+                                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                        offset: 0,
+                                        color: 'rgba(51,153,153,0.8)'
+                                    }, {
+                                        offset: 1,
+                                        color: 'rgba(51,153,153,0.2)'
+                                    }], false)
+                                }
+                            },
+                            itemStyle: {
+                                normal: {
+                                    color: 'rgba(51,153,153,0.9)'
+                                }
+                            },
+                            lineStyle: {
+                                normal: {
+                                    width: 3
+                                }
+                            }
+                        }
+                        $scope.flow_statistics.items.push($scope.flow_statistics.item);
+                    }
+                    if (item == 'smtp') {
+                        $scope.flow_statistics.item = {
+                            name: 'SMTP',
+                            type: 'line',
+                            smooth: true,
+                            showSymbol: false,
+                            symbol: 'circle',
+                            symbolSize: 6,
+                            data: $scope.flow_statistics.imap,
+                            areaStyle: {
+                                normal: {
+                                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                        offset: 0,
+                                        color: 'rgba(102,102,153,0.8)'
+                                    }, {
+                                        offset: 1,
+                                        color: 'rgba(102,102,153,0.2)'
+                                    }], false)
+                                }
+                            },
+                            itemStyle: {
+                                normal: {
+                                    color: 'rgba(102,102,153,0.9)'
+                                }
+                            },
+                            lineStyle: {
+                                normal: {
+                                    width: 3
+                                }
+                            }
+                        }
+                        $scope.flow_statistics.items.push($scope.flow_statistics.item);
+                    }
+                    if (item == 'dhcp') {
+                        $scope.flow_statistics.item = {
+                            name: 'DHCP',
+                            type: 'line',
+                            smooth: true,
+                            showSymbol: false,
+                            symbol: 'circle',
+                            symbolSize: 6,
+                            data: $scope.flow_statistics.imap,
+                            areaStyle: {
+                                normal: {
+                                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                        offset: 0,
+                                        color: 'rgba(153,204,255,0.8)'
+                                    }, {
+                                        offset: 1,
+                                        color: 'rgba(153,204,255,0.2)'
+                                    }], false)
+                                }
+                            },
+                            itemStyle: {
+                                normal: {
+                                    color: 'rgba(153,204,255,0.9)'
+                                }
+                            },
+                            lineStyle: {
+                                normal: {
+                                    width: 3
+                                }
+                            }
+                        }
+                        $scope.flow_statistics.items.push($scope.flow_statistics.item);
+                    }
                 })
                 console.log( $scope.flow_statistics);
                 
@@ -465,18 +724,25 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
                         extraCssText: 'box-shadow: 0 0 5px rgba(0,0,0,0.3)'
                     },
                     legend: {
-                        bottom: 20,
-                        left: 20,
+                        bottom: 10,
+                        left: 10,
                         orient: 'horizontal',
                         selected: {
                             // 选中'系列1'
                             'HTTP': true,
-                            // 不选中'系列2'
                             'HTTPS': true,
                             'SSH': true,
+                            // 不选中'系列2'
+                            'DNS': false,
+                            'FTP': false,
+                            'IMAP': false,
+                            'SMB': false,
+                            'POP3': false,
+                            'SMTP': false,
+                            'DHCP': false,
 
                         },
-                        data: ['HTTP', 'HTTPS', 'SSH']
+                        data: ['HTTP', 'HTTPS', 'SSH','DNS','FTP','IMAP','SMB','POP3','SMTP','DHCP']
                     },
                     xAxis: {
                         type: 'category',
