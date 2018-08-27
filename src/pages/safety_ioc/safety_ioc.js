@@ -150,12 +150,13 @@ app.controller('Safety_iocController', ['$scope', '$http', '$state', function ($
                     } else if (data.status == 1) {
                         zeroModal.error(data.msg);
                     }
-                }).error(function () {})
+                }).error(function (error) {
+                    console.log(error);
+                })
             },
             cancelFn: function () {}
         });
     };
-
     //删除列表数据
     $scope.del = function (id) {
         zeroModal.confirm({

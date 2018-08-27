@@ -3,9 +3,11 @@
 app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$state', function ($scope, $http, $stateParams, $state) {
     // 初始化
     $scope.init = function (params) {
-        $scope.detail_data = JSON.parse(unescape($stateParams.data));
-        // console.log($scope.detail_data);
-        $scope.alert_description_indicator = JSON.parse($scope.detail_data.alert_description)
+        $scope.crumbOptions = [
+            {"href": "#/app/alarm", "title" : "告警"},
+            {"href": "", "title" : "告警详情"}
+          ];
+        $scope.detail_data_id = $stateParams.data;
         $scope.selected = 0;
         $scope.threat = {}; //威胁情报
         $scope.network_events = {}; //网络事件
@@ -21,555 +23,15 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
             maxPage: "...",
             pageNow: 1,
         };
-        $scope.tab_data = [{name: '当前告警资产',content: '11111'}, {name: '历史告警资产',content: '22222'}];
+        $scope.tab_data = [{
+            name: '当前告警资产',
+            content: '11111'
+        }, {
+            name: '历史告警资产',
+            content: '22222'
+        }];
         $scope.li_index = 0;
-        $scope.get_data();
-        $scope.time_type = [{
-                time: '2018.08.12 23:22:12',
-                type: '威胁情报'
-            },
-            {
-                time: '2018.08.12 23:22:12',
-                type: 'IPReputation'
-            },
-            {
-                time: '2018.08.12 23:22:12',
-                type: 'MobileMaliciousHash'
-            },
-            {
-                time: '2018.08.12 23:22:12',
-                type: 'SDK'
-            },
-            {
-                time: '2018.08.12 23:22:12',
-                type: 'MaliciousHash'
-            },
-            {
-                time: '2018.08.12 23:22:12',
-                type: '沙箱'
-            },
-            {
-                time: '2018.08.12 23:22:12',
-                type: 'SDK'
-            },
-            {
-                time: '2018.08.12 23:22:12',
-                type: '沙箱'
-            },
-            {
-                time: '2018.08.12 23:22:12',
-                type: 'YARA'
-            },
-
-            {
-                time: '2018.08.12 23:22:12',
-                type: 'IDS'
-            },
-            {
-                time: '2018.08.12 23:22:12',
-                type: 'IDS'
-            }
-        ];
-        console.log($scope.time_type);
-        console.log($scope.time_type.length);
-        // 一 当告警来源是威胁情报的时候
-        // 1
-        $scope.threat.BotnetCAndCURL = [{
-                key: 'URL',
-                value: 'a232gh232a2323s23'
-            },
-            {
-                key: '威胁类型',
-                value: ' 僵尸网络'
-            },
-            {
-                key: '威胁细分',
-                value: 'threat'
-            },
-            {
-                key: '全球首次发现时间',
-                value: ' first_seen'
-            },
-            {
-                key: '流行度',
-                value: 'popularity'
-            },
-            {
-                key: '主要受影响地区',
-                value: 'geo'
-            },
-            {
-                key: '僵尸样本信息',
-                value: 'files'
-            },
-            {
-                key: '僵尸样本下载URL',
-                value: 'urls'
-            },
-            {
-                key: 'Whois信息',
-                value: 'whois'
-            }
-        ];
-        $scope.detail_infos = $scope.threat.BotnetCAndCURL;
-        // 2
-        $scope.threat.IPReputation = [{
-                key: 'IP',
-                value: 'a232gh232a2323s23'
-            },
-            {
-                key: '威胁类型',
-                value: 'malware“恶意地址”, spam“垃圾邮件”、 tor_exit_node“Tor边界节点”'
-            },
-            {
-                key: '全球首次发现时间',
-                value: ' first_seen'
-            },
-            {
-                key: '流行度',
-                value: 'popularity'
-            },
-            {
-                key: '主要受影响地区',
-                value: 'geo'
-            },
-            {
-                key: '相关联域名',
-                value: 'domains'
-            },
-            {
-                key: '相关联恶意文件',
-                value: 'files'
-            },
-            {
-                key: 'ip_whois信息',
-                value: 'ip_whois'
-            }
-        ];
-        // 3
-        $scope.threat.MaliciousHash = [{
-                key: 'MD5',
-                value: 'MD5'
-            },
-            {
-                key: 'SHA256',
-                value: 'SHA256'
-            },
-            {
-                key: '文件大小',
-                value: 'file_size'
-            },
-            {
-                key: '文件类型',
-                value: 'file_type'
-            },
-            {
-                key: '常见文件名',
-                value: 'file_names'
-            },
-            {
-                key: '威胁类型',
-                value: '恶意程序'
-            },
-            {
-                key: '威胁细分',
-                value: 'threat'
-            },
-            {
-                key: '全球首次发现时间',
-                value: 'first_seen'
-            },
-            {
-                key: '流行度',
-                value: 'popularity'
-            },
-            {
-                key: '主要受影响地区',
-                value: 'geo'
-            },
-            {
-                key: '样本下载IP地址',
-                value: 'IP'
-            },
-            {
-                key: '样本下载URL',
-                value: 'urls'
-            }
-        ];
-        // 4
-        $scope.threat.MaliciousURL = [{
-                key: 'URL',
-                value: 'URL'
-            },
-            {
-                key: '威胁类型',
-                value: 'Malware“恶意地址”，Bot C&C“僵尸网络C&C”，'
-            },
-            {
-                key: '全球首次发现时间',
-                value: ' first_seen'
-            },
-            {
-                key: '流行度',
-                value: 'popularity'
-            },
-            {
-                key: '主要受影响地区',
-                value: 'geo'
-            },
-            {
-                key: '相关联恶意文件',
-                value: 'files'
-            },
-            {
-                key: 'Whois信息',
-                value: 'whois'
-            }
-        ];
-        // 5
-        $scope.threat.PhishingURL = [{
-                key: 'URL',
-                value: 'URL'
-            },
-            {
-                key: '威胁类型',
-                value: '钓鱼网站'
-            },
-            {
-                key: '全球首次发现时间',
-                value: ' first_seen'
-            },
-            {
-                key: '流行度',
-                value: 'popularity'
-            },
-            {
-                key: '主要受影响地区',
-                value: 'geo'
-            },
-            {
-                key: '被钓鱼IP',
-                value: 'IP'
-            },
-            {
-                key: 'Whois信息',
-                value: 'whois'
-            }
-        ];
-        // 6
-        $scope.threat.MobileMaliciousHash = [{
-                key: 'MD5',
-                value: 'MD5'
-            },
-            {
-                key: 'SHA256',
-                value: 'SHA256'
-            },
-            {
-                key: '文件大小',
-                value: 'file_size'
-            },
-            {
-                key: '威胁类型',
-                value: '移动恶意程序'
-            },
-            {
-                key: '威胁细分',
-                value: 'threat'
-            },
-            {
-                key: '全球首次发现时间',
-                value: ' first_seen'
-            },
-            {
-                key: '流行度',
-                value: 'popularity'
-            },
-            {
-                key: '主要受影响地区',
-                value: 'geo'
-            }
-        ];
-        // 二当告警来源是SDK的时候
-        $scope.threat.SDK = [{
-                key: '文件名',
-                value: '文件名'
-            },
-            {
-                key: '文件大小',
-                value: ' 文件大小'
-            },
-            {
-                key: '文件哈希值',
-                value: '文件哈希值'
-            },
-            {
-                key: 'SDK检测出来的威胁名称',
-                value: ' SDK检测出来的威胁名称'
-            }
-        ];
-        // 三 当告警来源是沙箱的时候
-        $scope.threat.sandbox = [{
-            key: '沙箱运行信息',
-            value: '沙箱运行信息'
-        }];
-        // 四 当告警来源是YARA的时候
-        $scope.threat.yara = [{
-            key: 'Yara规则名称',
-            value: 'Yara规则名称'
-        }];
-        // 五 当告警来源是IDS的时候
-        $scope.threat.ids = [{
-                key: '告警类型',
-                value: '告警类型'
-            },
-            {
-                key: '告警描述',
-                value: '告警描述'
-            }
-        ];
-        // 网络事件
-        //http
-        $scope.network_events.http = [{
-                key: '方法',
-                value: 'GET'
-            },
-            {
-                key: '源地址',
-                value: '源地址'
-            },
-            {
-                key: '目的地址',
-                value: '目的地址'
-            },
-            {
-                key: 'URL',
-                value: 'URL'
-            },
-            {
-                key: '用户代理',
-                value: '用户代理'
-            },
-            {
-                key: '推荐人',
-                value: '推荐人'
-            },
-            {
-                key: '应用',
-                value: 'HTTP'
-            },
-        ];
-        //dns
-        $scope.network_events.dns = [{
-                key: '时间',
-                value: '时间'
-            },
-            {
-                key: 'DNS服务器地址',
-                value: 'DNS服务器地址'
-            },
-            {
-                key: '主机地址',
-                value: '主机地址'
-            },
-            {
-                key: '类型',
-                value: '类型'
-            },
-            {
-                key: '域名',
-                value: '域名'
-            },
-            {
-                key: '解析地址',
-                value: '解析地址'
-            },
-            {
-                key: 'TTL',
-                value: 'TTL'
-            },
-            {
-                key: '解析结果',
-                value: '解析结果'
-            },
-            {
-                key: '应用',
-                value: 'DNS'
-            },
-        ];
-        //SMTP/IMAP/Pop3
-        $scope.network_events.smtp = [{
-                key: '时间',
-                value: '时间'
-            },
-            {
-                key: '源地址',
-                value: '源地址'
-            },
-            {
-                key: '目的地址',
-                value: '目的地址'
-            },
-            {
-                key: '发件人',
-                value: '发件人'
-            },
-            {
-                key: '收件人',
-                value: '收件人'
-            },
-            {
-                key: '主题',
-                value: '主题'
-            },
-            {
-                key: '应用',
-                value: 'SMTP/IMAP/Pop3'
-            }
-        ];
-        //Kerberos
-        $scope.network_events.kerberos = [{
-                key: '时间',
-                value: '时间'
-            },
-            {
-                key: '源地址',
-                value: '源地址'
-            },
-            {
-                key: '目的地址',
-                value: '目的地址'
-            },
-            {
-                key: '信息类型',
-                value: '信息类型'
-            },
-            {
-                key: 'cname',
-                value: 'cname'
-            },
-            {
-                key: '认证管理域',
-                value: '认证管理域'
-            },
-            {
-                key: 'sname',
-                value: 'sname'
-            },
-            {
-                key: '应用',
-                value: 'Kerberos'
-            }
-        ];
-        //FTP
-        $scope.network_events.ftp = [{
-                key: '时间',
-                value: '时间'
-            },
-            {
-                key: '源地址',
-                value: '源地址'
-            },
-            {
-                key: '目的地址',
-                value: '目的地址'
-            },
-            {
-                key: '用户',
-                value: '用户'
-            },
-            {
-                key: '应用',
-                value: 'FTP'
-            }
-        ];
-        //SMB
-        $scope.network_events.smb = [{
-                key: '时间',
-                value: '时间'
-            },
-            {
-                key: '源地址',
-                value: '源地址'
-            },
-            {
-                key: '目的地址',
-                value: '目的地址'
-            },
-            {
-                key: '域',
-                value: '域'
-            },
-            {
-                key: '用户',
-                value: '用户'
-            },
-            {
-                key: '应用',
-                value: 'SMB'
-            }
-        ];
-        //HTTPS
-        $scope.network_events.ftp = [{
-                key: '时间',
-                value: '时间'
-            },
-            {
-                key: '源地址',
-                value: '源地址'
-            },
-            {
-                key: '目的地址',
-                value: '目的地址'
-            },
-            {
-                key: 'URL',
-                value: 'URL'
-            },
-            {
-                key: '证书发布者',
-                value: '证书发布者'
-            },
-            {
-                key: '证书授权',
-                value: '证书授权'
-            },
-            {
-                key: '证书有效期',
-                value: '证书有效期'
-            },
-            {
-                key: '应用',
-                value: 'HTTPS'
-            }
-        ];
-        //SSH
-        $scope.network_events.ftp = [{
-                key: '时间',
-                value: '时间'
-            },
-            {
-                key: '源地址',
-                value: '源地址'
-            },
-            {
-                key: '目的地址',
-                value: '目的地址'
-            },
-            {
-                key: '工具',
-                value: '工具'
-            },
-            {
-                key: '应用',
-                value: 'SSH'
-            }
-        ];
-        //其它
-        $scope.network_events.other = [{
-            key: '信息',
-            value: "这时候就把原始网络事件直接把json数据直接打印出来放到那儿"
-        }];
+        $scope.get_data();  //获取基础详细信息
     };
     //获取基础详细信息
     $scope.get_data = function () {
@@ -578,33 +40,511 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
             method: 'get',
             url: './yiiapi/alert/alert-details',
             params: {
-                'id': $scope.detail_data.id
+                'id': $scope.detail_data_id
             }
         }).success(function (data) {
-            // console.log(data);
+            console.log(data);
             zeroModal.close(loading);
             if (data.status == 0) {
                 $scope.alert_details = data.data
-                // console.log(JSON.parse($scope.alert_details.alert_description));
-                $scope.alert_details.alert_raw = JSON.parse($scope.alert_details.alert_description).session.raw;
+                $scope.getPage(); // 当前告警资产
+                $scope.getPage1(); //历史告警资产
+                // 检测时间轴数据
+                console.log($scope.alert_details.alarm_merger);
+                $scope.time_type = [{
+                    time: $scope.alert_details.alert_time,
+                    type: $scope.alert_details.detect_engine,
+                    content: $scope.alert_details.alert_description,
+                    description_type: $scope.alert_details.description_type,
+                    network_event: $scope.alert_details.network_event
+                }];
+                $scope.switch_type($scope.alert_details.description_type, $scope.alert_details.alert_description);
+                $scope.switch_network($scope.alert_details.network_event); //网络事件匹配
+                // 追加告警处理
+                if ($scope.alert_details.alarm_merger && $scope.alert_details.alarm_merger.length != 0) {
+                    $scope.alert_details.alarm_merger_item = {};
+                    angular.forEach($scope.alert_details.alarm_merger, function (item) {
+                        $scope.alert_details.alarm_merger_item = {
+                            time: item.alert_time,
+                            type: item.detect_engine,
+                            content: item.alert_description,
+                            description_type: item.description_type,
+                            network_event: item.network_event
+                        }
+                        $scope.time_type.push($scope.alert_details.alarm_merger_item);
+                    })
+                }
+                $scope.this_time = {}
             }
         }).error(function (err) {
             zeroModal.close(loading);
             console.log(err);
         })
-        $scope.getPage(); // 当前告警资产
-        $scope.getPage1(); //历史告警资产
+
     };
+    // 匹配情报类型
+    $scope.switch_type = function (params, content) {
+        console.log(params);
+        console.log('匹配情报类型');
+        $scope.whois_list = [];
+        $scope.urls_if = false;
+        $scope.whois_if = false;
+        $scope.sandbox_if = false;
+        $scope.IPReputation_if = false;
+        $scope.BotnetCAndCURL_if = false;
+        switch (params) {
+            case 'BotnetCAndCURL': //1
+                $scope.BotnetCAndCURL_if = true;
+                $scope.BotnetCAndCURL_list = [];
+                if (content.files) {
+                    $scope.files_md5 = [];
+                    angular.forEach(content.files, function (item) {
+                        $scope.files_md5.push(item.MD5)
+                    })
+                    $scope.BotnetCAndCURL_list.push({
+                        key: '僵尸样本信息',
+                        value: $scope.files_md5
+                    })
+                }
+                if (content.urls) {
+                    $scope.urls_url = [];
+                    angular.forEach(content.urls, function (item) {
+                        $scope.urls_url.push(item.url)
+                    })
+                    $scope.BotnetCAndCURL_list.push({
+                        key: '僵尸样本下载URL',
+                        value: $scope.urls_url
+                    })
+                }
+                if (content.whois) {
+                    $scope.whois_if = true;
+                    for (var key in content.whois) {
+                        $scope.whois_item = {
+                            key: key,
+                            value: content.whois[key]
+                        }
+                        $scope.whois_list.push($scope.whois_item);
+                    }
+                }
+                $scope.threat.BotnetCAndCURL = [{
+                        key: 'URL',
+                        value: content.mask
+                    },
+                    {
+                        key: '威胁类型',
+                        value: '僵尸网络C&C'
+                    },
+                    {
+                        key: '威胁细分',
+                        value: content.threat
+                    },
+                    {
+                        key: '全球首次发现时间',
+                        value: content.first_seen
+                    },
+                    {
+                        key: '流行度',
+                        value: content.popularity
+                    },
+                    {
+                        key: '主要受影响地区',
+                        value: content.geo
+                    }
+                ];
+                $scope.detail_infos = $scope.threat.BotnetCAndCURL;
+                break;
+            case 'IPReputation': //2
+                if (content.ip_whois) {
+                    $scope.whois_if = true;
+                    for (var key in content.ip_whois) {
+                        $scope.whois_item = {
+                            key: key,
+                            value: content.ip_whois[key]
+                        }
+                        $scope.whois_list.push($scope.whois_item);
+                    }
+                }
+                if (content.files) {
+                    $scope.BotnetCAndCURL_list = [];
+                    $scope.files_md5 = [];
+                    $scope.BotnetCAndCURL_list = true;
+                    angular.forEach(content.files, function (item) {
+                        $scope.files_md5.push(item.MD5)
+                    })
+                    $scope.BotnetCAndCURL_list.push({
+                        key: '相关联恶意文件',
+                        value: $scope.files_md5
+                    })
+                }
+                $scope.threat.IPReputation = [{
+                        key: 'IP',
+                        value: content.ip
+                    },
+                    {
+                        key: '威胁类型',
+                        value: content.category
+                    },
+                    {
+                        key: '全球首次发现时间',
+                        value: content.first_seen
+                    },
+                    {
+                        key: '流行度',
+                        value: content.popularity
+                    },
+                    {
+                        key: '主要受影响地区',
+                        value: content.ip_geo
+                    },
+                    {
+                        key: '相关联域名',
+                        value: content.domains
+                    },
+                    {
+                        key: '相关联恶意文件',
+                        value: content.files
+                    }
+                ];
+                $scope.detail_infos = $scope.threat.IPReputation;
+                break;
+
+            case 'MaliciousHash': // 3
+                if (content.urls) {
+                    $scope.urls = [];
+                    $scope.urls_if = true;
+                    angular.forEach(content.urls, function (item) {
+                        $scope.urls.push(item.url);
+                    });
+                }
+
+                $scope.threat.MaliciousHash = [{
+                        key: 'MD5',
+                        value: content.MD5
+                    },
+                    {
+                        key: 'SHA256',
+                        value: content.SHA256
+                    },
+                    {
+                        key: '文件大小',
+                        value: content.file_size
+                    },
+                    {
+                        key: '文件类型',
+                        value: content.file_type
+                    },
+                    {
+                        key: '常见文件名',
+                        value: content.file_names
+                    },
+                    {
+                        key: '威胁类型',
+                        value: '恶意程序'
+                    },
+                    {
+                        key: '威胁细分',
+                        value: content.threat
+                    },
+                    {
+                        key: '全球首次发现时间',
+                        value: content.first_seen
+                    },
+                    {
+                        key: '流行度',
+                        value: content.popularity
+                    },
+                    {
+                        key: '主要受影响地区',
+                        value: content.geo
+                    },
+                    {
+                        key: '样本下载IP地址',
+                        value: content.IP
+                    }
+
+                ];
+                $scope.detail_infos = $scope.threat.MaliciousHash;
+                break;
+
+            case 'MaliciousURL': // 4
+                console.log(content);
+
+                if (content.whois) {
+                    $scope.whois_if = true;
+                    for (var key in content.whois) {
+                        $scope.whois_item = {
+                            key: key,
+                            value: content.whois[key]
+                        }
+                        $scope.whois_list.push($scope.whois_item);
+                    }
+                }
+                $scope.threat.MaliciousURL = [{
+                        key: 'URL',
+                        value: content.mask
+                    },
+                    {
+                        key: '威胁类型',
+                        value: content.category
+                    },
+                    {
+                        key: '全球首次发现时间',
+                        value: content.first_seen
+                    },
+                    {
+                        key: '流行度',
+                        value: content.popularity
+                    },
+                    {
+                        key: '主要受影响地区',
+                        value: content.geo
+                    },
+                    {
+                        key: '相关联恶意文件',
+                        value: content.file
+                    }
+                ];
+                $scope.detail_infos = $scope.threat.MaliciousURL;
+                break;
+            case 'PhishingURL': // 5
+                if (content.whois) {
+                    $scope.whois_if = true;
+                    for (var key in content.whois) {
+                        $scope.whois_item = {
+                            key: key,
+                            value: content.whois[key]
+                        }
+                        $scope.whois_list.push($scope.whois_item);
+                    }
+                }
+                $scope.threat.PhishingURL = [{
+                        key: 'URL',
+                        value: content.mask
+                    },
+                    {
+                        key: '威胁类型',
+                        value: '钓鱼网站'
+                    },
+                    {
+                        key: '全球首次发现时间',
+                        value: content.first_seen
+                    },
+                    {
+                        key: '流行度',
+                        value: content.popularity
+                    },
+                    {
+                        key: '主要受影响地区',
+                        value: content.geo
+                    },
+                    {
+                        key: '被钓鱼IP',
+                        value: content.IP
+                    }
+                ];
+                $scope.detail_infos = $scope.threat.PhishingURL;
+                break;
+            case 'MobileMaliciousHash': // 6
+                $scope.threat.MobileMaliciousHash = [{
+                        key: 'MD5',
+                        value: content.MD5
+                    },
+                    {
+                        key: 'SHA256',
+                        value: content.SHA256
+                    },
+                    {
+                        key: '文件大小',
+                        value: content.file_size
+                    },
+                    {
+                        key: '威胁类型',
+                        value: content.category
+                    },
+                    {
+                        key: '威胁细分',
+                        value: content.threat
+                    },
+                    {
+                        key: '全球首次发现时间',
+                        value: content.first_seen
+                    },
+                    {
+                        key: '流行度',
+                        value: content.popularity
+                    },
+                    {
+                        key: '主要受影响地区',
+                        value: content.geo
+                    }
+                ];
+                $scope.detail_infos = $scope.threat.MobileMaliciousHash;
+                break;
+            case 'sdk': // 二当告警来源是SDK的时候
+                $scope.threat.sdk = [{
+                        key: '文件名',
+                        value: content.file_name
+                    },
+                    {
+                        key: '文件大小',
+                        value: content.file_size
+                    },
+                    {
+                        key: '文件哈希值',
+                        value: content.md5
+                    },
+                    {
+                        key: 'SDK检测威胁',
+                        value: content.threat
+                    }
+                ];
+                $scope.detail_infos = $scope.threat.sdk;
+                break;
+            case 'sandbox': // 三 当告警来源是沙箱的时候
+                $scope.sandbox_if = true;
+                $scope.threat.sandbox = [{
+                    key: '沙箱运行信息',
+                    value: content
+                }];
+                $scope.detail_infos = [];
+                break;
+            case 'yara': // 四 当告警来源是YARA的时候
+                $scope.threat.yara = [{
+                    key: 'Yara规则名称',
+                    value: content.rule_name
+                }];
+                $scope.detail_infos = $scope.threat.yara;
+                break;
+            case 'IDS': // 五 当告警来源是IDS的时候
+                $scope.threat.IDS = [{
+                        key: '告警类型',
+                        value: content.category
+                    },
+                    {
+                        key: '告警描述',
+                        value: content.threat
+                    }
+                ];
+                $scope.detail_infos = $scope.threat.IDS;
+                break;
+            default:
+                break;
+        }
+    }
+    // 匹配网络事件
+    $scope.switch_network = function (network_events) {
+        $scope.network_events.smtp_if = false;
+        $scope.network_events.http_if = false;
+        $scope.network_events.ftp_data_if = false;
+        $scope.network_events.imap_if = false;
+        $scope.network_events.pop3_if = false;
+        $scope.network_events.smb_if = false;
+        $scope.network_events.ssh_if = false;
+        $scope.network_events.ftp_if = false;
+        $scope.network_events.https_if = false;
+        $scope.network_events.dns_if = false;
+        $scope.network_events.krb5_if = false;
+        $scope.network_events.http_if = false;
+        switch (network_events.event_type) {
+            case "fileinfo":
+                // smtp
+                if (network_events.app_proto == 'smtp') {
+                    $scope.network_events.smtp_if = true;
+                    $scope.network_events.smtp = network_events;
+                    $scope.network_events.smtp.smtp.rcpt_to = $scope.network_events.smtp.smtp.rcpt_to.join(',');
+                }
+                // http
+                if (network_events.app_proto == 'http') {
+                    $scope.network_events.http_if = true;
+                    $scope.network_events.http = network_events;
+                }
+                // ftp-data
+                if (network_events.app_proto == 'ftp-data') {
+                    $scope.network_events.ftp_data_if = true;
+                    $scope.network_events.ftp_data = network_events;
+                }
+                // imap
+                if (network_events.app_proto == 'imap') {
+                    $scope.network_events.imap_if = true;
+                    $scope.network_events.imap = network_events;
+                    $scope.network_events.imap.email.to = $scope.network_events.imap.email.to.join(',');
+                }
+                // pop3
+                if (network_events.app_proto == 'pop3') {
+                    $scope.network_events.pop3_if = true;
+                    $scope.network_events.pop3 = network_events;
+                    if($scope.network_events.pop3.email.to.length >1){
+                        $scope.network_events.pop3.email.to = $scope.network_events.pop3.email.to.join(',');
+                    }
+                    console.log($scope.network_events.pop3.email.to.length);
+                }
+                // smb
+                if (network_events.app_proto == 'smb') {
+                    $scope.network_events.smb_if = true;
+                    $scope.network_events.smb = network_events;
+                }
+
+                break;
+            case 'flow':
+                if (network_events.app_proto == 'ftp') {
+                    $scope.network_events.ftp_if = true;
+                    $scope.network_events.ftp = network_events;
+                }
+
+                break;
+            case 'smb':
+                $scope.network_events.smb_if = true;
+                $scope.network_events.smb = network_events;
+                $scope.network_events.smb.app_proto = network_events.event_type;
+                break;
+            case 'ssh':
+                $scope.network_events.ssh_if = true;
+                $scope.network_events.ssh = network_events;
+                break;
+            case 'tls':
+                $scope.network_events.https_if = true;
+                $scope.network_events.https = network_events;
+                if ($scope.network_events.https.tls.subject) {
+                    $scope.network_events.https.tls.Authorizing = $scope.network_events.https.tls.subject.substring($scope.network_events.https.tls.subject.indexOf("CN=") + 3);
+                }
+                break;
+            case 'dns':
+                $scope.network_events.dns_if = true;
+                $scope.network_events.dns = network_events;
+                if($scope.network_events.dns.dns.grouped){
+                    $scope.network_events.dns.dns.HostAddr = $scope.network_events.dns.dns.grouped.A.join(',');
+                }
+                angular.forEach($scope.network_events.dns.dns.answers,function(item){
+                    if($scope.network_events.dns.dns.rrname == item.rrname){
+                    $scope.network_events.dns.dns.ttl = item.ttl
+                    $scope.network_events.dns.dns.rrtype = item.rrtype
+                    }
+                })
+               
+                break;
+            case 'krb5':
+                $scope.network_events.krb5_if = true;
+                $scope.network_events.krb5 = network_events;
+                break;
+                case 'http':
+                $scope.network_events.http_if = true;
+                $scope.network_events.http = network_events;
+                break;
+
+            default:
+
+                break;
+        }
+    }
     // 当前告警资产
     $scope.getPage = function (pageNow) {
         pageNow = pageNow ? pageNow : 1;
-        console.log($scope.detail_data.indicator);
         $http({
             method: 'get',
             url: './yiiapi/alert/get-same-indicator-alert',
             params: {
-                // 'indicator': 'blog.csdn.net/qq_30753945/article/details/5e9',
-                'indicator': $scope.detail_data.indicator,
+                'indicator': $scope.alert_details.indicator,
+                // 'id': $scope.alert_details.id,
                 'is_deal': 0,
                 'page': pageNow,
                 'row': 10,
@@ -625,8 +565,8 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
             method: 'get',
             url: './yiiapi/alert/get-same-indicator-alert',
             params: {
-                // 'indicator': 'blog.csdn.net/qq_30753945/article/details/5e9',
-                'indicator': $scope.detail_data.indicator,
+                'indicator': $scope.alert_details.indicator,
+                // 'id': $scope.alert_details.id,
                 'is_deal': 2,
                 'page': pageNow,
                 'row': 10,
@@ -649,16 +589,10 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
     $scope.isActive = function (item, index) {
         console.log(item);
         $scope.li_index = index;
-        if (item.type == 'IPReputation') {
-            $scope.detail_infos = $scope.threat.IPReputation;
-        } else if (item.type == 'MaliciousHash') {
-            $scope.detail_infos = $scope.threat.MaliciousHash;
-        } else {
-            $scope.detail_infos = $scope.threat.BotnetCAndCURL;
-
-        }
+        $scope.switch_type(item.description_type, item.content);
+        $scope.switch_network(item.network_event);
     };
     // 获取时间轴详细数据
-    $scope.get_time_data = function(){};
+    $scope.get_time_data = function () {};
     $scope.init();
-}, ]);
+}, ])

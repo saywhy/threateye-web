@@ -29,8 +29,8 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter', 
         $scope.endTime = $scope.nowDate;
         $scope.datapicker($scope.timerChoose);
         $scope.datatype = [{
-            name: '运行报告(docx)',
-            value: 'docx'
+            name: '运行报告(doc)',
+            value: 'doc'
         }, {
             name: '告警列表(csv)',
             value: 'csv'
@@ -88,7 +88,7 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter', 
             $scope.reportNameInput = true;
             // 获取echarts数据
             console.log($scope.selectedName);
-            if ($scope.selectedName == 'docx') {
+            if ($scope.selectedName == 'doc') {
                 // docx 报表
                 $http({
                     method: 'get',

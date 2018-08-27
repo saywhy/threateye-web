@@ -56,7 +56,7 @@ angular.module('app')
                                     return $ocLazyLoad.load(['src/pages/alarm/alarm.js']);
                                 }
                             ]
-                        }
+                        },
                     })
                     // 告警页面-详情
                     .state('app.alarm_detail', {
@@ -71,7 +71,7 @@ angular.module('app')
                                     return $ocLazyLoad.load(['src/pages/alarm_detail/alarm_detail.js']);
                                 }
                             ]
-                        }
+                        },
                     })
                     // 安全调查
                     .state('app.safety', {

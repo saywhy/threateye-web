@@ -41,11 +41,11 @@
                     <div class="flow-left col-md-12">
                         <p class="flow-item col-md-6">
                             <span class="flow-color2"></span>
-                            <span>流量</span>
+                            <span>流量（M/S）</span>
                         </p>
                         <p class="flow-item col-md-6">
                             <span class="flow-color3"></span>
-                            <span>文件</span>
+                            <span>文件（个/S）</span>
                         </p>
                     </div>
 
@@ -198,7 +198,7 @@
                             <tr>
                                 <th>时间</th>
                                 <th>告警类型</th>
-                                <th>告警描述</th>
+                                <th>威胁指标</th>
                                 <th>源地址</th>
                                 <th>目的地址</th>
                                 <th>应用</th>
@@ -207,7 +207,7 @@
                             <tr ng-repeat="item in new_alarm_data" style="height: 37px;">
                                 <td ng-bind="item.alert_time*1000 |date:'yyyy-MM-dd HH:mm:ss'"></td>
                                 <td ng-bind="item.category"></td>
-                                <td ng-bind="item.alert_description"></td>
+                                <td ng-bind="item.indicator"></td>
                                 <td ng-bind="item.src_ip"></td>
                                 <td ng-bind="item.dest_ip"></td>
                                 <td ng-bind="item.application"></td>
@@ -220,7 +220,7 @@
         </div>
     </div>
     <!-- 弹窗 -->
-    <div class="pop" ng-show="showpop">
+    <div class="pop" id="pop" ng-show="showpop">
         <div class="pop-content">
             <p class="pop-content-head">
                 <i class="fa fa-windows"></i> 拓扑图 </p>
@@ -238,7 +238,7 @@
         <div class="iot_pop_content">
             <p class="iot_pop_content_head">
                 <i class="fa fa-windows"></i> 
-                <span ng-bind="iot_detail_title.data.name"></span>
+                <span ng-bind="iot_detail_title.data.names"></span>
                 <span ng-bind="iot_detail_title.data.dev_ip"></span>
                 <span>的健康情况</span>
              </p>

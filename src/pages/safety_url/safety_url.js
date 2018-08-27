@@ -72,83 +72,99 @@ app.controller('Safety_urlController', ['$scope', '$http', '$state', function ($
     };
     //下载列表
     $scope.download_list = function () {
-        var tt = new Date().getTime();
-        var url = './yiiapi/investigate/ipurl-communication-investigation-export';
-        /**
-         * 使用form表单来发送请求
-         * 1.method属性用来设置请求的类型——post还是get
-         * 2.action属性用来设置请求路径。
-         */
-        var form = $("<form>"); //定义一个form表单
-        form.attr("style", "display:none");
-        form.attr("target", "");
-        form.attr("method", "get"); //请求类型
-        form.attr("action", url); //请求地址
-        $("body").append(form); //将表单放置在web中
-        /**
-         * input标签主要用来传递请求所需的参数：
-         * 1.name属性是传递请求所需的参数名.
-         * 2.value属性是传递请求所需的参数值.
-         * 3.当为get类型时，请求所需的参数用input标签来传递，直接写在URL后面是无效的。
-         * 4.当为post类型时，queryString参数直接写在URL后面，formData参数则用input标签传递
-         *       有多少数据则使用多少input标签
-         */
-
-        var input1 = $("<input>");
-        input1.attr("type", "hidden");
-        input1.attr("name", "src_ip");
-        input1.attr("value", $scope.params_data.src_ip);
-        form.append(input1);
-
-        var input2 = $("<input>");
-        input2.attr("type", "hidden");
-        input2.attr("name", "dst_ip");
-        input2.attr("value", $scope.params_data.dst_ip);
-        form.append(input2);
-
-        var input3 = $("<input>");
-        input3.attr("type", "hidden");
-        input3.attr("name", "src_port");
-        input3.attr("value", $scope.params_data.src_port);
-        form.append(input3);
-
-        var input4 = $("<input>");
-        input4.attr("type", "hidden");
-        input4.attr("name", "dst_port");
-        input4.attr("value", $scope.params_data.dst_port);
-        form.append(input4);
-
-        var input5 = $("<input>");
-        input5.attr("type", "hidden");
-        input5.attr("name", "email");
-        input5.attr("value", $scope.params_data.email);
-        form.append(input5);
-
-        var input6 = $("<input>");
-        input6.attr("type", "hidden");
-        input6.attr("name", "start_time");
-        input6.attr("value", $scope.params_data.start_time);
-        form.append(input6);
-
-        var input7 = $("<input>");
-        input7.attr("type", "hidden");
-        input7.attr("name", "end_time");
-        input7.attr("value", $scope.params_data.end_time);
-        form.append(input7);
-
-        var input9 = $("<input>");
-        input9.attr("type", "hidden");
-        input9.attr("name", "current_page");
-        input9.attr("value", 0);
-        form.append(input9);
-
-        var input0 = $("<input>");
-        input0.attr("type", "hidden");
-        input0.attr("name", "per_page_count");
-        input0.attr("value", 0);
-        form.append(input0);
-
-        form.submit(); //表单提交
+        $http({
+            method: 'get',
+            url: './yiiapi/investigate/investigation-download-test',
+            params: {
+                function: 'IPURLSearch',
+                src_ip: $scope.params_data.src_ip,
+                dst_ip: $scope.params_data.dst_ip,
+                src_port: $scope.params_data.src_port,
+                dst_port: $scope.params_data.dst_port,
+                email: $scope.params_data.email,
+                start_time: $scope.params_data.start_time,
+                end_time: $scope.params_data.end_time,
+                current_page: 0,
+                per_page_count:0,
+            }
+        }).success(function (data) {
+            console.log(data);
+            if(data.status == 0){
+                download_now();
+            }
+            if(data.status == 1){
+                zeroModal.error(data.msg);
+            }
+        }).error(function (error) {
+            console.log(error);
+         })
+         function download_now (){
+            var tt = new Date().getTime();
+            var url = './yiiapi/investigate/ipurl-communication-investigation-export';
+            var form = $("<form>"); //定义一个form表单
+            form.attr("style", "display:none");
+            form.attr("target", "");
+            form.attr("method", "get"); //请求类型
+            form.attr("action", url); //请求地址
+            $("body").append(form); //将表单放置在web中
+  
+            var input1 = $("<input>");
+            input1.attr("type", "hidden");
+            input1.attr("name", "src_ip");
+            input1.attr("value", $scope.params_data.src_ip);
+            form.append(input1);
+    
+            var input2 = $("<input>");
+            input2.attr("type", "hidden");
+            input2.attr("name", "dst_ip");
+            input2.attr("value", $scope.params_data.dst_ip);
+            form.append(input2);
+    
+            var input3 = $("<input>");
+            input3.attr("type", "hidden");
+            input3.attr("name", "src_port");
+            input3.attr("value", $scope.params_data.src_port);
+            form.append(input3);
+    
+            var input4 = $("<input>");
+            input4.attr("type", "hidden");
+            input4.attr("name", "dst_port");
+            input4.attr("value", $scope.params_data.dst_port);
+            form.append(input4);
+    
+            var input5 = $("<input>");
+            input5.attr("type", "hidden");
+            input5.attr("name", "email");
+            input5.attr("value", $scope.params_data.email);
+            form.append(input5);
+    
+            var input6 = $("<input>");
+            input6.attr("type", "hidden");
+            input6.attr("name", "start_time");
+            input6.attr("value", $scope.params_data.start_time);
+            form.append(input6);
+    
+            var input7 = $("<input>");
+            input7.attr("type", "hidden");
+            input7.attr("name", "end_time");
+            input7.attr("value", $scope.params_data.end_time);
+            form.append(input7);
+    
+            var input9 = $("<input>");
+            input9.attr("type", "hidden");
+            input9.attr("name", "current_page");
+            input9.attr("value", 0);
+            form.append(input9);
+    
+            var input0 = $("<input>");
+            input0.attr("type", "hidden");
+            input0.attr("name", "per_page_count");
+            input0.attr("value", 0);
+            form.append(input0);
+    
+            form.submit(); //表单提交
+         }
+    
     };
 
     // 时间插件

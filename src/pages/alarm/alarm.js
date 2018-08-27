@@ -1,5 +1,4 @@
 'use strict';
-
 /* Controllers */
 // Alarm controller
 app.controller('AlarmController', [
@@ -10,6 +9,10 @@ app.controller('AlarmController', [
     function ($scope, $http, $state, $filter) {
         // 初始化
         $scope.init = function (params) {
+            $scope.crumbOptions = [
+                // {"href": "#/app/alarm", "title" : "告警"},
+                {"href": "", "title" : "告警"}
+              ];
             $scope.searchData = {};
             $scope.statusData = [{
                 num: 3,
@@ -148,6 +151,17 @@ app.controller('AlarmController', [
                         },
                         tooltip: {
                             trigger: 'axis',
+                            axisPointer: {
+                                lineStyle: {
+                                    color: '#ddd'
+                                }
+                            },
+                            backgroundColor: 'rgba(255,255,255,1)',
+                            padding: [5, 10],
+                            textStyle: {
+                                color: '#7588E4',
+                            },
+                            extraCssText: 'box-shadow: 0 0 5px rgba(0,0,0,0.3)'
                         },
                         dataZoom: [{
                                 show: true,
@@ -215,8 +229,6 @@ app.controller('AlarmController', [
                 zeroModal.close(loading);
                 console.log(err);
             })
-
-
         };
         // 时间插件初始化
         $scope.timepicker = function (params) {
@@ -253,10 +265,10 @@ app.controller('AlarmController', [
         };
         // 跳转详情页面
         $scope.detail = function (params) {
-            // console.log(params);
-            params = escape(JSON.stringify(params));
+            console.log(params.id);
+            // params = escape(JSON.stringify(params));
             $state.go('app.alarm_detail', {
-                data: params
+                data: params.id
             });
         };
         //导出告警列表
@@ -268,7 +280,6 @@ app.controller('AlarmController', [
                 },
                 cancelFn: function () {}
             });
-
         }
         $scope.download_alarm = function () {
             var url = './yiiapi/alert/export-alerts';
@@ -289,7 +300,7 @@ app.controller('AlarmController', [
              * 2.value属性是传递请求所需的参数值.
              * 3.当为get类型时，请求所需的参数用input标签来传递，直接写在URL后面是无效的。
              * 4.当为post类型时，queryString参数直接写在URL后面，formData参数则用input标签传递
-             *       有多少数据则使用多少input标签
+             * 有多少数据则使用多少input标签
              */
             var input1 = $("<input>");
             input1.attr("type", "hidden");

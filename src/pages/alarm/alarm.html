@@ -1,4 +1,5 @@
 <div class="alarm" ng-controller="AlarmController" ng-init="app.settings.container = false;" ng-cloak>
+    <cust-breadcrumb options="{{crumbOptions}}"></cust-breadcrumb>
     <!-- 折线图表 -->
     <div class="alarm_echart">
         <div class="alarm_echart_content">
@@ -51,7 +52,7 @@
                                     <th style="width:40px">序号</th>
                                     <th style="width:145px">时间</th>
                                     <th>告警类型</th>
-                                    <th>告警描述</th>
+                                    <th>威胁指标</th>
                                     <th>源地址</th>
                                     <th>目的地址</th>
                                     <th>应用</th>
@@ -62,7 +63,7 @@
                                     <td ng-bind="$index + 1 + index_num">1</td>
                                     <td ng-bind="item.alert_time*1000 |date:'yyyy-MM-dd HH:mm:ss'"></td>
                                     <td ng-bind="item.category"></td>
-                                    <td ng-bind="item.alert_description"></td>
+                                    <td ng-bind="item.indicator"></td>
                                     <td ng-bind="item.src_ip"></td>
                                     <td ng-bind="item.dest_ip"></td>
                                     <td ng-bind="item.application"></td>

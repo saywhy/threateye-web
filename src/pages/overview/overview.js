@@ -137,11 +137,11 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
                 // 弹窗内容拓扑图
                 $scope.change_password = function (size) {
                     $scope.showpop = true; //  显示弹窗
-                    // setTimeout(function () {
-                    if ($scope.sysState_data.dev_info) {
-                        $scope.graph_echart();
-                    }
-                    // }, 3000);
+                    setTimeout(function () {
+                        if ($scope.sysState_data.dev_info) {
+                            $scope.graph_echart();
+                        }
+                    }, 100);
                 };
             }
         }).error(function (err) {
@@ -837,6 +837,21 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
                             type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
                         }
                     },
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                            // lineStyle: {
+                            //     color: '#ddd'
+                            // }
+                        },
+                        backgroundColor: 'rgba(255,255,255,1)',
+                        padding: [5, 10],
+                        textStyle: {
+                            color: '#7588E4',
+                        },
+                        extraCssText: 'box-shadow: 0 0 5px rgba(0,0,0,0.3)'
+                    },
                     grid: {
                         left: '3%',
                         right: '4%',
@@ -991,9 +1006,18 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
                 var option = {
                     tooltip: {
                         trigger: 'axis',
-                        axisPointer: { // 坐标轴指示器，坐标轴触发有效
-                            type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-                        }
+                        axisPointer: {
+                            type: 'shadow'
+                            // lineStyle: {
+                            //     color: '#ddd'
+                            // }
+                        },
+                        backgroundColor: 'rgba(255,255,255,1)',
+                        padding: [5, 10],
+                        textStyle: {
+                            color: '#7588E4',
+                        },
+                        extraCssText: 'box-shadow: 0 0 5px rgba(0,0,0,0.3)'
                     },
                     grid: {
                         left: '3%',
@@ -1195,7 +1219,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
                     name: '引擎/探针',
                     dev_ip: item.dev_ip,
                     status: item.status,
-                    x: 600,
+                    x: 300,
                     y: 150,
                     symbol: $scope.computer_base64,
                     //节点上面的文字	
@@ -1214,14 +1238,16 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
                 }
                 $scope.graph_echart_array.push($scope.graph_echart_array_item);
             }
-        })
+        });
         // 2 一台引擎模版
         $scope.data_item0 = {
             name: '节点0',
-            x: 600,
+            x: 350,
             y: 200,
             symbol: $scope.oracle_base64,
             names: '引擎',
+            dev_ip: $scope.engine_array[0].dev_ip,
+            status: $scope.engine_array[0].status,
             //节点上面的文字	
             label: {
                 normal: {
@@ -1235,20 +1261,22 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
                     formatter: '引擎'
                 }
             }
-        }
+        };
         // 一台引擎
         if ($scope.engine_array.length == 1) {
             $scope.graph_echart_array.push($scope.data_item0);
-        }
+        };
         console.log($scope.probe_array);
         // 多个探针 模版
         angular.forEach($scope.probe_array, function (item, index) {
             $scope.data_item1 = {
                 name: '节点1',
-                x: 300,
+                x:300,
                 y: 100,
                 symbol: $scope.router_base64,
                 names: '探针',
+                dev_ip: item.dev_ip,
+                status: item.status,
                 //节点上面的文字	
                 label: {
                     normal: {
@@ -1265,87 +1293,90 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
             };
             $scope.links_item = {
                 source: '节点0',
-                target: '节点1'
-            }
+                target: '节点1',
+                dev_ip: item.dev_ip,
+                status: item.status,
+                names: '探针'
+            };
             switch (index) {
                 case 0:
-                    $scope.data_item1.name = '节点1',
-                        $scope.links_item.target = '节点1',
-                        $scope.data_item1.x = 300,
-                        $scope.data_item1.y = 100
+                    $scope.data_item1.name = '节点1';
+                    $scope.links_item.target = '节点1';
+                    $scope.data_item1.x = 100;
+                    $scope.data_item1.y = 200;
                     $scope.graph_echart_array.push($scope.data_item1);
                     $scope.links_array.push($scope.links_item);
                     break;
                 case 1:
-                    $scope.data_item1.name = '节点2',
-                        $scope.links_item.target = '节点2',
-                        $scope.data_item1.x = 300,
-                        $scope.data_item1.y = 200
+                    $scope.data_item1.name = '节点2';
+                    $scope.links_item.target = '节点2';
+                    $scope.data_item1.x = 100;
+                    $scope.data_item1.y = 100;
                     $scope.graph_echart_array.push($scope.data_item1);
                     $scope.links_array.push($scope.links_item);
                     break;
                 case 2:
-                    $scope.data_item1.name = '节点3',
-                        $scope.links_item.target = '节点3',
-                        $scope.data_item1.x = 300,
-                        $scope.data_item1.y = 300
+                    $scope.data_item1.name = '节点3';
+                    $scope.links_item.target = '节点3';
+                    $scope.data_item1.x = 100;
+                    $scope.data_item1.y = 300;
                     $scope.graph_echart_array.push($scope.data_item1);
                     $scope.links_array.push($scope.links_item);
                     break;
                 case 3:
-                    $scope.data_item1.name = '节点4',
-                        $scope.links_item.target = '节点4',
-                        $scope.data_item1.x = 600,
-                        $scope.data_item1.y = 100
+                    $scope.data_item1.name = '节点4';
+                    $scope.links_item.target = '节点4';
+                    $scope.data_item1.x = 600;
+                    $scope.data_item1.y = 200;
                     $scope.graph_echart_array.push($scope.data_item1);
                     $scope.links_array.push($scope.links_item);
                     break;
                 case 4:
-                    $scope.data_item1.name = '节点5',
-                        $scope.links_item.target = '节点5',
-                        $scope.data_item1.x = 600,
-                        $scope.data_item1.y = 300
+                    $scope.data_item1.name = '节点5';
+                    $scope.links_item.target = '节点5';
+                    $scope.data_item1.x = 600;
+                    $scope.data_item1.y = 100;
                     $scope.graph_echart_array.push($scope.data_item1);
                     $scope.links_array.push($scope.links_item);
                     break;
                 case 5:
-                    $scope.data_item1.name = '节点6',
-                        $scope.links_item.target = '节点6',
-                        $scope.data_item1.x = 900,
-                        $scope.data_item1.y = 100
+                    $scope.data_item1.name = '节点6';
+                    $scope.links_item.target = '节点6';
+                    $scope.data_item1.x = 600;
+                    $scope.data_item1.y = 300;
                     $scope.graph_echart_array.push($scope.data_item1);
                     $scope.links_array.push($scope.links_item);
                     break;
                 case 6:
-                    $scope.data_item1.name = '节点7',
-                        $scope.links_item.target = '节点7',
-                        $scope.data_item1.x = 900,
-                        $scope.data_item1.y = 200
+                    $scope.data_item1.name = '节点7';
+                    $scope.links_item.target = '节点7';
+                    $scope.data_item1.x = 300;
+                    $scope.data_item1.y = 100;
                     $scope.graph_echart_array.push($scope.data_item1);
                     $scope.links_array.push($scope.links_item);
                     break;
                 case 7:
-                    $scope.links_item.target = '节点8',
-                        $scope.data_item1.name = '节点8',
-                        $scope.data_item1.x = 900,
-                        $scope.data_item1.y = 300
+                    $scope.links_item.target = '节点8';
+                    $scope.data_item1.name = '节点8';
+                    $scope.data_item1.x = 300;
+                    $scope.data_item1.y = 300;
                     $scope.graph_echart_array.push($scope.data_item1);
                     $scope.links_array.push($scope.links_item);
                     break;
                 default:
                     break;
-            }
+            };
         })
         console.log($scope.graph_echart_array);
+        // $("#pop").html('<div id="graph"</div>');
         var myChart = echarts.init(document.getElementById('graph'));
         var option = {
             tooltip: {
                 trigger: 'item',
                 formatter: function (params, trigger) {
-                    return '设备：' + params.data.name + '</br>' + 'IP地址：' + params.data.dev_ip + '</br>' + '状态：' + params.data.status
+                    return '设备：' + params.data.names + '</br>' + 'IP地址：' + params.data.dev_ip + '</br>' + '状态：' + params.data.status
                 }
             },
-            animation: false,
             animationDurationUpdate: 1000,
             animationEasingUpdate: 'quinticInOut',
             series: [{
@@ -1355,16 +1386,19 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
                 roam: true,
                 label: {
                     normal: {
-                        show: true
+                        show: false
                     }
                 },
                 focusNodeAdjacenc: true, //是否在鼠标移到节点上的时候突出显示节点以及节点的边和邻接节点
                 edgeSymbol: ['arrow', 'arrow'],
                 edgeSymbolSize: [7, 7],
                 edgeLabel: {
-                    normal: {
+                    normal:{
+                        show:false
+                    },
+                    emphasis: {
                         textStyle: {
-                            fontSize: 20
+                            fontSize: 30 //边节点显示的字体大小
                         }
                     }
                 },
@@ -1379,26 +1413,34 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
                 }
             }]
         };
+        myChart.clear();//只是清理画布，而不会删除 生成的元素节点
         myChart.setOption(option);
-        myChart.resize();
         //添加点击事件
+        myChart.off("click");//防止累计触发
         myChart.on('click', function (params) {
             // 弹窗打印数据的名称
             console.log(params);
             $scope.iot_detail_title = params;
             if (params.dataType == "node") {
-                $scope.$apply(function () {
+                // $scope.$apply(function () {
                     $scope.iotcontent = true;
                     setTimeout(function () {
-                        $scope.iot_detail_top(params); //iot具体cpu/内存/硬盘/流量
-                    }, 10);
-                })
+                        console.log(12121);
+                        $scope.iot_detail_top($scope.iot_detail_title); //iot具体cpu/内存/硬盘/流量
+                    }, 600);
+                // })
             }
         });
     };
     // iot_detail - 
     $scope.iot_detail_top = function (params) {
-        console.log(params.data.dev_ip);
+        console.log(params);
+        var loading = zeroModal.loading(4);
+           $scope.sys_detail_cpu = [];
+            $scope.sys_detail_mem = [];
+            $scope.sys_detail_disk = [];
+            $scope.sys_detail_time = [];
+            $scope.sys_detail_flow = [];
         $http({
             method: 'get',
             url: './yiiapi/alert/dev-state',
@@ -1406,11 +1448,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
                 ip: params.data.dev_ip
             }
         }).success(function (data) {
-            $scope.sys_detail_cpu = [];
-            $scope.sys_detail_mem = [];
-            $scope.sys_detail_disk = [];
-            $scope.sys_detail_time = [];
-            $scope.sys_detail_flow = [];
+            zeroModal.close(loading);
             console.log(data);
             if (data.status == 0) {
                 angular.forEach(data.data, function (item, index) {
@@ -1595,7 +1633,6 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
                     }]
                 };
                 myChart.setOption(option);
-                myChart.resize();
                 // iot具体流量
                 var myChart_detail_flow = echarts.init(document.getElementById('iot_detail_bom'));
                 var option_detail_flow = {
@@ -1709,13 +1746,12 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
                     }]
                 };
                 myChart_detail_flow.setOption(option_detail_flow);
-                myChart_detail_flow.resize();
-
             }
             if (data.status == 1) {
                 zeroModal.error(data.msg);
             }
         }).error(function (err) {
+            zeroModal.close(loading);
             console.log(err);
         })
     };

@@ -120,8 +120,8 @@ li {
 }
 
 .time_content_li {
-    height: 34px;
-    line-height: 34px;
+    min-height: 30px;
+    line-height: 30px;
 }
 
 .time_content_span_title {
@@ -174,4 +174,13 @@ li {
     color: rgba(255,128,0,1);
     color: rgba(0,0,255,1);
     color: rgba(128,0,255,1);
+}
+
+.alarm_detail_tdcontent{
+    word-wrap:break-word !important;
+    word-break:break-all !important;
+    white-space:normal
+}
+.urls_style{
+    float: left;
 }

@@ -32,7 +32,7 @@ angular.module('app')
                 rgbaLow8: 'rgba(74,164,110,.8)',
                 rgbaLow2: 'rgba(74,164,110,.2)',
             };
-       
+
             // save settings to local storage
             if (angular.isDefined($localStorage.settings)) {
                 $scope.app.settings = $localStorage.settings;
@@ -78,15 +78,15 @@ angular.module('app')
                 $scope.get_news();
                 // 默认参数
                 $scope.app.settings = {
-                    navbarHeaderColor:'bg-black',
-                    navbarCollapseColor:'bg-white-only',
-                    asideColor:'bg-black',
-                    headerFixed:true,
-                    asideFixed:true
+                    navbarHeaderColor: 'bg-black',
+                    navbarCollapseColor: 'bg-white-only',
+                    asideColor: 'bg-black',
+                    headerFixed: true,
+                    asideFixed: true
                 };
             }
             $scope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-                // console.log(toState);
+                console.log(toState);
                 if (toState.url == '' || toState.url == '/signin') {
                     $http({
                         method: 'POST',
@@ -100,7 +100,7 @@ angular.module('app')
                     }, function errorCallback(data) {
 
                     });
-                }else{
+                } else {
                     $scope.get_news();
                 }
             });
@@ -221,5 +221,37 @@ angular.module('app')
             }
 
             $scope.init_main();
+
+
         }
-    ]);
+    ])
+    .directive("custBreadcrumb", function() {
+        return {
+          restrict: 'E',
+          replace: true,
+          scope: {
+            options:'@'
+          },
+          link: function(scope, elem, attrs) {
+            console.log(elem);
+            // var parentNode = elem.parent();
+            var crumbString = '<ol class="breadcrumb">';
+            angular.forEach(scope.$eval(scope.options), function(item) {
+                console.log(item);
+              if (item["href"] != "") {
+                var tempString = '<li><a href="' + item["href"] + '">' + item["title"] + '</a></li>'; 
+                crumbString += tempString;
+              } else {
+                var tempString = '<li class="active">' + item["title"] + '</li>'; 
+                crumbString += tempString;
+              }
+            });
+    
+            crumbString += "</ol>";
+            elem.append(angular.element(crumbString));
+            // console.log(parentNode);
+            console.log(crumbString);
+          }
+        };
+      });
+  
