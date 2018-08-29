@@ -39,13 +39,8 @@
                         </p>
                         <p>
                             <span class="alarm_detai_span">应用:</span>
-                            <span class="part_detail_span" ng-bind="alert_details.application"> </span>
+                            <span class="part_detail_span" ng-bind="alert_details.application == 'tls'? 'https': alert_details.application"> </span>
                         </p>
-                        <!-- <p>
-                            haha <liyi@hoohoolab.com>	
-                            <span class="alarm_detai_span">告警描述:</span>
-                            <span class="part_detail_span" ng-bind="alert_details.alert_description">与告警页面内容一致 </span>
-                        </p> -->
                         <p>
                             <span class="alarm_detai_span">检测引擎:</span>
                             <span class="part_detail_span" ng-bind="alert_details.detect_engine">被那个引擎或者规则检测出的告警 </span>
@@ -156,7 +151,6 @@
                                         </td>
                                         <td ng-bind="network_events.smtp.smtp.mail_from" title="{{network_events.smtp.smtp.mail_from}}"></td>
                                         <td ng-bind="network_events.smtp.smtp.rcpt_to" title="{{network_events.smtp.smtp.rcpt_to}}"></td>
-                                        <!-- <td ng-bind="network_events.smtp.smtp" title="{{network_events.smtp.smtp.helo}}"></td> -->
                                         <td>-</td>
                                         <td ng-bind="network_events.smtp.app_proto" title="{{network_events.smtp.app_proto}}"></td>
                                     </tr>
@@ -207,8 +201,8 @@
                                             <span ng-bind="network_events.ftp_data.dest_ip"></span>:
                                             <span ng-bind="network_events.ftp_data.dest_port"></span>
                                         </td>
+                                        <!-- <td ng-bind="network_events.ftp_data.user" title="{{network_events.ftp_data.user}}"></td> -->
                                         <td>-</td>
-                                        <td ng-bind="network_events.http.http.http_refer" title="{{network_events.http.http.http_refer}}"></td>
                                         <td>FTP</td>
                                     </tr>
                                 </div>
@@ -235,7 +229,6 @@
                                         </td>
                                         <td ng-bind="network_events.imap.email.from" title="{{network_events.imap.email.from}}"></td>
                                         <td ng-bind="network_events.imap.email.to" title="{{network_events.imap.email.to}}"></td>
-                                        <!-- <td ng-bind="network_events.imap.email" title="{{network_events.imap.email.helo}}">-</td> -->
                                         <td>-</td>
                                         <td ng-bind="network_events.imap.app_proto" title="{{network_events.imap.app_proto}}"></td>
                                     </tr>
@@ -263,7 +256,6 @@
                                         </td>
                                         <td ng-bind="network_events.pop3.email.from" title="{{network_events.pop3.email.from}}"></td>
                                         <td ng-bind="network_events.pop3.email.to" title="{{network_events.pop3.email.to}}"></td>
-                                        <!-- <td ng-bind="network_events.pop3.email.helo" title="{{network_events.pop3.email.helo}}"></td> -->
                                         <td>-</td>
                                         <td ng-bind="network_events.pop3.app_proto" title="{{network_events.pop3.app_proto}}"></td>
                                     </tr>

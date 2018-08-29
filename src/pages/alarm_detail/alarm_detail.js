@@ -3,10 +3,15 @@
 app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$state', function ($scope, $http, $stateParams, $state) {
     // 初始化
     $scope.init = function (params) {
-        $scope.crumbOptions = [
-            {"href": "#/app/alarm", "title" : "告警"},
-            {"href": "", "title" : "告警详情"}
-          ];
+        $scope.crumbOptions = [{
+                "href": "#/app/alarm",
+                "title": "告警"
+            },
+            {
+                "href": "",
+                "title": "告警详情"
+            }
+        ];
         $scope.detail_data_id = $stateParams.data;
         $scope.selected = 0;
         $scope.threat = {}; //威胁情报
@@ -31,7 +36,7 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
             content: '22222'
         }];
         $scope.li_index = 0;
-        $scope.get_data();  //获取基础详细信息
+        $scope.get_data(); //获取基础详细信息
     };
     //获取基础详细信息
     $scope.get_data = function () {
@@ -58,7 +63,9 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
                     description_type: $scope.alert_details.description_type,
                     network_event: $scope.alert_details.network_event
                 }];
-                $scope.switch_type($scope.alert_details.description_type, $scope.alert_details.alert_description);
+                if($scope.alert_details.alert_description != null ){
+                    $scope.switch_type($scope.alert_details.description_type, $scope.alert_details.alert_description);
+                }
                 $scope.switch_network($scope.alert_details.network_event); //网络事件匹配
                 // 追加告警处理
                 if ($scope.alert_details.alarm_merger && $scope.alert_details.alarm_merger.length != 0) {
@@ -76,16 +83,17 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
                 }
                 $scope.this_time = {}
             }
+            if(data.status == 1){
+                zeroModal.error(data.msg);
+            }
         }).error(function (err) {
             zeroModal.close(loading);
             console.log(err);
         })
-
     };
     // 匹配情报类型
     $scope.switch_type = function (params, content) {
-        console.log(params);
-        console.log('匹配情报类型');
+        console.log('匹配情报类型：'+params);
         $scope.whois_list = [];
         $scope.urls_if = false;
         $scope.whois_if = false;
@@ -167,7 +175,7 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
                 if (content.files) {
                     $scope.BotnetCAndCURL_list = [];
                     $scope.files_md5 = [];
-                    $scope.BotnetCAndCURL_list = true;
+                    $scope.BotnetCAndCURL_if = true;
                     angular.forEach(content.files, function (item) {
                         $scope.files_md5.push(item.MD5)
                     })
@@ -199,10 +207,6 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
                     {
                         key: '相关联域名',
                         value: content.domains
-                    },
-                    {
-                        key: '相关联恶意文件',
-                        value: content.files
                     }
                 ];
                 $scope.detail_infos = $scope.threat.IPReputation;
@@ -216,7 +220,6 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
                         $scope.urls.push(item.url);
                     });
                 }
-
                 $scope.threat.MaliciousHash = [{
                         key: 'MD5',
                         value: content.MD5
@@ -268,7 +271,6 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
 
             case 'MaliciousURL': // 4
                 console.log(content);
-
                 if (content.whois) {
                     $scope.whois_if = true;
                     for (var key in content.whois) {
@@ -433,6 +435,8 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
     }
     // 匹配网络事件
     $scope.switch_network = function (network_events) {
+        console.log('匹配网络事件:'+network_events.event_type);
+        console.log('应用:'+network_events.app_proto);
         $scope.network_events.smtp_if = false;
         $scope.network_events.http_if = false;
         $scope.network_events.ftp_data_if = false;
@@ -473,7 +477,7 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
                 if (network_events.app_proto == 'pop3') {
                     $scope.network_events.pop3_if = true;
                     $scope.network_events.pop3 = network_events;
-                    if($scope.network_events.pop3.email.to.length >1){
+                    if ($scope.network_events.pop3.email.to.length > 1) {
                         $scope.network_events.pop3.email.to = $scope.network_events.pop3.email.to.join(',');
                     }
                     console.log($scope.network_events.pop3.email.to.length);
@@ -483,14 +487,12 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
                     $scope.network_events.smb_if = true;
                     $scope.network_events.smb = network_events;
                 }
-
                 break;
             case 'flow':
                 if (network_events.app_proto == 'ftp') {
                     $scope.network_events.ftp_if = true;
                     $scope.network_events.ftp = network_events;
                 }
-
                 break;
             case 'smb':
                 $scope.network_events.smb_if = true;
@@ -511,28 +513,38 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
             case 'dns':
                 $scope.network_events.dns_if = true;
                 $scope.network_events.dns = network_events;
-                if($scope.network_events.dns.dns.grouped){
+                if ($scope.network_events.dns.dns.grouped) {
                     $scope.network_events.dns.dns.HostAddr = $scope.network_events.dns.dns.grouped.A.join(',');
                 }
-                angular.forEach($scope.network_events.dns.dns.answers,function(item){
-                    if($scope.network_events.dns.dns.rrname == item.rrname){
-                    $scope.network_events.dns.dns.ttl = item.ttl
-                    $scope.network_events.dns.dns.rrtype = item.rrtype
+                angular.forEach($scope.network_events.dns.dns.answers, function (item) {
+                    if ($scope.network_events.dns.dns.rrname == item.rrname) {
+                        $scope.network_events.dns.dns.ttl = item.ttl
+                        $scope.network_events.dns.dns.rrtype = item.rrtype
                     }
                 })
-               
                 break;
             case 'krb5':
                 $scope.network_events.krb5_if = true;
                 $scope.network_events.krb5 = network_events;
                 break;
-                case 'http':
+            case 'http':
                 $scope.network_events.http_if = true;
                 $scope.network_events.http = network_events;
                 break;
-
+            case 'alert':
+                if (network_events.app_proto == 'tls') {
+                    $scope.network_events.https_if = true;
+                    $scope.network_events.https = network_events;
+                    if ($scope.network_events.https.tls.subject) {
+                        $scope.network_events.https.tls.Authorizing = $scope.network_events.https.tls.subject.substring($scope.network_events.https.tls.subject.indexOf("CN=") + 3);
+                    }
+                }
+                if (network_events.app_proto == 'http') {
+                    $scope.network_events.http_if = true;
+                    $scope.network_events.http = network_events;
+                }
+                break;
             default:
-
                 break;
         }
     }
@@ -550,7 +562,7 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
                 'row': 10,
             }
         }).success(function (data) {
-            console.log(data);
+            // console.log(data);
             if (data.status == 0) {
                 $scope.pages = data.data;
             }
@@ -572,7 +584,7 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
                 'row': 10,
             }
         }).success(function (data) {
-            console.log(data);
+            // console.log(data);
             if (data.status == 0) {
                 $scope.pages1 = data.data;
             }

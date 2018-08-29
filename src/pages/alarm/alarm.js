@@ -11,8 +11,11 @@ app.controller('AlarmController', [
         $scope.init = function (params) {
             $scope.crumbOptions = [
                 // {"href": "#/app/alarm", "title" : "告警"},
-                {"href": "", "title" : "告警"}
-              ];
+                {
+                    "href": "",
+                    "title": "告警"
+                }
+            ];
             $scope.searchData = {};
             $scope.statusData = [{
                 num: 3,
@@ -39,10 +42,38 @@ app.controller('AlarmController', [
             $scope.timepicker();
             $scope.alarmEchart(); // 折线图表
             $scope.getPage();
+            $scope.IntervalgetPage();
+            setInterval(function () {
+                $scope.IntervalgetPage();
+            }, 5000);
         };
+        $scope.dataTime = 'frist'
+        $scope.IntervalgetPage = function () {
+            $http({
+                method: 'get',
+                url: './yiiapi/alert/get-last-alert-timestamp'
+            }).success(function (data) {
+                if ($scope.dataTime == 'frist') {
+                    $scope.dataTime = data.data;
+                    console.log('第一次请求');
+                } else {
+                    if (data.data != $scope.dataTime) {
+                        console.log('数据更新');
+                        $scope.getPage();
+                        $scope.alarmEchart(); // 折线图表
+                    } else {
+                        $scope.dataTime = data.data;
+                        // console.log('数据无变化');
+                    }
+                }
+            }).error(function (err) {
+                console.log(err);
+            })
+        }
+
         // 告警列表
         $scope.getPage = function (pageNow) {
-            var loading = zeroModal.loading(4);
+            // var loading = zeroModal.loading(4);
             pageNow = pageNow ? pageNow : 1;
             $scope.index_num = (pageNow - 1) * 10;
             $scope.params_data = {
@@ -61,13 +92,13 @@ app.controller('AlarmController', [
                 params: $scope.params_data,
             }).success(function (data) {
                 console.log(data);
-                zeroModal.close(loading);
+                // zeroModal.close(loading);
                 if (data.status == 0) {
                     $scope.pages = data.data;
                 }
                 console.log($scope.pages);
             }).error(function (err) {
-                zeroModal.close(loading);
+                // zeroModal.close(loading);
                 console.log(err);
             })
         }
@@ -82,7 +113,6 @@ app.controller('AlarmController', [
             label: '已解决'
         }];
         // 默认是未解决
-
         $scope.setAriaID = function (item, $event) {
             $event.stopPropagation();
             if ($scope.ariaID == item.id) {
@@ -97,7 +127,6 @@ app.controller('AlarmController', [
                 $scope.ariaID = null;
             }, 10);
         };
-
         // 搜索按钮
         $scope.search = function () {
             $scope.getPage();
@@ -124,16 +153,15 @@ app.controller('AlarmController', [
                 console.log(err);
             })
         }
-
         // 折线图表
         $scope.alarmEchart = function (params) {
-            var loading = zeroModal.loading(4);
+            // var loading = zeroModal.loading(4);
             $http({
                 method: 'get',
                 url: './yiiapi/alert/alert-trend'
             }).success(function (data) {
                 console.log(data);
-                zeroModal.close(loading);
+                // zeroModal.close(loading);
                 if (data.status == 0) {
                     $scope.alarmEchart_time = [];
                     $scope.alarmEchart_data = [];
@@ -226,7 +254,7 @@ app.controller('AlarmController', [
                     myChart.setOption(option);
                 }
             }).error(function (err) {
-                zeroModal.close(loading);
+                // zeroModal.close(loading);
                 console.log(err);
             })
         };

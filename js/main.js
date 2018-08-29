@@ -86,13 +86,13 @@ angular.module('app')
                 };
             }
             $scope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-                console.log(toState);
+                // console.log(toState);
                 if (toState.url == '' || toState.url == '/signin') {
                     $http({
                         method: 'POST',
                         url: './yiiapi/site/login'
                     }).then(function successCallback(data) {
-                        console.log(data.data);
+                        // console.log(data.data);
                         if (data.data.status == 202) {
                             console.log('已登陆');
                             $state.go('app.overview');
@@ -233,11 +233,11 @@ angular.module('app')
             options:'@'
           },
           link: function(scope, elem, attrs) {
-            console.log(elem);
+            // console.log(elem);
             // var parentNode = elem.parent();
             var crumbString = '<ol class="breadcrumb">';
             angular.forEach(scope.$eval(scope.options), function(item) {
-                console.log(item);
+                // console.log(item);
               if (item["href"] != "") {
                 var tempString = '<li><a href="' + item["href"] + '">' + item["title"] + '</a></li>'; 
                 crumbString += tempString;
@@ -250,7 +250,7 @@ angular.module('app')
             crumbString += "</ol>";
             elem.append(angular.element(crumbString));
             // console.log(parentNode);
-            console.log(crumbString);
+            // console.log(crumbString);
           }
         };
       });
