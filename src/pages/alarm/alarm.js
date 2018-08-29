@@ -55,7 +55,7 @@ app.controller('AlarmController', [
             }).success(function (data) {
                 if ($scope.dataTime == 'frist') {
                     $scope.dataTime = data.data;
-                    console.log('第一次请求');
+                    console.log('第一次请求111');
                 } else {
                     if (data.data != $scope.dataTime) {
                         console.log('数据更新');
