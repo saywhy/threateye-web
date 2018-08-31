@@ -25,7 +25,7 @@ app.controller('Set_userController', ['$scope', '$http', '$state', function ($sc
         $http.post('./yiiapi/user/page', {
             page: pageNow
         }).then(function success(rsp) {
-            console.log(rsp.data);
+            // console.log(rsp.data);
             if (rsp.data.status == 0) {
                 zeroModal.close(loading);
                 $scope.pages = rsp.data.data;
@@ -96,11 +96,11 @@ app.controller('Set_userController', ['$scope', '$http', '$state', function ($sc
             page: $scope.pages.pageNow
         };
         var str = JSON.stringify(rqs_data)
-        console.log(str);
+        // console.log(str);
         var loading = zeroModal.loading(4);
         $http.post("./yiiapi/user/user-add", rqs_data).then(function success(rsp) {
             zeroModal.close(loading);
-            console.log(rsp);
+            // console.log(rsp);
             if (rsp.data.status == 0) {
                 $scope.pages = rsp.data.data;
             } else if (rsp.data.status == 1) {
@@ -122,7 +122,7 @@ app.controller('Set_userController', ['$scope', '$http', '$state', function ($sc
                     id: item.id,
                     page: $scope.pages.pageNow
                 };
-                console.log(rqs_data);
+                // console.log(rqs_data);
                 var loading = zeroModal.loading(4);
                 $http({
                     method: 'delete',
@@ -142,11 +142,11 @@ app.controller('Set_userController', ['$scope', '$http', '$state', function ($sc
     };
     //重置密码
     $scope.resetPassword = function (user) {
-        console.log(user);
+        // console.log(user);
         
         var loading = zeroModal.loading(4);
         $http.get("./yiiapi/user/get-password-reset-token?id=" + user.id).then(function success(rsp) {
-            console.log(rsp);
+            // console.log(rsp);
             
             zeroModal.close(loading);
             if (rsp.data.status == 0) {
@@ -190,7 +190,7 @@ app.controller('Set_userController', ['$scope', '$http', '$state', function ($sc
                             url: './yiiapi/user/reset-password?token=' + rsp.data.data.token,
                             data: post_data,
                         }).success(function (data) {
-                            console.log(data);
+                            // console.log(data);
                             if(data.status == 0){
                                 zeroModal.success('密码重置成功！');
                             }else{

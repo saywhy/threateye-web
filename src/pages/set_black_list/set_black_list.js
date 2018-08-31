@@ -5,7 +5,6 @@ app.controller('Set_black_listController', ['$scope', '$http', '$state', functio
      
         $("input[type='file']").change(function (target) {
             $("#avatval").val($(this).val());
-            console.log(22222);
             $scope.uploadPic();
         });
         $scope.white_list = {};
@@ -32,7 +31,7 @@ app.controller('Set_black_listController', ['$scope', '$http', '$state', functio
             url: './yiiapi/whitelist/list',
             params: $scope.params_data,
         }).success(function (data) {
-            console.log(data);
+            // console.log(data);
             if (data.status == 0) {
                 $scope.pages0 = data.data;
             }
@@ -58,8 +57,7 @@ app.controller('Set_black_listController', ['$scope', '$http', '$state', functio
             ok: true,
             cancel: true,
             okFn: function () {
-                console.log('1111');
-                console.log($scope.white_list);
+                // console.log($scope.white_list);
                 $scope.add_whitelist($scope.white_list);
             },
             onCleanup: function () {
@@ -79,7 +77,7 @@ app.controller('Set_black_listController', ['$scope', '$http', '$state', functio
                 "alert_type": white_list.alert_type
             },
         }).success(function (data) {
-            console.log(data);
+            // console.log(data);
             if (data.status == 0) {
                 zeroModal.success('添加成功！');
                 $scope.white_list.indicator = '';
@@ -96,7 +94,7 @@ app.controller('Set_black_listController', ['$scope', '$http', '$state', functio
     };
     //删除白名单
     $scope.del = function(item){
-        console.log(item);
+        // console.log(item);
         $scope.del_item = item;
         zeroModal.confirm({
             content: "确定删除白名单吗？",
@@ -111,7 +109,7 @@ app.controller('Set_black_listController', ['$scope', '$http', '$state', functio
                         alert_type:  $scope.del_item.alert_type
                     },
                 }).success(function (data) {
-                    console.log(data);
+                    // console.log(data);
                     if (data.status == 0) {
                         zeroModal.success('删除成功！');
                         $scope.getPage0();
@@ -149,7 +147,7 @@ app.controller('Set_black_listController', ['$scope', '$http', '$state', functio
                         }
                     };
                     xhr.upload.onloadstart = function () {
-                        console.log('started...');
+                        // console.log('started...');
                     };　　　
                 }
                 return xhr;　
@@ -157,7 +155,7 @@ app.controller('Set_black_listController', ['$scope', '$http', '$state', functio
             processData: false, // 告诉jQuery不要去处理发送的数据
             contentType: false, // 告诉jQuery不要去设置Content-Type请求头
             success: function (res) {
-                console.log(res);
+                // console.log(res);
                 if (res.status == 0) {
                     zeroModal.success('上传成功');
                     $scope.getPage0(); // 获取数据列表

@@ -9,6 +9,7 @@ app.controller('AlarmController', [
     function ($scope, $http, $state, $filter) {
         // 初始化
         $scope.init = function (params) {
+            $scope.searchActive = false;
             $scope.crumbOptions = [
                 // {"href": "#/app/alarm", "title" : "告警"},
                 {
@@ -16,7 +17,6 @@ app.controller('AlarmController', [
                     "title": "告警"
                 }
             ];
-            $scope.searchData = {};
             $scope.statusData = [{
                 num: 3,
                 type: '所有'
@@ -37,43 +37,66 @@ app.controller('AlarmController', [
             // 默认时间
             $scope.searchData = {
                 startTime: moment().subtract(365, 'days').unix(),
-                endTime: moment().unix()
+                endTime: moment().unix(),
+                src_ip:'',
+                dest_ip:''
             };
             $scope.timepicker();
             $scope.alarmEchart(); // 折线图表
             $scope.getPage();
             $scope.IntervalgetPage();
-            setInterval(function () {
+            $scope.startInterval = setInterval(function () {
                 $scope.IntervalgetPage();
             }, 5000);
         };
         $scope.dataTime = 'frist'
         $scope.IntervalgetPage = function () {
-            $http({
-                method: 'get',
-                url: './yiiapi/alert/get-last-alert-timestamp'
-            }).success(function (data) {
-                if ($scope.dataTime == 'frist') {
-                    $scope.dataTime = data.data;
-                    console.log('第一次请求111');
-                } else {
-                    if (data.data != $scope.dataTime) {
-                        console.log('数据更新');
-                        $scope.getPage();
-                        $scope.alarmEchart(); // 折线图表
-                    } else {
-                        $scope.dataTime = data.data;
-                        // console.log('数据无变化');
+            if($scope.searchActive){
+                // 不刷新
+                console.log('停止刷新');
+                clearInterval($scope.startInterval);
+                $scope.insideInterval =setInterval(function(){
+                    console.log('内部循环');
+                    if(!$scope.searchActive){
+                        console.log('开启循环刷新');
+                        clearInterval($scope.insideInterval);
+                        // 开始循环
+                        $scope.startInterval = setInterval(function () {
+                            $scope.IntervalgetPage();
+                        }, 5000);
                     }
-                }
-            }).error(function (err) {
-                console.log(err);
-            })
+                },5000)
+            }else {
+                console.log('数据更新111');
+                $http({
+                    method: 'get',
+                    url: './yiiapi/alert/get-last-alert-timestamp'
+                }).success(function (data) {
+                    if ($scope.dataTime == 'frist') {
+                        $scope.dataTime = data.data;
+                        console.log('第一次请求111');
+                    } else {
+                        console.log('本地赋值'+$scope.dataTime);
+                        console.log('获取时间'+data.data );
+                        if (data.data != $scope.dataTime) {
+                            console.log('数据更新');
+                            $scope.dataTime = data.data;
+                                    $scope.searchData.endTime=data.data; //更新时间
+                                    $scope.getPage();
+                                    $scope.alarmEchart(); // 折线图表
+                        } else {
+                            $scope.dataTime = data.data;
+                            console.log('数据无变化');
+                        }
+                    }
+                }).error(function (err) {
+                    console.log(err);
+                })
+            }
         }
 
         // 告警列表
         $scope.getPage = function (pageNow) {
-            // var loading = zeroModal.loading(4);
             pageNow = pageNow ? pageNow : 1;
             $scope.index_num = (pageNow - 1) * 10;
             $scope.params_data = {
@@ -91,16 +114,15 @@ app.controller('AlarmController', [
                 url: './yiiapi/alert/list',
                 params: $scope.params_data,
             }).success(function (data) {
-                console.log(data);
-                // zeroModal.close(loading);
+                // console.log(data.count);
                 if (data.status == 0) {
-                    $scope.pages = data.data;
+                        $scope.pages = data.data;
                 }
                 console.log($scope.pages);
             }).error(function (err) {
-                // zeroModal.close(loading);
                 console.log(err);
             })
+            
         }
         $scope.status_str = [{
             css: 'success',
@@ -129,6 +151,14 @@ app.controller('AlarmController', [
         };
         // 搜索按钮
         $scope.search = function () {
+            if($scope.searchData.src_ip!=''||$scope.searchData.dest_ip!=''){
+                // 不刷新
+                $scope.searchActive = true;
+            }else{
+                // 刷新
+                $scope.searchActive = false;
+            }
+           
             $scope.getPage();
         };
         // 操作 已解决

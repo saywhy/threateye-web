@@ -18,7 +18,7 @@
                             </div>
                             <div class="form-group col-md-2">
                                 <label>主机</label>
-                                <input type="text" class="form-control input_radius" ng-model="url.source_ip" ng-keyup="myKeyup($event)">
+                                <input type="text" class="form-control input_radius" ng-model="host.host_ip" ng-keyup="myKeyup($event)">
                             </div>
                             <div class="form-group col-md-1">
                                 <label style="width: 100%;">&nbsp;</label>
@@ -76,47 +76,126 @@
                                                     </tr>
                                                 </table>
                                                 <!-- angularjs分页 -->
-                                                <div style="border-top: 1px solid #f4f4f4;padding: 10px;">
+                                                <div style="border-top: 1px solid #f4f4f4;padding: 10px;" ng-if="selected == 0" >
                                                     <em>共有
-                                                        <span ng-bind="pages0.count"></span>条</em>
+                                                        <span ng-bind="pages_network.count"></span>条</em>
                                                     <!-- angularjs分页 -->
                                                     <ul class="pagination pagination-sm no-margin pull-right ng-cloak">
                                                         <li>
-                                                            <a href="javascript:void(0);" ng-click="getPage0(pages0.pageNow-1)" ng-if="pages0.pageNow>1">上一页</a>
+                                                            <a href="javascript:void(0);" ng-click="getPage_network(pages_network.pageNow-1)" ng-if="pages_network.pageNow>1">上一页</a>
                                                         </li>
                                                         <li>
-                                                            <a href="javascript:void(0);" ng-click="getPage0(1)" ng-if="pages0.pageNow>1">1</a>
+                                                            <a href="javascript:void(0);" ng-click="getPage_network(1)" ng-if="pages_network.pageNow>1">1</a>
                                                         </li>
                                                         <li>
-                                                            <a href="javascript:void(0);" ng-if="pages0.pageNow>4">...</a>
+                                                            <a href="javascript:void(0);" ng-if="pages_network.pageNow>4">...</a>
                                                         </li>
                                                         <li>
-                                                            <a href="javascript:void(0);" ng-click="getPage0(pages0.pageNow-2)" ng-bind="pages0.pageNow-2" ng-if="pages0.pageNow>3"></a>
+                                                            <a href="javascript:void(0);" ng-click="getPage_network(pages_network.pageNow-2)" ng-bind="pages_network.pageNow-2" ng-if="pages_network.pageNow>3"></a>
                                                         </li>
                                                         <li>
-                                                            <a href="javascript:void(0);" ng-click="getPage0(pages0.pageNow-1)" ng-bind="pages0.pageNow-1" ng-if="pages0.pageNow>2"></a>
+                                                            <a href="javascript:void(0);" ng-click="getPage_network(pages_network.pageNow-1)" ng-bind="pages_network.pageNow-1" ng-if="pages_network.pageNow>2"></a>
                                                         </li>
                                                         <li class="active">
-                                                            <a href="javascript:void(0);" ng-bind="pages0.pageNow"></a>
+                                                            <a href="javascript:void(0);" ng-bind="pages_network.pageNow"></a>
                                                         </li>
                                                         <li>
-                                                            <a href="javascript:void(0);" ng-click="getPage0(pages0.pageNow+1)" ng-bind="pages0.pageNow+1" ng-if="pages0.pageNow<pages0.maxPage-1"></a>
+                                                            <a href="javascript:void(0);" ng-click="getPage_network(pages_network.pageNow+1)" ng-bind="pages_network.pageNow+1" ng-if="pages_network.pageNow<pages_network.maxPage-1"></a>
                                                         </li>
                                                         <li>
-                                                            <a href="javascript:void(0);" ng-click="getPage0(pages0.pageNow+2)" ng-bind="pages0.pageNow+2" ng-if="pages0.pageNow<pages0.maxPage-2"></a>
+                                                            <a href="javascript:void(0);" ng-click="getPage_network(pages_network.pageNow+2)" ng-bind="pages_network.pageNow+2" ng-if="pages_network.pageNow<pages_network.maxPage-2"></a>
                                                         </li>
                                                         <li>
-                                                            <a href="javascript:void(0);" ng-if="pages0.pageNow<pages0.maxPage-3">...</a>
+                                                            <a href="javascript:void(0);" ng-if="pages_network.pageNow<pages_network.maxPage-3">...</a>
                                                         </li>
                                                         <li>
-                                                            <a href="javascript:void(0);" ng-click="getPage0(pages0.maxPage)" ng-bind="pages0.maxPage" ng-if="pages0.pageNow<pages0.maxPage"></a>
+                                                            <a href="javascript:void(0);" ng-click="getPage_network(pages_network.maxPage)" ng-bind="pages_network.maxPage" ng-if="pages_network.pageNow<pages_network.maxPage"></a>
                                                         </li>
                                                         <li>
-                                                            <a href="javascript:void(0);" ng-click="getPage0(pages0.pageNow+1)" ng-if="pages0.pageNow<pages0.maxPage">下一页</a>
+                                                            <a href="javascript:void(0);" ng-click="getPage_network(pages_network.pageNow+1)" ng-if="pages_network.pageNow<pages_network.maxPage">下一页</a>
                                                         </li>
                                                     </ul>
                                                 </div>
-                                                <!-- /.angularjs分页 -->
+                                                <div style="border-top: 1px solid #f4f4f4;padding: 10px;" ng-if="selected == 1" >
+                                                        <em>共有
+                                                            <span ng-bind="pages_file.count"></span>条</em>
+                                                        <!-- angularjs分页 -->
+                                                        <ul class="pagination pagination-sm no-margin pull-right ng-cloak">
+                                                            <li>
+                                                                <a href="javascript:void(0);" ng-click="getPage_file(pages_file.pageNow-1)" ng-if="pages_file.pageNow>1">上一页</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="javascript:void(0);" ng-click="getPage_file(1)" ng-if="pages_file.pageNow>1">1</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="javascript:void(0);" ng-if="pages_file.pageNow>4">...</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="javascript:void(0);" ng-click="getPage_file(pages_file.pageNow-2)" ng-bind="pages_file.pageNow-2" ng-if="pages_file.pageNow>3"></a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="javascript:void(0);" ng-click="getPage_file(pages_file.pageNow-1)" ng-bind="pages_file.pageNow-1" ng-if="pages_file.pageNow>2"></a>
+                                                            </li>
+                                                            <li class="active">
+                                                                <a href="javascript:void(0);" ng-bind="pages_file.pageNow"></a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="javascript:void(0);" ng-click="getPage_file(pages_file.pageNow+1)" ng-bind="pages_file.pageNow+1" ng-if="pages_file.pageNow<pages_file.maxPage-1"></a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="javascript:void(0);" ng-click="getPage_file(pages_file.pageNow+2)" ng-bind="pages_file.pageNow+2" ng-if="pages_file.pageNow<pages_file.maxPage-2"></a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="javascript:void(0);" ng-if="pages_file.pageNow<pages_file.maxPage-3">...</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="javascript:void(0);" ng-click="getPage_file(pages_file.maxPage)" ng-bind="pages_file.maxPage" ng-if="pages_file.pageNow<pages_file.maxPage"></a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="javascript:void(0);" ng-click="getPage_file(pages_file.pageNow+1)" ng-if="pages_file.pageNow<pages_file.maxPage">下一页</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div style="border-top: 1px solid #f4f4f4;padding: 10px;" ng-if="selected == 2" >
+                                                            <em>共有
+                                                                <span ng-bind="pages_user.count"></span>条</em>
+                                                            <!-- angularjs分页 -->
+                                                            <ul class="pagination pagination-sm no-margin pull-right ng-cloak">
+                                                                <li>
+                                                                    <a href="javascript:void(0);" ng-click="getPage_user(pages_user.pageNow-1)" ng-if="pages_user.pageNow>1">上一页</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="javascript:void(0);" ng-click="getPage_user(1)" ng-if="pages_user.pageNow>1">1</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="javascript:void(0);" ng-if="pages_user.pageNow>4">...</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="javascript:void(0);" ng-click="getPage_user(pages_user.pageNow-2)" ng-bind="pages_user.pageNow-2" ng-if="pages_user.pageNow>3"></a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="javascript:void(0);" ng-click="getPage_user(pages_user.pageNow-1)" ng-bind="pages_user.pageNow-1" ng-if="pages_user.pageNow>2"></a>
+                                                                </li>
+                                                                <li class="active">
+                                                                    <a href="javascript:void(0);" ng-bind="pages_user.pageNow"></a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="javascript:void(0);" ng-click="getPage_user(pages_user.pageNow+1)" ng-bind="pages_user.pageNow+1" ng-if="pages_user.pageNow<pages_user.maxPage-1"></a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="javascript:void(0);" ng-click="getPage_user(pages_user.pageNow+2)" ng-bind="pages_user.pageNow+2" ng-if="pages_user.pageNow<pages_user.maxPage-2"></a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="javascript:void(0);" ng-if="pages_user.pageNow<pages_user.maxPage-3">...</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="javascript:void(0);" ng-click="getPage_user(pages_user.maxPage)" ng-bind="pages_user.maxPage" ng-if="pages_user.pageNow<pages_user.maxPage"></a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="javascript:void(0);" ng-click="getPage_user(pages_user.pageNow+1)" ng-if="pages_user.pageNow<pages_user.maxPage">下一页</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
                                             </div>
                                         </div>
                                     </div>

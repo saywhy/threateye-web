@@ -1,7 +1,7 @@
 'use strict';
 // signin controller
 app.controller('SigninFormController', ['$scope', '$http', '$state', function ($scope, $http, $state) {
-    console.log('成功链接服务器123');
+    // console.log('成功链接服务器123');
     $scope.init = function () {
         // $scope.particvle();
         $scope.login_show = false;
@@ -17,13 +17,13 @@ app.controller('SigninFormController', ['$scope', '$http', '$state', function ($
             method: 'POST',
             url: './yiiapi/site/login'
         }).then(function successCallback(data) {
-            console.log(data.data);
+            // console.log(data.data);
             if(data.data.status == 207){
-                console.log('未注册');
+                // console.log('未注册');
                 zeroModal.close(loading);
                 $scope.login_show = true;
             }else if(data.data.status == 202){
-                console.log('已登陆');
+                // console.log('已登陆');
                 $state.go('app.overview');
                 zeroModal.close(loading);
             }else{
@@ -37,7 +37,7 @@ app.controller('SigninFormController', ['$scope', '$http', '$state', function ($
     };
     // 创建管理员
     $scope.creat_admin = function(){
-        console.log($scope.creat);
+        // console.log($scope.creat);
         var loading = zeroModal.loading(4);
         // $state.go('app.overview');
         $scope.password_rexp = /(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^a-zA-Z0-9]).{8,30}/;
@@ -60,7 +60,7 @@ app.controller('SigninFormController', ['$scope', '$http', '$state', function ($
                     "login-button": ""
                 }
             }).then(function successCallback(data) {
-                console.log(data);
+                // console.log(data);
                 zeroModal.close(loading);
                 // 创建成功，显示登录页面登录
                 if (data.data.status == 0) {
@@ -75,7 +75,7 @@ app.controller('SigninFormController', ['$scope', '$http', '$state', function ($
     // 登录
     $scope.login = function () {
         var loading = zeroModal.loading(4);
-        console.log($scope.user);
+        // console.log($scope.user);
         // $state.go('app.overview');
         $http({
             method: 'POST',
@@ -88,7 +88,7 @@ app.controller('SigninFormController', ['$scope', '$http', '$state', function ($
                 "login-button": ""
             }
         }).then(function successCallback(data) {
-            console.log(data.data);
+            // console.log(data.data);
             // 登陆成功
             if (data.data.status == 0) {
                 $state.go('app.overview');
@@ -107,7 +107,7 @@ app.controller('SigninFormController', ['$scope', '$http', '$state', function ($
                 };
             }
         }, function errorCallback(data) {
-            console.log(data);
+            // console.log(data);
             zeroModal.close(loading);
         });
     };

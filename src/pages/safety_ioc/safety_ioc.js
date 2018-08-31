@@ -49,7 +49,7 @@ app.controller('Safety_iocController', ['$scope', '$http', '$state', function ($
             url: './yiiapi/investigate/ioc-scanning-list',
             params: $scope.params_data,
         }).success(function (data) {
-            console.log(data);
+            // console.log(data);
             if (data.status == 0) {
                 $scope.pages = data.data;
                 angular.forEach( $scope.pages.data,function(item,index){
@@ -94,7 +94,7 @@ app.controller('Safety_iocController', ['$scope', '$http', '$state', function ($
                         }
                     };
                     xhr.upload.onloadstart = function () {
-                        console.log('started...');
+                        // console.log('started...');
                     };　　　
                 }
                 return xhr;　
@@ -102,7 +102,7 @@ app.controller('Safety_iocController', ['$scope', '$http', '$state', function ($
             processData: false, // 告诉jQuery不要去处理发送的数据
             contentType: false, // 告诉jQuery不要去设置Content-Type请求头
             success: function (res) {
-                console.log(res);
+                // console.log(res);
                 if (res.status == 0) {
                     zeroModal.success('上传成功');
                 }
@@ -131,7 +131,7 @@ app.controller('Safety_iocController', ['$scope', '$http', '$state', function ($
                         'id': id
                     }
                 }).success(function (data) {
-                    console.log(data);
+                    // console.log(data);
                     if (data.status == 0) {
                         var tt = new Date().getTime();
                         var url = './yiiapi/investigate/ioc-scanning-download';
@@ -170,7 +170,7 @@ app.controller('Safety_iocController', ['$scope', '$http', '$state', function ($
                         'id': id
                     }
                 }).success(function (data) {
-                    console.log(data);
+                    // console.log(data);
                     if (data.status == 0) {
                         zeroModal.success('删除成功');
                         $scope.getPage();

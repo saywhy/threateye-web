@@ -25,14 +25,14 @@ app.controller('Set_netController', ['$scope', '$http', '$state', function ($sco
             method: 'get',
             url: './yiiapi/seting/get-network'
         }).success(function (data) {
-            console.log(data);
+            // console.log(data);
             if (data.status == 0) {
                 $scope.net_names = [];
                 $scope.net_info_array = data.data.data;
                 angular.forEach($scope.net_info_array, function (item) {
                     $scope.net_names.push(item.NAME);
                 });
-                console.log($scope.net_names);
+                // console.log($scope.net_names);
                 // 默认初始值
                 $scope.net.index = $scope.net_names[0];
                 $scope.net_detail = $scope.net_info_array[0];
@@ -71,8 +71,8 @@ app.controller('Set_netController', ['$scope', '$http', '$state', function ($sco
                 DNS2: $scope.net_detail.DNS2,
             }
         }).success(function (data) {
-            console.log($scope.net_detail);
-            console.log(data);
+            // console.log($scope.net_detail);
+            // console.log(data);
             if (data.status == 0) {
                 zeroModal.success('网络配置成功');
                 $scope.get_network(); //获取网络配置
@@ -142,7 +142,7 @@ app.controller('Set_netController', ['$scope', '$http', '$state', function ($sco
 
     //保存
     $scope.keep = function (params) {
-        console.log($scope.net);
+        // console.log($scope.net);
 
     }
     $scope.init();

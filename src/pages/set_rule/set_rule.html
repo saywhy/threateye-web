@@ -3,18 +3,18 @@
     <div class="row">
         <div class="col-md-12 ">
             <div class="set_content">
-       
                 <div class="rule_item">
                     <div class="rule_item_header row">
                         <h4 class="col-md-1" style="min-width:150px">实时更新</h4>
                     </div>
                     <div style="margin: 20px 20px 0px 20px">
                         <span>点击更新按钮，实时更新规则库。</span>
+                        <span style="color: #367fa9;font-size: 16px" ng-bind="updataText">正在升级中 </span>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-1 col-md-offset-5">
                             <label style="width: 100%;">&nbsp;</label>
-                            <button class="form-control btn btn-primary btn_style" style="max-width: 80px;" ng-click="real_time_update()">更&nbsp;新</button>
+                            <button ng-disabled="disabledUpdata" class="form-control btn btn-primary btn_style"  style="max-width: 80px;" ng-click="real_time_update()">更&nbsp;新</button>
                         </div>
                     </div>
                 </div>

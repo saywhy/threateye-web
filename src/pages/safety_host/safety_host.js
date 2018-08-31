@@ -3,10 +3,31 @@
 app.controller('Safety_hostController', ['$scope', '$http', '$state', function ($scope, $http, $state) {
     // 初始化
     $scope.init = function (params) {
-        $scope.user = {};
-        $scope.searchData = {
-            startTime: moment().subtract(1, 'days').unix(),
-            endTime: moment().unix()
+        $scope.host = {
+            host_ip: '',
+            start_time: moment().subtract(1, 'days').unix(),
+            end_time: moment().unix()
+        };
+        $scope.pages_network = {
+            data: [],
+            count: 0,
+            maxPage: "...",
+            pageNow: 1,
+            rows: 10
+        };
+        $scope.pages_file = {
+            data: [],
+            count: 0,
+            maxPage: "...",
+            pageNow: 1,
+            rows: 10
+        };
+        $scope.pages_user = {
+            data: [],
+            count: 0,
+            maxPage: "...",
+            pageNow: 1,
+            rows: 10
         };
         $scope.timerange(); // 时间插件初始化
         $scope.tab_data = [{
@@ -26,23 +47,7 @@ app.controller('Safety_hostController', ['$scope', '$http', '$state', function (
                 }, {
                     name: '应用'
                 }],
-                value:[{
-                    time:'2018-07-20 12:00:00',
-                    Ip:'192.168.2.254',
-                    source_port:'8422',
-                    addr:'10.22.2.123',
-                    port:'5643',
-                    email:'wssdaa@163.com',
-                    application:'https'
-                },{
-                    time:'2018-07-22 02:00:00',
-                    Ip:'192.168.2.224',
-                    source_port:'7223',
-                    addr:'10.22.2.123',
-                    port:'5433',
-                    email:'wssdaa@126.com',
-                    application:'http'
-                },]
+                value: []
             },
             {
                 name: '文件',
@@ -57,19 +62,7 @@ app.controller('Safety_hostController', ['$scope', '$http', '$state', function (
                 }, {
                     name: '应用'
                 }],
-                value:[{
-                    name:'文件名1',
-                    hash:'221',
-                    source:'8422',
-                    host_ip:'10.22.2.123',
-                    application:'https'
-                },{
-                    name:'文件名2',
-                    hash:'323',
-                    source:'8422',
-                    host_ip:'192.122.2.213',
-                    application:'https'
-                }]
+                value: []
             },
             {
                 name: '用户',
@@ -80,59 +73,295 @@ app.controller('Safety_hostController', ['$scope', '$http', '$state', function (
                 }, {
                     name: '应用'
                 }],
-                value:[{
-                    user_name:'用户名1',
-                    host_ip:'10.22.2.123',
-                    application:'https'
-                },{
-                    user_name:'用户名2',
-                    host_ip:'192.122.2.213',
-                    application:'https'
-                }]
+                value: []
             }
         ];
         $scope.selected = 0;
-        // 假数据
-        $scope.pages = [{
-                time: '2018-07-10 10:00:00 - 2018-07-14 10:00:00 ',
-                source_ip: '201.199.29.1',
-                dns_ip: '201.199.29.1',
-                host: 'ftp',
-            },
-            {
-                time: '2018-07-16 10:00:00 - 2018-07-19 10:00:00 ',
-                source_ip: '201.199.29.1',
-                dns_ip: '201.199.29.1',
-                host: 'https',
-            }, {
-                time: '2018-07-11 10:00:00 - 2018-07-12 10:00:00 ',
-                source_ip: '201.199.29.1',
-                dns_ip: '201.199.29.1',
-                host: 'http',
-            }, {
-                time: '2018-07-13 10:00:00 - 2018-07-15 10:00:00 ',
-                source_ip: '201.199.29.1',
-                dns_ip: '201.199.29.1',
-                host: 'smtp',
-            }
-        ]
+        $scope.getPage_network();
     };
+    // 主机网络调查
+    $scope.getPage_network = function (pageNow) {
+        pageNow = pageNow ? pageNow : 1;
+        $scope.index_num = (pageNow - 1) * 10;
+        $scope.params_data = {
+            host_ip: $scope.host.host_ip,
+            start_time: $scope.host.start_time,
+            end_time: $scope.host.end_time,
+            current_page: pageNow,
+            per_page_count: '10'
+        };
+        var loading = zeroModal.loading(4);
+        $http({
+            method: 'get',
+            url: './yiiapi/investigate/host-network-investigation',
+            params: $scope.params_data,
+        }).success(function (data) {
+            // console.log(data);
+            if (data.status == 0) {
+                $scope.tab_data[0].value = [];
+                angular.forEach(data.data.data.data, function (item) {
+                    // console.log(item);
+                    var item_network = {
+                        time: item.timestamp,
+                        Ip: item.src_ip,
+                        source_port: item.src_port,
+                        addr: item.dest_ip,
+                        port: item.dest_port,
+                        email: item.email,
+                        application: item.application
+                    }
+                    $scope.tab_data[0].value.push(item_network);
+                });
+                $scope.pages_network = data.data;
+                // console.log( $scope.tab_data[0].value);
+            }
+            if (data.status == 1) {
+                zeroModal.error(data.msg);
+            }
+            zeroModal.close(loading);
+        }).error(function (error) {
+            console.log(error);
+            zeroModal.close(loading);
+        })
+    };
+
+    // 主机文件调查
+    $scope.getPage_file = function (pageNow) {
+        pageNow = pageNow ? pageNow : 1;
+        $scope.index_num = (pageNow - 1) * 10;
+        $scope.params_data = {
+            host_ip: $scope.host.host_ip,
+            start_time: $scope.host.start_time,
+            end_time: $scope.host.end_time,
+            current_page: pageNow,
+            per_page_count: '10'
+        };
+        var loading = zeroModal.loading(4);
+        $http({
+            method: 'get',
+            url: './yiiapi/investigate/host-file-investigation',
+            params: $scope.params_data,
+        }).success(function (data) {
+            // console.log(data);
+            if (data.status == 0) {
+                $scope.tab_data[1].value = [];
+                angular.forEach(data.data.data.data, function (item) {
+                    var item_network = {
+                        name: item.file_name,
+                        hash: item.md5,
+                        source: item.source,
+                        host_ip: item.host_ip,
+                        application: item.application
+                    }
+                    $scope.tab_data[1].value.push(item_network);
+                });
+                $scope.pages_file = data.data;
+                // console.log( $scope.tab_data[0].value);
+            }
+            if (data.status == 1) {
+                zeroModal.error(data.msg);
+            }
+            zeroModal.close(loading);
+        }).error(function (error) {
+            console.log(error);
+            zeroModal.close(loading);
+        })
+    };
+
+    // 主机用户调查
+    $scope.getPage_user = function (pageNow) {
+        pageNow = pageNow ? pageNow : 1;
+        $scope.index_num = (pageNow - 1) * 10;
+        $scope.params_data = {
+            host_ip: $scope.host.host_ip,
+            start_time: $scope.host.start_time,
+            end_time: $scope.host.end_time,
+            current_page: pageNow,
+            per_page_count: '10'
+        };
+        var loading = zeroModal.loading(4);
+        $http({
+            method: 'get',
+            url: './yiiapi/investigate/host-user-investigation',
+            params: $scope.params_data,
+        }).success(function (data) {
+            // console.log(data);
+            if (data.status == 0) {
+                $scope.tab_data[2].value = [];
+                angular.forEach(data.data.data.data, function (item) {
+                    var item_network = {
+                        user_name: item.username,
+                        host_ip: item.host_ip,
+                        application: item.application
+                    }
+                    $scope.tab_data[2].value.push(item_network);
+                });
+                $scope.pages_user = data.data;
+                // console.log( $scope.tab_data[0].value);
+            }
+            if (data.status == 1) {
+                zeroModal.error(data.msg);
+            }
+            zeroModal.close(loading);
+        }).error(function (error) {
+            console.log(error);
+            zeroModal.close(loading);
+        })
+    };
+
+
+
     //tab栏切换
     $scope.show = function (params) {
         $scope.selected = params;
-        console.log(params);
+        // console.log(params);
+        if ($scope.selected == 0) {
+            $scope.getPage_network();
+        }
+        if ($scope.selected == 1) {
+            $scope.getPage_file();
+        }
+        if ($scope.selected == 2) {
+            $scope.getPage_user();
+        }
     };
     // 搜索
     $scope.search = function (params) {
-        console.log($scope.user);
-        console.log($scope.searchData);
-        console.log($scope.selected);
+        if ($scope.selected == 0) {
+            $scope.getPage_network();
+        }
+        if ($scope.selected == 1) {
+            $scope.getPage_file();
+        }
+        if ($scope.selected == 2) {
+            $scope.getPage_user();
+        }
+    };
+
+    // 下载报表
+    $scope.download = function () {
+        if ($scope.selected == 0) {
+            if ($scope.pages_network.count > 1000) {
+                zeroModal.error('下载数据不能超出1000条！')
+            } else {
+                zeroModal.confirm({
+                    content: "确定下载列表吗？",
+                    okFn: function () {
+                        $scope.download_list({
+                            testUrl: "./yiiapi/investigate/investigation-download-test",
+                            url: "./yiiapi/investigate/host-network-investigation-export",
+                            name: 'HostNetWork'
+                        });
+                    },
+                    cancelFn: function () {}
+                });
+            }
+        }
+        if ($scope.selected == 1) {
+            if ($scope.pages_file.count > 1000) {
+                zeroModal.error('下载数据不能超出1000条！')
+            } else {
+                zeroModal.confirm({
+                    content: "确定下载列表吗？",
+                    okFn: function () {
+                        $scope.download_list({
+                            testUrl: "./yiiapi/investigate/investigation-download-test",
+                            url: "./yiiapi/investigate/host-file-investigation-export",
+                            name: 'HostFile'
+                        });
+                    },
+                    cancelFn: function () {}
+                });
+            }
+        }
+        if ($scope.selected == 2) {
+            if ($scope.pages_user.count > 1000) {
+                zeroModal.error('下载数据不能超出1000条！')
+            } else {
+                zeroModal.confirm({
+                    content: "确定下载列表吗？",
+                    okFn: function () {
+                        $scope.download_list({
+                            testUrl: "./yiiapi/investigate/investigation-download-test",
+                            url: "./yiiapi/investigate/host-user-investigation-export",
+                            name: 'HostUser'
+                        });
+                    },
+                    cancelFn: function () {}
+                });
+            }
+        }
 
     };
-    //导出csv 
-    $scope.export = function (params) {
-        console.log($scope.user);
-        console.log($scope.searchData);
+
+    //下载列表
+    $scope.download_list = function (item) {
+        $http({
+            method: 'get',
+            url: item.testUrl,
+            params: {
+                function: item.name,
+                host_ip: $scope.params_data.host_ip,
+                start_time: $scope.params_data.start_time,
+                end_time: $scope.params_data.end_time,
+                current_page: 0,
+                per_page_count: 0,
+            }
+        }).success(function (data) {
+            // console.log(data);
+            if (data.status == 0) {
+                download_now(item);
+            }
+            if (data.status == 1) {
+                zeroModal.error(data.msg);
+            }
+        }).error(function (error) {
+            console.log(error);
+        })
+
+        function download_now(item) {
+            var tt = new Date().getTime();
+            var url = item.url;
+
+            var form = $("<form>"); //定义一个form表单
+            form.attr("style", "display:none");
+            form.attr("target", "");
+            form.attr("method", "get"); //请求类型
+            form.attr("action", url); //请求地址
+            $("body").append(form); //将表单放置在web中
+
+            var input1 = $("<input>");
+            input1.attr("type", "hidden");
+            input1.attr("name", "host_ip");
+            input1.attr("value", $scope.params_data.host_ip);
+            form.append(input1);
+
+            var input3 = $("<input>");
+            input3.attr("type", "hidden");
+            input3.attr("name", "start_time");
+            input3.attr("value", $scope.params_data.start_time);
+            form.append(input3);
+
+            var input4 = $("<input>");
+            input4.attr("type", "hidden");
+            input4.attr("name", "end_time");
+            input4.attr("value", $scope.params_data.end_time);
+            form.append(input4);
+
+            var input9 = $("<input>");
+            input9.attr("type", "hidden");
+            input9.attr("name", "current_page");
+            input9.attr("value", 0);
+            form.append(input9);
+
+            var input0 = $("<input>");
+            input0.attr("type", "hidden");
+            input0.attr("name", "per_page_count");
+            input0.attr("value", 0);
+            form.append(input0);
+
+            form.submit(); //表单提交
+        }
     };
     // 时间插件
     $scope.timerange = function (params) {

@@ -5,11 +5,9 @@ app.controller('Set_yaraController', ['$scope', '$http', '$state', function ($sc
 
     };
     $scope.yara_replace = function () {
-        console.log(1111);
         $("input[type='file']").trigger('click');
         $("input[type='file']").change(function (target) {
             $("#avatval").val($(this).val());
-            console.log(22222);
         });
     };
     $scope.init();

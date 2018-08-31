@@ -2,7 +2,6 @@
 app.controller('Set_net_ipController', ['$scope', '$http', '$state', function ($scope, $http, $state) {
     // 初始化
     $scope.init = function (params) {
-        console.log(222);
         $scope.pages = {
             data: [],
             count: 0,
@@ -26,7 +25,7 @@ app.controller('Set_net_ipController', ['$scope', '$http', '$state', function ($
             url: './yiiapi/ipsegment/list',
             params: $scope.params_data,
         }).success(function (data) {
-            console.log(data);
+            // console.log(data);
             if (data.status == 0) {
                 $scope.pages = data.data;
             }
@@ -47,7 +46,7 @@ app.controller('Set_net_ipController', ['$scope', '$http', '$state', function ($
                     "net_mask": $scope.net_ip_mask
                 },
             }).success(function (data) {
-                console.log(data);
+                // console.log(data);
                 if (data.status == 0) {
                     zeroModal.success('设置成功！');
                     $scope.net_ip ='',
@@ -76,7 +75,7 @@ app.controller('Set_net_ipController', ['$scope', '$http', '$state', function ($
                 "id": id
             },
         }).success(function (data) {
-            console.log(data);
+            // console.log(data);
             if (data.status == 0) {
                 zeroModal.success('删除成功！');
                 $scope.getPage();

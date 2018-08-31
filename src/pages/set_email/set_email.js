@@ -21,7 +21,7 @@ app.controller('Set_emailController', ['$scope', '$http', '$state', function ($s
             method: 'get',
             url: './yiiapi/email/get'
         }).success(function (data) {
-            console.log(data);
+            // console.log(data);
             if (data.status == 0) {
                 if (data.data.port && data.data.port !='') {
                     data.data.port = parseInt(data.data.port);
@@ -46,7 +46,7 @@ app.controller('Set_emailController', ['$scope', '$http', '$state', function ($s
         rqs_data = $scope.item;
         var loading = zeroModal.loading(4);
         $http.post("./yiiapi/email/test", rqs_data).then(function success(rsp) {
-            console.log(rsp);
+            // console.log(rsp);
             zeroModal.close(loading);
             if (rsp.data.status == 0) {
                 zeroModal.success('邮件发送成功!');
@@ -65,11 +65,11 @@ app.controller('Set_emailController', ['$scope', '$http', '$state', function ($s
           return;
         }
         rqs_data = $scope.item;
-        console.log(rqs_data);
+        // console.log(rqs_data);
         var loading = zeroModal.loading(4);
         $http.post("./yiiapi/email/save", rqs_data).then(function success(rsp) {
             zeroModal.close(loading);
-            console.log(rsp);
+            // console.log(rsp);
 
             if (rsp.data.status == 0) {
                 zeroModal.success('保存成功!');
@@ -82,7 +82,7 @@ app.controller('Set_emailController', ['$scope', '$http', '$state', function ($s
         });
     }
     $scope.search = function (params) {
-        console.log($scope.item);
+        // console.log($scope.item);
     };
     $scope.init();
 }]);

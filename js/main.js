@@ -94,7 +94,7 @@ angular.module('app')
                     }).then(function successCallback(data) {
                         // console.log(data.data);
                         if (data.data.status == 202) {
-                            console.log('已登陆');
+                            // console.log('已登陆');
                             $state.go('app.overview');
                         }
                     }, function errorCallback(data) {
@@ -140,7 +140,7 @@ angular.module('app')
                     method: 'get',
                     url: './yiiapi/site/logout'
                 }).then(function successCallback(data) {
-                    console.log(data);
+                    // console.log(data);
                     // 退出成功
                     if (data.data.status == 0) {
                         zeroModal.close(loading);
@@ -177,7 +177,7 @@ angular.module('app')
                 })
             };
             $scope.showNews = function (item) {
-                console.log(item);
+                // console.log(item);
                 var W = 480;
                 var H = 200;
                 zeroModal.show({
@@ -186,7 +186,7 @@ angular.module('app')
                     width: W + "px",
                     height: H + "px",
                     onCleanup: function (data) {
-                        console.log(data);
+                        // console.log(data);
                     },
                     buttons: [{
                             className: 'zeromodal-btn zeromodal-btn-default',
@@ -197,7 +197,7 @@ angular.module('app')
                             className: 'zeromodal-btn zeromodal-btn-success',
                             name: '已查看',
                             fn: function () {
-                                console.log(item);
+                                // console.log(item);
                                 $http({
                                     method: 'post',
                                     url: './yiiapi/news/update',
@@ -205,7 +205,7 @@ angular.module('app')
                                         id: item.id
                                     }
                                 }).success(function (data) {
-                                    console.log(data);
+                                    // console.log(data);
                                     if (data.status == 0) {
                                         $scope.get_news();
                                     }

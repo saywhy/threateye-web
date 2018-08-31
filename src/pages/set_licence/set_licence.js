@@ -12,14 +12,14 @@ app.controller('Set_licenceController', ['$scope', '$http', '$state', function (
             method: 'get',
             url: './yiiapi/license/get',
         }).then(function successCallback(data) {
-            console.log(data.data);
+            // console.log(data.data);
             $scope.key = data.data.data.key;
             if(data.data.status == 0){
                 for(key in data.data.data.license.list){
                     $scope.license_array.push(data.data.data.license.list[key]);
                 }
             }
-            console.log( $scope.license_array);
+            // console.log( $scope.license_array);
         }, function errorCallback(data) {
             console.log(data);
         });
@@ -44,7 +44,7 @@ app.controller('Set_licenceController', ['$scope', '$http', '$state', function (
                         key: $scope.key
                     }
                     $http.post('./yiiapi/license/online', post_data).then(function success(rsp) {
-                        console.log(rsp);
+                        // console.log(rsp);
                         if (rsp.data.status == 'success') {
                             $scope.importBin(rsp.data.bin);
                         } else if (rsp.data.errorMessage == 'License does not exist') {
@@ -83,7 +83,7 @@ app.controller('Set_licenceController', ['$scope', '$http', '$state', function (
             $http.post('./yiiapi/license/import', {
                 bin: bin
             }).then(function success(rsp) {
-                console.log(rsp.data);
+                // console.log(rsp.data);
                 $scope.repeat_license =true;
                 if (rsp.data.status == 0) {
                    angular.forEach($scope.license_array,function(item,index){

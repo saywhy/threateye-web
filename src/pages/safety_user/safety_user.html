@@ -1,5 +1,4 @@
 <div class="safety_user" ng-controller="Safety_userController" ng-init="app.settings.container = false;" ng-cloak>
-
     <div class="row">
         <div class="col-md-12">
             <div class="nav-tabs-custom" style="margin-bottom: 0px">
@@ -9,6 +8,7 @@
                             <i class="fa fa-bell-o"></i> 用户调查</a>
                     </li>
                 </ul>
+                   
                 <div class="tab-content" style="padding-top:0px;border-bottom:0px;">
                     <!-- protect -->
                     <div class="tab-pane active" id="protect">
@@ -19,11 +19,11 @@
                             </div>
                             <div class="form-group col-md-2">
                                 <label>用户名</label>
-                                <input type="text" class="form-control input_radius" ng-model="url.source_ip" ng-keyup="myKeyup($event)">
+                                <input type="text" class="form-control input_radius" ng-model="user.username" ng-keyup="myKeyup($event)">
                             </div>
                             <div class="form-group col-md-2">
                                 <label>主机IP</label>
-                                <input type="text" class="form-control input_radius" ng-model="url.source_port" ng-keyup="myKeyup($event)">
+                                <input type="text" class="form-control input_radius" ng-model="user.host_ip" ng-keyup="myKeyup($event)">
                             </div>
                             <div class="form-group col-md-1">
                                 <label style="width: 100%;">&nbsp;</label>
@@ -43,14 +43,13 @@
                                     <th>主机IP</th>
                                     <th>应用</th>
                                 </tr>
-                                <tr style="cursor: pointer;" ng-repeat="item in pages" ng-click="detail(item)">
-                                    <td class="td_content" ng-bind="item.time"></td>
-                                    <td class="td_content" ng-bind="item.source_ip"></td>
-                                    <td class="td_content" ng-bind="item.dns_ip"></td>
-                                    <td class="td_content" ng-bind="item.host"></td>
+                                <tr style="cursor: pointer;" ng-repeat="item in pages.data.data" >
+                                    <td class="td_content" ng-bind="item.timestamp"></td>
+                                    <td class="td_content" ng-bind="item.username"></td>
+                                    <td class="td_content" ng-bind="item.host_ip"></td>
+                                    <td class="td_content" ng-bind="item.application"></td>
                                 </tr>
                             </table>
-
                             <!-- angularjs分页 -->
                             <div style="border-top: 1px solid #f4f4f4;padding: 10px;">
                                 <em>共有

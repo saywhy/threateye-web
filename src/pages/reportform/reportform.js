@@ -63,7 +63,7 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter', 
                 rows: 10
             }
         }).then(function (data, status, headers, config) {
-            console.log(data.data.data);
+            // console.log(data.data.data);
             $scope.pages = {
                 data: data.data.data.data,
                 count: data.data.data.count,
@@ -87,7 +87,7 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter', 
         } else {
             $scope.reportNameInput = true;
             // 获取echarts数据
-            console.log($scope.selectedName);
+            // console.log($scope.selectedName);
             if ($scope.selectedName == 'doc') {
                 // docx 报表
                 $http({
@@ -100,12 +100,12 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter', 
                         report_type: $scope.selectedName
                     }
                 }).success(function (data) {
-                    console.log(data);
+                    // console.log(data);
                     if (data.status == 0) {
                         zeroModal.close(loading);
                         // 未处理告警
                         if (data.data.threat_level) {
-                            console.log(data.data.threat_level);
+                            // console.log(data.data.threat_level);
                             $scope.untreatedAlarm(data.data.threat_level);
                         }
                         //威胁使用应用协议
@@ -135,7 +135,7 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter', 
                                 threat_protocol: $scope.base64_application_protocol,
                             }
                         }).success(function (data) {
-                            console.log(data);
+                            // console.log(data);
                             if (data.status == 0) {
                                 // 生成成功
                                 zeroModal.success("保存成功!");
@@ -164,7 +164,7 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter', 
                         report_type: $scope.selectedName
                     }
                 }).then(function (data, status, headers, config) {
-                    console.log(data);
+                    // console.log(data);
                     if (data.data.status == 0) {
                         // 添加成功，刷新数据 
                         zeroModal.success("保存成功!");
@@ -196,7 +196,7 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter', 
                     id: item.id
                 }
             }).then(function (data, status, headers, config) {
-                console.log(data);
+                // console.log(data);
                 zeroModal.close($scope.loading);
                 if (data.data.status == 0) {
                     // 添加成功，刷新数据
@@ -217,7 +217,7 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter', 
     };
     // 生成图表
     $scope.untreatedAlarm = function (params) {
-        console.log(params);
+        // console.log(params);
         if (params.length == 0) {
             $scope.low_total_count = 0;
             $scope.medium_total_count = 0;
@@ -308,7 +308,7 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter', 
     };
     // 柱状图-威胁应用协议
     $scope.application_protocol = function (params) {
-        console.log(params);
+        // console.log(params);
         $scope.application_protocol_name = [];
         $scope.application_protocol_value = [];
         angular.forEach(params, function (item, index) {
@@ -529,7 +529,7 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter', 
         });
     };
     $scope.download_report = function (params) {
-        console.log(params);
+        // console.log(params);
         var tt = new Date().getTime();
         var url = './yiiapi/report/download-report';
         /**

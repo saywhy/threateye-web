@@ -1419,22 +1419,19 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
         myChart.off("click");//防止累计触发
         myChart.on('click', function (params) {
             // 弹窗打印数据的名称
-            console.log(params);
+            // console.log(params);
             $scope.iot_detail_title = params;
             if (params.dataType == "node") {
-                // $scope.$apply(function () {
                     $scope.iotcontent = true;
                     setTimeout(function () {
-                        console.log(12121);
                         $scope.iot_detail_top($scope.iot_detail_title); //iot具体cpu/内存/硬盘/流量
                     }, 600);
-                // })
             }
         });
     };
     // iot_detail - 
     $scope.iot_detail_top = function (params) {
-        console.log(params);
+        // console.log(params);
         var loading = zeroModal.loading(4);
            $scope.sys_detail_cpu = [];
             $scope.sys_detail_mem = [];
@@ -1449,7 +1446,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
             }
         }).success(function (data) {
             zeroModal.close(loading);
-            console.log(data);
+            // console.log(data);
             if (data.status == 0) {
                 angular.forEach(data.data, function (item, index) {
                     $scope.sys_detail_cpu.unshift(item.cpu);
@@ -1757,7 +1754,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
     };
     //弹窗系统状态图表
     $scope.sysEchart = function (params) {
-        console.log(params);
+        // console.log(params);
     };
     $scope.init();
 }]);

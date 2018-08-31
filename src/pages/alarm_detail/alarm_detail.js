@@ -48,14 +48,14 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
                 'id': $scope.detail_data_id
             }
         }).success(function (data) {
-            console.log(data);
+            // console.log(data);
             zeroModal.close(loading);
             if (data.status == 0) {
                 $scope.alert_details = data.data
                 $scope.getPage(); // 当前告警资产
                 $scope.getPage1(); //历史告警资产
                 // 检测时间轴数据
-                console.log($scope.alert_details.alarm_merger);
+                // console.log($scope.alert_details.alarm_merger);
                 $scope.time_type = [{
                     time: $scope.alert_details.alert_time,
                     type: $scope.alert_details.detect_engine,
@@ -93,7 +93,7 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
     };
     // 匹配情报类型
     $scope.switch_type = function (params, content) {
-        console.log('匹配情报类型：'+params);
+        // console.log('匹配情报类型：'+params);
         $scope.whois_list = [];
         $scope.urls_if = false;
         $scope.whois_if = false;
@@ -270,7 +270,7 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
                 break;
 
             case 'MaliciousURL': // 4
-                console.log(content);
+                // console.log(content);
                 if (content.whois) {
                     $scope.whois_if = true;
                     for (var key in content.whois) {
@@ -435,8 +435,8 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
     }
     // 匹配网络事件
     $scope.switch_network = function (network_events) {
-        console.log('匹配网络事件:'+network_events.event_type);
-        console.log('应用:'+network_events.app_proto);
+        // console.log('匹配网络事件:'+network_events.event_type);
+        // console.log('应用:'+network_events.app_proto);
         $scope.network_events.smtp_if = false;
         $scope.network_events.http_if = false;
         $scope.network_events.ftp_data_if = false;
@@ -480,7 +480,7 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
                     if ($scope.network_events.pop3.email.to.length > 1) {
                         $scope.network_events.pop3.email.to = $scope.network_events.pop3.email.to.join(',');
                     }
-                    console.log($scope.network_events.pop3.email.to.length);
+                    // console.log($scope.network_events.pop3.email.to.length);
                 }
                 // smb
                 if (network_events.app_proto == 'smb') {
@@ -595,11 +595,11 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
     // 告警资产tab切换
     $scope.show = function (params) {
         $scope.selected = params;
-        console.log(params);
+        // console.log(params);
     };
     //  检测时间轴点击切换
     $scope.isActive = function (item, index) {
-        console.log(item);
+        // console.log(item);
         $scope.li_index = index;
         $scope.switch_type(item.description_type, item.content);
         $scope.switch_network(item.network_event);

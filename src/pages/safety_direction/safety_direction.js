@@ -50,7 +50,7 @@ app.controller('Safety_directionController', ['$scope', '$http', '$state', funct
             url: './yiiapi/investigate/flow-direction-investigation',
             params: $scope.params_data,
         }).success(function (data) {
-            console.log(data);
+            // console.log(data);
             if (data.status == 0) {
                 $scope.pages = data.data;
                 // console.log($scope.pages);
@@ -97,7 +97,7 @@ app.controller('Safety_directionController', ['$scope', '$http', '$state', funct
                 per_page_count:0,
             }
         }).success(function (data) {
-            console.log(data);
+            // console.log(data);
             if(data.status == 0){
                 download_now();
             }

@@ -27,14 +27,14 @@ angular.module('app')
                         "old_password": $scope.data.old
                     }
                 }).then(function successCallback(data) {
-                    console.log(data);
+                    // console.log(data);
                     if (data.data.status == 0) {
                         zeroModal.close(loading);
                         $modalInstance.close();
                         zeroModal.success('密码修改成功！');
                         $state.go('app.overview');
                     }else if(data.data.status ==1){
-                            console.log(data.data.msg);
+                            // console.log(data.data.msg);
                             zeroModal.close(loading);
                             zeroModal.error(data.data.msg);
                     }

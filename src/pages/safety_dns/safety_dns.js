@@ -50,17 +50,17 @@ app.controller('Safety_dnsController', ['$scope', '$http', '$state', function ($
             current_page: pageNow,
             per_page_count: '10'
         };
-        console.log($scope.params_data);
+        // console.log($scope.params_data);
         // var loading = zeroModal.loading(4);
         $http({
             method: 'get',
             url: './yiiapi/investigate/dns-investigation',
             params: $scope.params_data,
         }).success(function (data) {
-            console.log(data);
+            // console.log(data);
             if (data.status == 0) {
                 $scope.pages = data.data;
-                console.log($scope.pages);
+                // console.log($scope.pages);
             }
             if (data.status == 1) {
                 zeroModal.error(data.msg);
@@ -72,8 +72,8 @@ app.controller('Safety_dnsController', ['$scope', '$http', '$state', function ($
     };
     //导出csv 
     $scope.export = function (params) {
-        console.log($scope.dns);
-        console.log($scope.searchData);
+        // console.log($scope.dns);
+        // console.log($scope.searchData);
     };
     // 下载报表
     $scope.download = function () {
@@ -108,7 +108,7 @@ app.controller('Safety_dnsController', ['$scope', '$http', '$state', function ($
                 per_page_count: 0,
             }
         }).success(function (data) {
-            console.log(data);
+            // console.log(data);
             if (data.status == 0) {
                 download_now();
             }

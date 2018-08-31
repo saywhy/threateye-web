@@ -36,7 +36,7 @@ app.controller('Safety_fileController', ['$scope', '$http', '$state', function (
             url: './yiiapi/investigate/file-investigation',
             params: $scope.params_data,
         }).success(function (data) {
-            console.log(data);
+            // console.log(data);
             if (data.status == 0) {
                 $scope.pages = data.data;
                 // console.log($scope.pages);
@@ -84,7 +84,7 @@ app.controller('Safety_fileController', ['$scope', '$http', '$state', function (
                 per_page_count:0,
             }
         }).success(function (data) {
-            console.log(data);
+            // console.log(data);
             if(data.status == 0){
                 download_now();
             }
