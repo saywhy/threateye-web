@@ -38,7 +38,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
             method: 'GET',
             url: './yiiapi/alert/system-state'
         }).success(function (data) {
-            console.log(data);
+            // console.log(data);
             if (data.status == 0) {
                 $scope.sysState_data = data.data;
                 $scope.system = [{
@@ -321,7 +321,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
             method: 'GET',
             url: './yiiapi/alert/protocol-flow-statistics'
         }).success(function (data) {
-            console.log(data);
+            // console.log(data);
             if (data.status == 0) {
                 $scope.flow_statistics = {
                     item: {},
@@ -342,7 +342,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
                 for (var k in data.data) {
                     $scope.flow_statistics.title.push(k);
                 }
-                console.log(data.data.http);
+                // console.log(data.data.http);
                 // ["http","https","ssh","ftp","dns","imap","smb","pop3","smtp","dhcp"]
                 angular.forEach(data.data.http, function (item, index) {
                     $scope.flow_statistics.time.unshift(item.statistics_time);
@@ -707,7 +707,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
                         $scope.flow_statistics.items.push($scope.flow_statistics.item);
                     }
                 })
-                console.log($scope.flow_statistics);
+                // console.log($scope.flow_statistics);
 
                 var myChart = echarts.init(document.getElementById('safetyequipment'));
                 var option = {
@@ -1266,7 +1266,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
         if ($scope.engine_array.length == 1) {
             $scope.graph_echart_array.push($scope.data_item0);
         };
-        console.log($scope.probe_array);
+        // console.log($scope.probe_array);
         // 多个探针 模版
         angular.forEach($scope.probe_array, function (item, index) {
             $scope.data_item1 = {
@@ -1367,7 +1367,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', fun
                     break;
             };
         })
-        console.log($scope.graph_echart_array);
+        // console.log($scope.graph_echart_array);
         // $("#pop").html('<div id="graph"</div>');
         var myChart = echarts.init(document.getElementById('graph'));
         var option = {

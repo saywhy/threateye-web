@@ -53,12 +53,12 @@ app.controller('AlarmController', [
         $scope.IntervalgetPage = function () {
             if($scope.searchActive){
                 // 不刷新
-                console.log('停止刷新');
+                // console.log('停止刷新');
                 clearInterval($scope.startInterval);
                 $scope.insideInterval =setInterval(function(){
-                    console.log('内部循环');
+                    // console.log('内部循环');
                     if(!$scope.searchActive){
-                        console.log('开启循环刷新');
+                        // console.log('开启循环刷新');
                         clearInterval($scope.insideInterval);
                         // 开始循环
                         $scope.startInterval = setInterval(function () {
@@ -67,26 +67,26 @@ app.controller('AlarmController', [
                     }
                 },5000)
             }else {
-                console.log('数据更新111');
+                // console.log('数据更新111');
                 $http({
                     method: 'get',
                     url: './yiiapi/alert/get-last-alert-timestamp'
                 }).success(function (data) {
                     if ($scope.dataTime == 'frist') {
                         $scope.dataTime = data.data;
-                        console.log('第一次请求111');
+                        // console.log('第一次请求111');
                     } else {
-                        console.log('本地赋值'+$scope.dataTime);
-                        console.log('获取时间'+data.data );
+                        // console.log('本地赋值'+$scope.dataTime);
+                        // console.log('获取时间'+data.data );
                         if (data.data != $scope.dataTime) {
-                            console.log('数据更新');
+                            // console.log('数据更新');
                             $scope.dataTime = data.data;
                                     $scope.searchData.endTime=data.data; //更新时间
                                     $scope.getPage();
                                     $scope.alarmEchart(); // 折线图表
                         } else {
                             $scope.dataTime = data.data;
-                            console.log('数据无变化');
+                            // console.log('数据无变化');
                         }
                     }
                 }).error(function (err) {
@@ -108,7 +108,7 @@ app.controller('AlarmController', [
                 page: pageNow,
                 rows: '10'
             };
-            console.log($scope.params_data);
+            // console.log($scope.params_data);
             $http({
                 method: 'get',
                 url: './yiiapi/alert/list',
@@ -118,7 +118,7 @@ app.controller('AlarmController', [
                 if (data.status == 0) {
                         $scope.pages = data.data;
                 }
-                console.log($scope.pages);
+                // console.log($scope.pages);
             }).error(function (err) {
                 console.log(err);
             })
@@ -173,7 +173,7 @@ app.controller('AlarmController', [
                 url: './yiiapi/alert/do-alarm',
                 data: dataJson,
             }).success(function (data) {
-                console.log(data);
+                // console.log(data);
                 zeroModal.close(loading);
                 if (data.status == 0) {
                     $scope.getPage();
@@ -190,7 +190,7 @@ app.controller('AlarmController', [
                 method: 'get',
                 url: './yiiapi/alert/alert-trend'
             }).success(function (data) {
-                console.log(data);
+                // console.log(data);
                 // zeroModal.close(loading);
                 if (data.status == 0) {
                     $scope.alarmEchart_time = [];
@@ -323,7 +323,7 @@ app.controller('AlarmController', [
         };
         // 跳转详情页面
         $scope.detail = function (params) {
-            console.log(params.id);
+            // console.log(params.id);
             // params = escape(JSON.stringify(params));
             $state.go('app.alarm_detail', {
                 data: params.id

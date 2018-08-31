@@ -168,7 +168,7 @@ angular.module('app')
                         $scope.new_data_info = 0;
                     }
                 }).error(function (data) {
-                    console.log(data);
+                    // console.log(data);
                     if (data.status == 404) {
                         // 未登录
                         $state.go('signin');
