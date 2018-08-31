@@ -50,7 +50,7 @@ app.controller('Set_ruleController', ['$scope', '$http', '$state', function ($sc
             method: 'get',
             url: './yiiapi/rulebase/get-update-status'
         }).success(function (data) {
-            console.log(data);
+            // console.log(data);
             if (data.status == 0) {
                 if (data.data.status == 1) {
                     // 正在升级中
@@ -71,7 +71,6 @@ app.controller('Set_ruleController', ['$scope', '$http', '$state', function ($sc
     }
     // 实时更新
     $scope.real_time_update = function () {
-
         if ($scope.disabledUpdata) {
             zeroModal.error('正在升级中');
         } else {

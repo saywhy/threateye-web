@@ -37,7 +37,7 @@ $scope.getPage = function (pageNow) {
         url: './yiiapi/investigate/user-investigation',
         params: $scope.params_data,
     }).success(function (data) {
-        console.log(data);
+        // console.log(data);
         if (data.status == 0) {
             $scope.pages = data.data;
             // console.log($scope.pages);
@@ -82,7 +82,7 @@ $scope.getPage = function (pageNow) {
                 per_page_count:0,
             }
         }).success(function (data) {
-            console.log(data);
+            // console.log(data);
             if(data.status == 0){
                 download_now();
             }
@@ -93,8 +93,6 @@ $scope.getPage = function (pageNow) {
             console.log(error);
          })
          function download_now(){
-             console.log(12121);
-             
             var tt = new Date().getTime();
             var url = './yiiapi/investigate/user-investigation-export';
             
@@ -147,11 +145,6 @@ $scope.getPage = function (pageNow) {
     // 搜索
     $scope.search = function (params) {
         $scope.getPage();
-    }
-    //导出csv 
-    $scope.export = function (params) {
-        console.log($scope.user);
-        console.log($scope.searchData);
     }
     // 时间插件
     $scope.timerange = function (params) {
