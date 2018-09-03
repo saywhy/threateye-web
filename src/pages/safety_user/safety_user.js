@@ -2,9 +2,12 @@
 
 'use strict';
 /* Controllers */
-app.controller('Safety_userController', ['$scope', '$http', '$state', function ($scope, $http, $state) {
+app.controller('Safety_userController', ['$scope', '$http', '$state','$rootScope', function ($scope, $http, $state, $rootScope) {
        // 初始化
        $scope.init = function (params) {
+        clearInterval($rootScope.insideInterval);
+        clearInterval($rootScope.startInterval);
+        $rootScope.pageNow= 0;
         $scope.user = {
             start_time:moment().subtract(1, 'days').unix(),
             end_time:moment().unix()

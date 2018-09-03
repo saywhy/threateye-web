@@ -1,7 +1,10 @@
 /* Controllers */
-app.controller('Set_licenceController', ['$scope', '$http', '$state', function ($scope, $http, $state) {
+app.controller('Set_licenceController', ['$scope', '$http', '$state','$rootScope', function ($scope, $http, $state,$rootScope) {
     // 初始化
     $scope.init = function (params) {
+        clearInterval($rootScope.insideInterval);
+        clearInterval($rootScope.startInterval);
+        $rootScope.pageNow= 0;
          $scope.license_array = [];
         $scope.get_license(); // 获取证书列表
 

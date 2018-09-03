@@ -1,8 +1,11 @@
 'use strict';
 /* Controllers */
-app.controller('Safety_iocController', ['$scope', '$http', '$state', function ($scope, $http, $state) {
+app.controller('Safety_iocController', ['$scope', '$http', '$state','$rootScope', function ($scope, $http, $state,$rootScope) {
     // 初始化
     $scope.init = function (params) {
+        clearInterval($rootScope.insideInterval);
+        clearInterval($rootScope.startInterval);
+        $rootScope.pageNow= 0;
         $scope.upload_true = true; //初始化禁用提交按钮
         $("#avatval").click(function () {
             $("input[type='file']").trigger('click');

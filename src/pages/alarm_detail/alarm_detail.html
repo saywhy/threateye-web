@@ -453,7 +453,7 @@
                                                 <td ng-bind="item.indicator"></td>
                                                 <td ng-bind="item.src_ip"></td>
                                                 <td ng-bind="item.dest_ip"></td>
-                                                <td ng-bind="item.application"></td>
+                                                <td ng-bind="item.application == 'tls'? 'https': item.application"></td>
                                                 <td ng-bind="item.degree"></td>
                                             </tr>
                                         </table>
@@ -518,7 +518,7 @@
                                                 <td ng-bind="item.indicator"></td>
                                                 <td ng-bind="item.src_ip"></td>
                                                 <td ng-bind="item.dest_ip"></td>
-                                                <td ng-bind="item.application"></td>
+                                                <td ng-bind="item.application == 'tls'? 'https': item.application"></td>
                                                 <td ng-bind="item.degree"></td>
                                             </tr>
                                         </table>

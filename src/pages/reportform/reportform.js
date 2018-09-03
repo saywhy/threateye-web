@@ -3,6 +3,7 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter','
     rootScope = $scope;
     clearInterval($rootScope.insideInterval);
     clearInterval($rootScope.startInterval);
+    $rootScope.pageNow= 0;
     $scope.init = function (params) {
         $scope.datafalse = false; //版本暂时不需要，隐藏
         $scope.reportNameInput = true;

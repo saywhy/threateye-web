@@ -1,7 +1,10 @@
 /* Controllers */
-app.controller('Set_netController', ['$scope', '$http', '$state', function ($scope, $http, $state) {
+app.controller('Set_netController', ['$scope', '$http', '$state','$rootScope', function ($scope, $http, $state,$rootScope) {
     // 初始化
     $scope.init = function (params) {
+        clearInterval($rootScope.insideInterval);
+        clearInterval($rootScope.startInterval);
+        $rootScope.pageNow= 0;
         $scope.net = {};
         $scope.net_detail={};
         $scope.net_names = [];

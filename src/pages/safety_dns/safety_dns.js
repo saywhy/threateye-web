@@ -1,8 +1,11 @@
 'use strict';
 /* Controllers */
-app.controller('Safety_dnsController', ['$scope', '$http', '$state', function ($scope, $http, $state) {
+app.controller('Safety_dnsController', ['$scope', '$http', '$state','$rootScope', function ($scope, $http, $state,$rootScope) {
     // 初始化
     $scope.init = function (params) {
+        clearInterval($rootScope.insideInterval);
+        clearInterval($rootScope.startInterval);
+        $rootScope.pageNow= 0;
         $scope.dns = {};
         $scope.pages = {
             data: [],

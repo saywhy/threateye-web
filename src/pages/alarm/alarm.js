@@ -9,6 +9,7 @@ app.controller('AlarmController', [
     '$rootScope',
     function ($scope, $http, $state, $filter,$rootScope) {
         // 初始化
+       
         $scope.init = function (params) {
             $scope.searchActive = false;
             $scope.crumbOptions = [
@@ -35,6 +36,7 @@ app.controller('AlarmController', [
                 maxPage: "...",
                 pageNow: 1,
             };
+           
             // 默认时间
             $scope.searchData = {
                 startTime: moment().subtract(365, 'days').unix(),
@@ -98,6 +100,14 @@ app.controller('AlarmController', [
 
         // 告警列表
         $scope.getPage = function (pageNow) {
+            if(pageNow){
+                $rootScope.pageNow = pageNow;
+                $scope.pages.pageNow = pageNow;
+            }else{
+                if($rootScope.pageNow!= 0){
+                    $scope.pages.pageNow = $rootScope.pageNow;
+                }
+            }
             pageNow = pageNow ? pageNow : 1;
             $scope.index_num = (pageNow - 1) * 10;
             $scope.params_data = {
@@ -106,7 +116,7 @@ app.controller('AlarmController', [
                 src_ip: $scope.searchData.src_ip,
                 dest_ip: $scope.searchData.dest_ip,
                 status: $scope.selectedName,
-                page: pageNow,
+                page: $scope.pages.pageNow,
                 rows: '10'
             };
             // console.log($scope.params_data);
