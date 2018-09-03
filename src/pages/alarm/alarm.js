@@ -6,7 +6,8 @@ app.controller('AlarmController', [
     '$http',
     '$state',
     '$filter',
-    function ($scope, $http, $state, $filter) {
+    '$rootScope',
+    function ($scope, $http, $state, $filter,$rootScope) {
         // 初始化
         $scope.init = function (params) {
             $scope.searchActive = false;
@@ -45,7 +46,7 @@ app.controller('AlarmController', [
             $scope.alarmEchart(); // 折线图表
             $scope.getPage();
             $scope.IntervalgetPage();
-            $scope.startInterval = setInterval(function () {
+            $rootScope.startInterval = setInterval(function () {
                 $scope.IntervalgetPage();
             }, 5000);
         };
@@ -54,12 +55,12 @@ app.controller('AlarmController', [
             if($scope.searchActive){
                 // 不刷新
                 // console.log('停止刷新');
-                clearInterval($scope.startInterval);
-                $scope.insideInterval =setInterval(function(){
+                clearInterval($rootScope.startInterval);
+                $rootScope.insideInterval =setInterval(function(){
                     // console.log('内部循环');
                     if(!$scope.searchActive){
                         // console.log('开启循环刷新');
-                        clearInterval($scope.insideInterval);
+                        clearInterval($rootScope.insideInterval);
                         // 开始循环
                         $scope.startInterval = setInterval(function () {
                             $scope.IntervalgetPage();

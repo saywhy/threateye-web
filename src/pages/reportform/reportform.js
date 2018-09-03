@@ -1,6 +1,8 @@
 /* Controllers */
-app.controller('ReportformController', ['$scope', '$http', '$state', '$filter', function ($scope, $http, $state, $filter) {
+app.controller('ReportformController', ['$scope', '$http', '$state', '$filter','$rootScope', function ($scope, $http, $state, $filter,$rootScope) {
     rootScope = $scope;
+    clearInterval($rootScope.insideInterval);
+    clearInterval($rootScope.startInterval);
     $scope.init = function (params) {
         $scope.datafalse = false; //版本暂时不需要，隐藏
         $scope.reportNameInput = true;

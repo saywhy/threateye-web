@@ -1,8 +1,10 @@
 'use strict';
 // Alarm Detail controller
-app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$state', function ($scope, $http, $stateParams, $state) {
+app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$state','$rootScope', function ($scope, $http, $stateParams, $state,$rootScope) {
     // 初始化
     $scope.init = function (params) {
+        clearInterval($rootScope.insideInterval);
+        clearInterval($rootScope.startInterval);
         $scope.crumbOptions = [{
                 "href": "#/app/alarm",
                 "title": "告警"
@@ -55,7 +57,7 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
                 $scope.getPage(); // 当前告警资产
                 $scope.getPage1(); //历史告警资产
                 // 检测时间轴数据
-                // console.log($scope.alert_details.alarm_merger);
+                // console.log($scope.alert_details);
                 $scope.time_type = [{
                     time: $scope.alert_details.alert_time,
                     type: $scope.alert_details.detect_engine,
@@ -94,6 +96,7 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
     // 匹配情报类型
     $scope.switch_type = function (params, content) {
         // console.log('匹配情报类型：'+params);
+        // console.log(content);
         $scope.whois_list = [];
         $scope.urls_if = false;
         $scope.whois_if = false;
@@ -140,7 +143,7 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
                     },
                     {
                         key: '威胁类型',
-                        value: '僵尸网络C&C'
+                        value: content.category //content.category
                     },
                     {
                         key: '威胁细分',
@@ -242,7 +245,7 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
                     },
                     {
                         key: '威胁类型',
-                        value: '恶意程序'
+                        value: content.category ////content.category
                     },
                     {
                         key: '威胁细分',
@@ -264,7 +267,6 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
                         key: '样本下载IP地址',
                         value: content.IP
                     }
-
                 ];
                 $scope.detail_infos = $scope.threat.MaliciousHash;
                 break;
@@ -325,7 +327,7 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
                     },
                     {
                         key: '威胁类型',
-                        value: '钓鱼网站'
+                        value: content.category
                     },
                     {
                         key: '全球首次发现时间',
@@ -435,7 +437,7 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
     }
     // 匹配网络事件
     $scope.switch_network = function (network_events) {
-        // console.log('匹配网络事件:'+network_events.event_type);
+        // console.log(network_events);
         // console.log('应用:'+network_events.app_proto);
         $scope.network_events.smtp_if = false;
         $scope.network_events.http_if = false;
