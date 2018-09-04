@@ -4,11 +4,12 @@
 
 html {
   background-color: #f0f3f4;
+  
 }
 
 body {
   font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
+  font-size: 12px;
   -webkit-font-smoothing: antialiased;
   line-height: 1.42857143;
   color: #58666e;

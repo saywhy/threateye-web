@@ -69,6 +69,7 @@
                 <!-- /.box-header -->
                 <div class="row equipment-content">
                     <div class="equipment-right col-md-12">
+                        <p>单位：(M/S)</p>
                         <div id="safetyequipment"></div>
                     </div>
                 </div>
@@ -126,7 +127,7 @@
     <!-- 第三排 -->
     <div class="row o_fourth">
         <!-- 左边-TOP5威胁 -->
-        <div class="o_container col-md-3">
+        <div class="o_container col-md-3 new_top_left">
             <div class="top">
                 <div class="o_box_header">
                     <p>
@@ -139,8 +140,8 @@
                         <table class="table table-striped">
                             <tr>
                                 <th style="width: 40px">排名</th>
-                                <th>威胁</th>
-                                <th>威胁类型</th>
+                                <th style="width: 80px">威胁</th>
+                                <th style="width: 88px">威胁类型</th>
                             </tr>
                             <tr ng-repeat="(index,item) in top_threaten_data" style="height: 37px;">
                                 <td ng-bind="index+1">1</td>
@@ -153,7 +154,7 @@
             </div>
         </div>
         <!-- 中间top5风险资产-->
-        <div class="o_container col-md-4">
+        <div class="o_container col-md-4 new_top_mid">
             <div class="top">
                 <div class="o_box_header">
                     <p>
@@ -167,7 +168,7 @@
                             <tr>
                                 <th style="width:15%">排名</th>
                                 <th style="width:30%">资产</th>
-                                <th style="width:55%">风险度</th>
+                                <th style="width:38%">风险度</th>
                             </tr>
                             <tr ng-repeat="(index,item) in risk_property_data">
                                 <td ng-bind="index+1">1</td>
@@ -184,7 +185,7 @@
             </div>
         </div>
         <!-- 右边-  最新告警-->
-        <div class="col-md-5 o_container">
+        <div class="col-md-5 o_container new_alert">
             <div class="top">
                 <div class="o_box_header">
                     <p>
@@ -201,8 +202,8 @@
                                 <th>威胁指标</th>
                                 <th>源地址</th>
                                 <th>目的地址</th>
-                                <th>应用</th>
-                                <th>告警等级</th>
+                                <th style="width: 53px">应用</th>
+                                <th style="width: 73px">告警等级</th>
                             </tr>
                             <tr ng-repeat="item in new_alarm_data" style="height: 37px;">
                                 <td ng-bind="item.alert_time*1000 |date:'yyyy-MM-dd HH:mm:ss'"></td>

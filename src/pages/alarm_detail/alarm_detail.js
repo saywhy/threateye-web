@@ -420,6 +420,9 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
                         }
                     }
                     $scope.threat.sdk = [{
+                        key: '威胁类型',
+                        value: content.category
+                    },{
                             key: '文件名',
                             value: content.file_name
                         },

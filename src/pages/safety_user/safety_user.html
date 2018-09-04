@@ -38,12 +38,14 @@
                         <div class="row margin">
                             <table class="table table-hover ng-cloak">
                                 <tr>
+                                        <th style="width:60px">序号</th>
                                     <th>时间</th>
                                     <th>用户名</th>
                                     <th>主机IP</th>
                                     <th>应用</th>
                                 </tr>
                                 <tr style="cursor: pointer;" ng-repeat="item in pages.data.data" >
+                                        <td ng-bind="$index + 1 + index_num">1</td>
                                     <td class="td_content" ng-bind="item.timestamp"></td>
                                     <td class="td_content" ng-bind="item.username"></td>
                                     <td class="td_content" ng-bind="item.host_ip"></td>

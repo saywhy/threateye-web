@@ -36,6 +36,8 @@ app.controller('Safety_hostController', ['$scope', '$http', '$state','$rootScope
         $scope.tab_data = [{
                 name: '网络通讯',
                 content_th: [{
+                    name: '序号'
+                },{
                     name: '时间'
                 }, {
                     name: '源IP'
@@ -55,6 +57,8 @@ app.controller('Safety_hostController', ['$scope', '$http', '$state','$rootScope
             {
                 name: '文件',
                 content_th: [{
+                    name: '序号'
+                },{
                     name: '文件名'
                 }, {
                     name: '哈希值'
@@ -70,6 +74,8 @@ app.controller('Safety_hostController', ['$scope', '$http', '$state','$rootScope
             {
                 name: '用户',
                 content_th: [{
+                    name: '序号'
+                },{
                     name: '用户名'
                 }, {
                     name: '主机IP'
@@ -85,7 +91,6 @@ app.controller('Safety_hostController', ['$scope', '$http', '$state','$rootScope
     // 主机网络调查
     $scope.getPage_network = function (pageNow) {
         pageNow = pageNow ? pageNow : 1;
-        $scope.index_num = (pageNow - 1) * 10;
         $scope.params_data = {
             host_ip: $scope.host.host_ip,
             start_time: $scope.host.start_time,
@@ -102,9 +107,10 @@ app.controller('Safety_hostController', ['$scope', '$http', '$state','$rootScope
             // console.log(data);
             if (data.status == 0) {
                 $scope.tab_data[0].value = [];
-                angular.forEach(data.data.data.data, function (item) {
+                angular.forEach(data.data.data.data, function (item,index) {
                     // console.log(item);
                     var item_network = {
+                        index: index + 1 + (pageNow-1) * 10,
                         time: item.timestamp,
                         Ip: item.src_ip,
                         source_port: item.src_port,
@@ -131,7 +137,6 @@ app.controller('Safety_hostController', ['$scope', '$http', '$state','$rootScope
     // 主机文件调查
     $scope.getPage_file = function (pageNow) {
         pageNow = pageNow ? pageNow : 1;
-        $scope.index_num = (pageNow - 1) * 10;
         $scope.params_data = {
             host_ip: $scope.host.host_ip,
             start_time: $scope.host.start_time,
@@ -148,8 +153,9 @@ app.controller('Safety_hostController', ['$scope', '$http', '$state','$rootScope
             // console.log(data);
             if (data.status == 0) {
                 $scope.tab_data[1].value = [];
-                angular.forEach(data.data.data.data, function (item) {
+                angular.forEach(data.data.data.data, function (item,index) {
                     var item_network = {
+                        index: index + 1 + (pageNow-1) * 10,
                         name: item.file_name,
                         hash: item.md5,
                         source: item.source,
@@ -174,7 +180,6 @@ app.controller('Safety_hostController', ['$scope', '$http', '$state','$rootScope
     // 主机用户调查
     $scope.getPage_user = function (pageNow) {
         pageNow = pageNow ? pageNow : 1;
-        $scope.index_num = (pageNow - 1) * 10;
         $scope.params_data = {
             host_ip: $scope.host.host_ip,
             start_time: $scope.host.start_time,
@@ -191,8 +196,9 @@ app.controller('Safety_hostController', ['$scope', '$http', '$state','$rootScope
             // console.log(data);
             if (data.status == 0) {
                 $scope.tab_data[2].value = [];
-                angular.forEach(data.data.data.data, function (item) {
+                angular.forEach(data.data.data.data, function (item,index) {
                     var item_network = {
+                        index: index + 1 + (pageNow-1) * 10,
                         user_name: item.username,
                         host_ip: item.host_ip,
                         application: item.application

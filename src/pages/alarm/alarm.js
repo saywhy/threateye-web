@@ -97,7 +97,6 @@ app.controller('AlarmController', [
                 })
             }
         }
-
         // 告警列表
         $scope.getPage = function (pageNow) {
             if(pageNow){
@@ -133,7 +132,6 @@ app.controller('AlarmController', [
             }).error(function (err) {
                 console.log(err);
             })
-            
         }
         $scope.status_str = [{
             css: 'success',
@@ -169,7 +167,6 @@ app.controller('AlarmController', [
                 // 刷新
                 $scope.searchActive = false;
             }
-           
             $scope.getPage();
         };
         // 操作 已解决

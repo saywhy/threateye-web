@@ -12,7 +12,7 @@ angular.module('app')
 
             // config
             $scope.app = {
-                name: 'ThreatEye防APT解决方案',
+                name: 'ThreatEye高级威胁检测系统',
                 title: 'ThreatEye',
                 version: '1.0.0',
                 http: 'http://192.168.1.253',

@@ -313,7 +313,6 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal','$ro
         })
 
     };
-
     // hhtp
     // HTTPS
     // Dns  ssh  ftp 
@@ -716,8 +715,8 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal','$ro
                     grid: {
                         left: 50,
                         right: 40,
-                        top: 15,
-                        bottom: 85
+                        top: 6,
+                        bottom: 100
                     },
                     tooltip: {
                         trigger: 'axis',
@@ -734,9 +733,12 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal','$ro
                         extraCssText: 'box-shadow: 0 0 5px rgba(0,0,0,0.3)'
                     },
                     legend: {
-                        bottom: 10,
-                        left: 10,
+                        bottom: 5,
+                        left: 5,
                         orient: 'horizontal',
+                        textStyle: {
+                            fontSize:12
+                        },
                         selected: {
                             // 选中'系列1'
                             'HTTP': true,
@@ -782,6 +784,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal','$ro
                             }
                         }
                     },
+               
                     yAxis: {
                         type: 'value',
                         splitLine: {
@@ -790,7 +793,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal','$ro
                             }
                         },
                         axisTick: {
-                            show: false
+                            show: true
                         },
                         axisLine: {
                             lineStyle: {
@@ -801,7 +804,8 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal','$ro
                             margin: 10,
                             textStyle: {
                                 fontSize: 10
-                            }
+                            },
+                            // formatter: '{value} (M/s)'
                         }
                     },
                     series: $scope.flow_statistics.items
