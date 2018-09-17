@@ -47,13 +47,13 @@
                                 <label style="width: 100%;">&nbsp;</label>
                                 <button class="form-control btn btn-primary btn_style" style="max-width: 80px;" ng-click="search()">搜&nbsp;索</button>
                             </div>
-                            <div class="download_position ">
+                            <div class="download_position " ng-if="content_show">
                                 <span>
                                     <img src="../src/images/icos/download.png" ng-click="download(item.id)" width="16" height="16" alt="">
                                 </span>
                             </div>
                         </div>
-                        <div class="row margin">
+                        <div class="row margin" ng-if="content_show">
                             <table class="table table-hover ng-cloak">
                                 <tr>
                                     <th style="width:60px">序号</th>
@@ -64,7 +64,7 @@
                                     <th>域名</th>
                                     <th> 解析地址</th>
                                     <th> TTL</th>
-                                    <th> 解析结果</th>
+                                    <!-- <th> 解析结果</th> -->
                                 </tr>
                                 <tr style="cursor: pointer;" ng-repeat="item in pages.data" ng-click="detail(item)">
                                         <td ng-bind="$index + 1 + index_num">1</td>
@@ -75,7 +75,7 @@
                                     <td class="td_content" ng-bind="item.rrname"></td>
                                     <td class="td_content" ng-bind="item.rdata"></td>
                                     <td class="td_content" ng-bind="item.ttl"></td>
-                                    <td class="td_content" ng-bind="item.des_query"></td>
+                                    <!-- <td class="td_content" ng-bind="item.des_query"></td> -->
                                 </tr>
                             </table>
                             <!-- angularjs分页 -->

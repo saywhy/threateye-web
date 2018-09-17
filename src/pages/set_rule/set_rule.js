@@ -44,7 +44,7 @@ app.controller('Set_ruleController', ['$scope', '$http', '$state','$rootScope', 
     };
 
 
-    $scope.getUpdataStatus = setInterval(function () {
+    $rootScope.getUpdataStatus = setInterval(function () {
         $scope.updataStatus();
     }, 10000)
 
@@ -60,6 +60,10 @@ app.controller('Set_ruleController', ['$scope', '$http', '$state','$rootScope', 
                     $scope.disabledUpdata = true;
                     $scope.updataText = '正在升级中'
                 }
+                if (data.data.status == 0) {
+                    // 未配置
+                    $scope.disabledUpdata = false;
+                }
                 if (data.data.status == 2) {
                     // 升级完成
                     // 手动升级完成时间为 timestamp
@@ -69,7 +73,7 @@ app.controller('Set_ruleController', ['$scope', '$http', '$state','$rootScope', 
             }
         }).error(function () {
             zeroModal.error('获取更新状态失败！');
-            clearInterval($scope.getUpdataStatus);
+            clearInterval($rootScope.getUpdataStatus);
         })
     }
     // 实时更新
@@ -82,11 +86,14 @@ app.controller('Set_ruleController', ['$scope', '$http', '$state','$rootScope', 
                 method: 'post',
                 url: './yiiapi/rulebase/realtime-update'
             }).success(function (data) {
-                console.log(data);
+                // console.log(data);
                 if (data.status == 0) {
                     // zeroModal.success('开始更新！');
                 }
                 if (data.status == 1) {
+                    zeroModal.error(data.msg);
+                }
+                if (data.status == 401) {
                     zeroModal.error(data.msg);
                 }
                 zeroModal.close(loading);
@@ -144,15 +151,16 @@ app.controller('Set_ruleController', ['$scope', '$http', '$state','$rootScope', 
                 return xhr;　
             },
             success: function (res) {
-                // res = JSON.parse(res)
+                res = JSON.parse(res)
                 // console.log(res);
                 if (res.status == 0) {
                     zeroModal.success('上传成功');
                     $scope.$apply(function () {
                         $scope.offline_update_button = false;
                     })
-
                 } else if (res.status == 1) {
+                    zeroModal.error(res.msg);
+                }else if (res.status == 401) {
                     zeroModal.error(res.msg);
                 }
             },

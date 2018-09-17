@@ -66,6 +66,8 @@ app.controller('SigninFormController', ['$scope', '$http', '$state', function ($
                 if (data.data.status == 0) {
                     zeroModal.success('创建管理员成功!');
                     $scope.login_show = false;
+                }else if(data.data.status == 202){
+                    $state.go('app.overview');
                 } 
             }, function errorCallback(data) {
                 zeroModal.close(loading);

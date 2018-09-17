@@ -18,27 +18,27 @@
                             </div>
                             <div class="form-group col-md-2">
                                 <label>文件名</label>
-                                <input type="text" class="form-control input_radius" ng-model="url.source_ip" ng-keyup="myKeyup($event)">
+                                <input type="text" class="form-control input_radius" ng-model="file.file_name" ng-keyup="myKeyup($event)">
                             </div>
                             <div class="form-group col-md-2">
                                 <label>哈希值</label>
-                                <input type="text" class="form-control input_radius" ng-model="url.source_port" ng-keyup="myKeyup($event)">
+                                <input type="text" class="form-control input_radius" ng-model="file.md5" ng-keyup="myKeyup($event)">
                             </div>
                             <div class="form-group col-md-2">
                                 <label>主机IP</label>
-                                <input type="text" class="form-control input_radius" ng-model="url.source_port" ng-keyup="myKeyup($event)">
+                                <input type="text" class="form-control input_radius" ng-model="file.host_ip" ng-keyup="myKeyup($event)">
                             </div>
                             <div class="form-group col-md-1">
                                 <label style="width: 100%;">&nbsp;</label>
                                 <button class="form-control btn btn-primary btn_style" style="max-width: 80px;" ng-click="search()">搜&nbsp;索</button>
                             </div>
-                            <div class="download_position ">
+                            <div class="download_position " ng-if="content_show">
                                 <span>
                                     <img src="../src/images/icos/download.png" ng-click="download(item.id)" width="16" height="16" alt="">
                                 </span>
                             </div>
                         </div>
-                        <div class="row margin">
+                        <div class="row margin" ng-if="content_show">
                             <table class="table table-hover ng-cloak">
                                 <tr>
                                     <th style="width:60px">序号</th>

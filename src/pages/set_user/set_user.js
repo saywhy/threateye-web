@@ -2,8 +2,10 @@
 app.controller('Set_userController', ['$scope', '$http', '$state','$rootScope', function ($scope, $http, $state,$rootScope) {
     // 初始化
     $scope.init = function (params) {
+        $scope.power = false;
         clearInterval($rootScope.insideInterval);
         clearInterval($rootScope.startInterval);
+        clearInterval($rootScope.getUpdataStatus);
         $rootScope.pageNow= 0;
         $scope.UserIDList = [];
         $scope.userList = {};
@@ -29,12 +31,18 @@ app.controller('Set_userController', ['$scope', '$http', '$state','$rootScope', 
             page: pageNow
         }).then(function success(rsp) {
             // console.log(rsp.data);
+            zeroModal.close(loading);
             if (rsp.data.status == 0) {
-                zeroModal.close(loading);
                 $scope.pages = rsp.data.data;
+                $scope.power = true;
             }
             if(rsp.data.status == 1){
                 zeroModal.error(rsp.data.msg);
+                $scope.power = true;
+            }
+            if (rsp.data.status == 401) {
+                zeroModal.error(rsp.data.msg);
+             
             }
         }, function err(rsp) {
             zeroModal.close(loading);

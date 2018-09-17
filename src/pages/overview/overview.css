@@ -330,11 +330,11 @@
         line-height: 34px;
     }
     .new_alert{
-        min-width: 605px;
+        width: 50%
     }
     .new_top_left{
-        max-width: 291px;
+      width: 25%
     }
     .new_top_mid{
-        max-width: 337px;
+        width: 25%
     }

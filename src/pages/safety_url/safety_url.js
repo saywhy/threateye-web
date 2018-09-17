@@ -3,8 +3,10 @@
 app.controller('Safety_urlController', ['$scope', '$http', '$state','$rootScope', function ($scope, $http, $state,$rootScope) {
     // 初始化
     $scope.init = function (params) {
+        $scope.content_show = false;
         clearInterval($rootScope.insideInterval);
         clearInterval($rootScope.startInterval);
+        clearInterval($rootScope.getUpdataStatus);
         $rootScope.pageNow= 0;
         $scope.pages = {
             data: [],
@@ -15,13 +17,18 @@ app.controller('Safety_urlController', ['$scope', '$http', '$state','$rootScope'
         };
         $scope.url = {
             start_time: moment().subtract(1, 'days').unix(),
-            end_time: moment().unix()
+            end_time: moment().unix(),
+            src_ip:'',
+            dst_ip:'',
+            src_port:'',
+            dst_port:'',
+            email:'',
         };
-        $scope.getPage();
         $scope.timerange(); // 时间插件初始化
     };
     // 获取数据
     $scope.getPage = function (pageNow) {
+        $scope.content_show = true;
         pageNow = pageNow ? pageNow : 1;
         $scope.index_num = (pageNow-1) * 10;
         $scope.params_data = {
@@ -57,7 +64,11 @@ app.controller('Safety_urlController', ['$scope', '$http', '$state','$rootScope'
     };
     //搜索
     $scope.search = function () {
-        $scope.getPage(1);
+        if($scope.url.src_ip==''&&$scope.url.dst_ip==''&&$scope.url.src_port==''&&$scope.url.dst_port==''&&$scope.url.email==''){
+            zeroModal.error('至少选择时间范围以及另外一项搜索条件');
+           }else{
+            $scope.getPage(1);
+           }
     };
     // 下载报表
     $scope.download = function () {

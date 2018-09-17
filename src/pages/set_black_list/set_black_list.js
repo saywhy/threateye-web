@@ -4,6 +4,7 @@ app.controller('Set_black_listController', ['$scope', '$http', '$state','$rootSc
     $scope.init = function (params) {
         clearInterval($rootScope.insideInterval);
         clearInterval($rootScope.startInterval);
+        clearInterval($rootScope.getUpdataStatus);
         $rootScope.pageNow= 0;
         $("input[type='file']").change(function (target) {
             $("#avatval").val($(this).val());
@@ -38,6 +39,9 @@ app.controller('Set_black_listController', ['$scope', '$http', '$state','$rootSc
                 $scope.pages0 = data.data;
             }
             if(data.status == 1){
+                zeroModal.error(data.msg);
+            }
+            if (data.status == 401) {
                 zeroModal.error(data.msg);
             }
             zeroModal.close(loading);
@@ -88,6 +92,9 @@ app.controller('Set_black_listController', ['$scope', '$http', '$state','$rootSc
             if(data.status == 1){
                 zeroModal.error(data.msg);
             }
+            if (data.status == 401) {
+                zeroModal.error(data.msg);
+            }
             zeroModal.close(loading);
         }).error(function () {
             zeroModal.close(loading);
@@ -117,6 +124,9 @@ app.controller('Set_black_listController', ['$scope', '$http', '$state','$rootSc
                         $scope.getPage0();
                     }
                     if(data.status == 1){
+                        zeroModal.error(data.msg);
+                    }
+                    if (data.status == 401) {
                         zeroModal.error(data.msg);
                     }
                     zeroModal.close(loading);
@@ -158,11 +168,15 @@ app.controller('Set_black_listController', ['$scope', '$http', '$state','$rootSc
             contentType: false, // 告诉jQuery不要去设置Content-Type请求头
             success: function (res) {
                 // console.log(res);
+                res = JSON.parse(res) 
                 if (res.status == 0) {
                     zeroModal.success('上传成功');
                     $scope.getPage0(); // 获取数据列表
                 }
                 if (res.status == 1) {
+                    zeroModal.error(res.msg);
+                }
+                if (res.status == 401) {
                     zeroModal.error(res.msg);
                 }
             },
@@ -171,6 +185,21 @@ app.controller('Set_black_listController', ['$scope', '$http', '$state','$rootSc
             }
         })
     };
+    // 下载模版
+    $scope.download = function(){
+        var tt = new Date().getTime();
+        var url = './yiiapi/whitelist/download-ioc-template';
+        var form = $("<form>"); //定义一个form表单
+        form.attr("style", "display:none");
+        form.attr("target", "");
+        form.attr("method", "get"); //请求类型
+        form.attr("action", url); //请求地址
+        $("body").append(form); //将表单放置在web中
+        var input1 = $("<input>");
+        input1.attr("type", "hidden");
+        form.append(input1);
+        form.submit(); //表单提交
+    }
     // 指标 类型 列添加
     $scope.init();
 }]);

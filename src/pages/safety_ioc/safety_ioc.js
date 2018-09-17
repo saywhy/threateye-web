@@ -3,8 +3,11 @@
 app.controller('Safety_iocController', ['$scope', '$http', '$state','$rootScope', function ($scope, $http, $state,$rootScope) {
     // 初始化
     $scope.init = function (params) {
+        $scope.content_show = false;
+        $scope.btn_disabled = true;
         clearInterval($rootScope.insideInterval);
         clearInterval($rootScope.startInterval);
+        clearInterval($rootScope.getUpdataStatus);
         $rootScope.pageNow= 0;
         $scope.upload_true = true; //初始化禁用提交按钮
         $("#avatval").click(function () {
@@ -36,10 +39,10 @@ app.controller('Safety_iocController', ['$scope', '$http', '$state','$rootScope'
             maxPage: "...",
             pageNow: 1,
         };
-        $scope.getPage(); // 获取数据列表
     };
     //获取数据
     $scope.getPage = function (pageNow) {
+        $scope.content_show = true;
         var loading = zeroModal.loading(4);
         pageNow = pageNow ? pageNow : 1;
         $scope.index_num = (pageNow-1) * 10;
@@ -93,6 +96,9 @@ app.controller('Safety_iocController', ['$scope', '$http', '$state','$rootScope'
                 if (xhr.upload) {　　　　　　
                     xhr.upload.onprogress = function (progress) {
                         if (progress.lengthComputable) {
+                            // console.log(progress.lengthComputable);
+                            // console.log(progress.loaded );
+                            // console.log(progress.total);
                             $('#progress')[0].style = 'width:' + parseInt(progress.loaded / progress.total * 100) + '%';
                         }
                     };
@@ -106,14 +112,20 @@ app.controller('Safety_iocController', ['$scope', '$http', '$state','$rootScope'
             contentType: false, // 告诉jQuery不要去设置Content-Type请求头
             success: function (res) {
                 // console.log(res);
+                res = JSON.parse(res);
                 if (res.status == 0) {
                     zeroModal.success('上传成功');
-                }
-                if(res.status == 1){
+                    $scope.$apply(function(){
+                        $scope.btn_disabled = false;
+                    })
+                }else{
                     zeroModal.error(res.msg);
                 }
             },
             error: function (err) {
+                $('#progress')[0].style = 'width:0%';
+                $scope.progress_if = false;
+                console.log(err);
                 alert("网络连接失败,稍后重试", err);
             }
         })

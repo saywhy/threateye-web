@@ -4,6 +4,7 @@ app.controller('Set_netController', ['$scope', '$http', '$state','$rootScope', f
     $scope.init = function (params) {
         clearInterval($rootScope.insideInterval);
         clearInterval($rootScope.startInterval);
+        clearInterval($rootScope.getUpdataStatus);
         $rootScope.pageNow= 0;
         $scope.net = {};
         $scope.net_detail={};
@@ -81,6 +82,9 @@ app.controller('Set_netController', ['$scope', '$http', '$state','$rootScope', f
                 $scope.get_network(); //获取网络配置
             }
             if (data.status == 1) {
+                zeroModal.error(data.msg);
+            }
+            if (data.status == 401) {
                 zeroModal.error(data.msg);
             }
             zeroModal.close(loading);

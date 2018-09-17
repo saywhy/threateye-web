@@ -29,16 +29,16 @@
                                 <label style="width: 100%;">&nbsp;</label>
                                 <button class="form-control btn btn-primary btn_style" style="max-width: 80px;" ng-click="search()">搜&nbsp;索</button>
                             </div>
-                            <div class="download_position ">
+                            <div class="download_position " ng-if="content_show">
                                 <span>
                                     <img src="../src/images/icos/download.png" ng-click="download(item.id)" width="16" height="16" alt="">
                                 </span>
                             </div>
                         </div>
-                        <div class="row margin">
+                        <div class="row margin" ng-if="content_show">
                             <table class="table table-hover ng-cloak">
                                 <tr>
-                                        <th style="width:60px">序号</th>
+                                    <th style="width:60px">序号</th>
                                     <th>时间</th>
                                     <th>用户名</th>
                                     <th>主机IP</th>

@@ -3,6 +3,7 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter','
     rootScope = $scope;
     clearInterval($rootScope.insideInterval);
     clearInterval($rootScope.startInterval);
+    clearInterval($rootScope.getUpdataStatus);
     $rootScope.pageNow= 0;
     $scope.init = function (params) {
         $scope.datafalse = false; //版本暂时不需要，隐藏
@@ -105,10 +106,10 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter','
                 }).success(function (data) {
                     // console.log(data);
                     if (data.status == 0) {
+                        // console.log(data.data);
                         zeroModal.close(loading);
                         // 未处理告警
                         if (data.data.threat_level) {
-                            // console.log(data.data.threat_level);
                             $scope.untreatedAlarm(data.data.threat_level);
                         }
                         //威胁使用应用协议
@@ -124,31 +125,36 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter','
                             $scope.alert_type(data.data.alert_type);
                         }
                         var loading = zeroModal.loading(4);
-                        $http({
-                            method: 'post',
-                            url: './yiiapi/report/create-report',
-                            data: {
-                                stime: new Date($scope.startTime).valueOf() / 1000,
-                                etime: new Date($scope.endTime).valueOf() / 1000,
-                                report_name: $scope.reportName,
-                                report_type: $scope.selectedName,
-                                threat_level: $scope.base64_untreatedAlarm,
-                                alert_type: $scope.base64_alert_type,
-                                alert_trend: $scope.base64_alert_trend,
-                                threat_protocol: $scope.base64_application_protocol,
-                            }
-                        }).success(function (data) {
-                            // console.log(data);
-                            if (data.status == 0) {
-                                // 生成成功
-                                zeroModal.success("保存成功!");
-                                $scope.getDataInfo(1);
-                            }
-                            zeroModal.close(loading);
-                        }).error(function () {
-                            zeroModal.error("保存失败!");
-                            zeroModal.close(loading);
-                        })
+                        setTimeout(function(){
+                            $http({
+                                method: 'post',
+                                url: './yiiapi/report/create-report',
+                                data: {
+                                    stime: new Date($scope.startTime).valueOf() / 1000,
+                                    etime: new Date($scope.endTime).valueOf() / 1000,
+                                    report_name: $scope.reportName,
+                                    report_type: $scope.selectedName,
+                                    threat_level: $scope.base64_untreatedAlarm,
+                                    alert_type: $scope.base64_alert_type,
+                                    alert_trend: $scope.base64_alert_trend,
+                                    threat_protocol: $scope.base64_application_protocol,
+                                }
+                            }).success(function (data) {
+                                if (data.status == 0) {
+                                    // 生成成功
+                                    zeroModal.success("保存成功!");
+                                    $scope.getDataInfo(1);
+                                }
+                                zeroModal.close(loading);
+                            }).error(function () {
+                                zeroModal.error("保存失败!");
+                                zeroModal.close(loading);
+                            })
+                        },500)
+                     
+                    }
+                    if (data.status == 401) {
+                        zeroModal.error(data.msg);
                     }
                 }).error(function () {
                     zeroModal.error("保存失败!");
@@ -167,13 +173,16 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter','
                         report_type: $scope.selectedName
                     }
                 }).then(function (data, status, headers, config) {
-                    // console.log(data);
+                    console.log(data);
                     if (data.data.status == 0) {
                         // 添加成功，刷新数据 
                         zeroModal.success("保存成功!");
                         $scope.getDataInfo(1);
                     }
                     if (data.data.status == 1) {
+                        zeroModal.error(data.data.msg);
+                    }
+                    if (data.data.status == 401) {
                         zeroModal.error(data.data.msg);
                     }
                     zeroModal.close(loading);
@@ -199,11 +208,14 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter','
                     id: item.id
                 }
             }).then(function (data, status, headers, config) {
-                // console.log(data);
+                console.log(data);
                 zeroModal.close($scope.loading);
                 if (data.data.status == 0) {
                     // 添加成功，刷新数据
                     $scope.getDataInfo($scope.pages);
+                }
+                if (data.data.status == 401) {
+                    zeroModal.error(data.data.msg);
                 }
             }, function (error, status, headers, config) {
                 console.log(error);
@@ -362,6 +374,7 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter','
                 // name: '高危',
                 type: 'bar',
                 barWidth: 20,
+                animation: false,
                 stack: '搜索引擎',
                 itemStyle: {
                     normal: {
@@ -373,7 +386,7 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter','
             }]
         };
         myChart.setOption(option);
-        $scope.base64_application_protocol = myChart.getDataURL();
+            $scope.base64_application_protocol = myChart.getDataURL();
     };
     //告警趋势
     $scope.alert_trend = function (params) {
@@ -426,6 +439,7 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter','
                 name: '文件',
                 type: 'line',
                 smooth: true,
+                animation: false,
                 showSymbol: false,
                 symbol: 'circle',
                 symbolSize: 6,
@@ -454,7 +468,7 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter','
             }]
         };
         myChart.setOption(option_file);
-        $scope.base64_alert_trend = myChart.getDataURL();
+            $scope.base64_alert_trend = myChart.getDataURL();
     };
     //告警类型
     $scope.alert_type = function (params) {
@@ -508,6 +522,7 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter','
                 // name: '高危',
                 type: 'bar',
                 barWidth: 20,
+                animation: false,
                 stack: '搜索引擎',
                 itemStyle: {
                     normal: {

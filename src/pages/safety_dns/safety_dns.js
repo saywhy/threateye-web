@@ -5,8 +5,16 @@ app.controller('Safety_dnsController', ['$scope', '$http', '$state','$rootScope'
     $scope.init = function (params) {
         clearInterval($rootScope.insideInterval);
         clearInterval($rootScope.startInterval);
+        clearInterval($rootScope.getUpdataStatus);
         $rootScope.pageNow= 0;
-        $scope.dns = {};
+        $scope.content_show = false;
+        $scope.dns = {
+            host_ip:'',
+            server_ip:'',
+            domain_ip:'',
+            resolves_ip:'',
+            ttl:''
+        };
         $scope.pages = {
             data: [],
             count: 0,
@@ -31,14 +39,20 @@ app.controller('Safety_dnsController', ['$scope', '$http', '$state','$rootScope'
             endTime: moment().unix()
         };
         $scope.timerange(); // 时间插件初始化
-        $scope.getPage(1);
+        // $scope.getPage(1);
     };
     //搜索
     $scope.search = function () {
+       if($scope.dns.host_ip==''&&$scope.dns.server_ip==''&&$scope.dns.domain_ip==''&&$scope.dns.resolves_ip==''&&$scope.dns.ttl==''){
+        zeroModal.error('至少选择时间范围以及另外一项搜索条件');
+       }else{
         $scope.getPage(1);
+       }
+
     };
     // 获取数据
     $scope.getPage = function (pageNow) {
+        $scope.content_show = true;
         pageNow = pageNow ? pageNow : 1;
         $scope.index_num = (pageNow - 1) * 10;
         $scope.params_data = {

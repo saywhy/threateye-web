@@ -6,6 +6,7 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
         $scope.init = function (params) {
             clearInterval($rootScope.insideInterval);
             clearInterval($rootScope.startInterval);
+            clearInterval($rootScope.getUpdataStatus);
             $scope.crumbOptions = [{
                     "href": "#/app/alarm",
                     "title": "告警"
@@ -58,7 +59,7 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
                     $scope.getPage(); // 当前告警资产
                     $scope.getPage1(); //历史告警资产
                     // 检测时间轴数据
-                    console.log($scope.alert_details);
+                    // console.log($scope.alert_details);
                     $scope.time_type = [{
                         time: $scope.alert_details.alert_time,
                         type: $scope.alert_details.detect_engine,

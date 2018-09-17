@@ -3,8 +3,10 @@
 app.controller('Safety_fileController', ['$scope', '$http', '$state','$rootScope', function ($scope, $http, $state,$rootScope) {
     // 初始化
     $scope.init = function (params) {
+        $scope.content_show = false;
         clearInterval($rootScope.insideInterval);
         clearInterval($rootScope.startInterval);
+        clearInterval($rootScope.getUpdataStatus);
         $rootScope.pageNow= 0;
         $scope.pages = {
             data: [],
@@ -15,13 +17,16 @@ app.controller('Safety_fileController', ['$scope', '$http', '$state','$rootScope
         };
         $scope.file = {
             start_time: moment().subtract(1, 'days').unix(),
-            end_time: moment().unix()
+            end_time: moment().unix(),
+            file_name:'',
+            md5:'',
+            host_ip:'',
         };
-        $scope.getPage();
         $scope.timerange(); // 时间插件初始化
     };
     // 获取数据
     $scope.getPage = function (pageNow) {
+        $scope.content_show = true;
         pageNow = pageNow ? pageNow : 1;
         $scope.index_num = (pageNow-1) * 10;
         $scope.params_data = {
@@ -55,7 +60,11 @@ app.controller('Safety_fileController', ['$scope', '$http', '$state','$rootScope
     };
     //搜索
     $scope.search = function () {
-        $scope.getPage(1);
+        if($scope.file.file_name==''&&$scope.file.host_ip==''&&$scope.file.md5=='' ){
+            zeroModal.error('至少选择时间范围以及另外一项搜索条件');
+           }else{
+            $scope.getPage(1);
+           }
     };
     // 下载报表
     $scope.download = function () {
@@ -103,7 +112,7 @@ app.controller('Safety_fileController', ['$scope', '$http', '$state','$rootScope
     
             var form = $("<form>"); //定义一个form表单
             form.attr("style", "display:none");
-            form.attr("target", "name");
+            form.attr("target", "");
             form.attr("method", "get"); //请求类型
             form.attr("action", url); //请求地址
             $("body").append(form); //将表单放置在web中

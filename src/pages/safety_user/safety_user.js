@@ -5,12 +5,16 @@
 app.controller('Safety_userController', ['$scope', '$http', '$state','$rootScope', function ($scope, $http, $state, $rootScope) {
        // 初始化
        $scope.init = function (params) {
+        $scope.content_show = false;
         clearInterval($rootScope.insideInterval);
         clearInterval($rootScope.startInterval);
+        clearInterval($rootScope.getUpdataStatus);
         $rootScope.pageNow= 0;
         $scope.user = {
             start_time:moment().subtract(1, 'days').unix(),
-            end_time:moment().unix()
+            end_time:moment().unix(),
+            username:'',
+            host_ip:''
         };
         $scope.timerange(); // 时间插件初始化
         $scope.pages = {
@@ -20,10 +24,18 @@ app.controller('Safety_userController', ['$scope', '$http', '$state','$rootScope
             pageNow: 1,
             rows: 10
         };
-        $scope.getPage();
     };
+      // 搜索
+      $scope.search = function (params) {
+        if($scope.user.username==''&&$scope.user.host_ip==''){
+            zeroModal.error('至少选择时间范围以及另外一项搜索条件');
+           }else{
+            $scope.getPage(1);
+           }
+    }
 //获取数据
 $scope.getPage = function (pageNow) {
+    $scope.content_show = true;
     pageNow = pageNow ? pageNow : 1;
     $scope.index_num = (pageNow-1) * 10;
     $scope.params_data = {
@@ -145,10 +157,7 @@ $scope.getPage = function (pageNow) {
             form.submit(); //表单提交
          }
     };
-    // 搜索
-    $scope.search = function (params) {
-        $scope.getPage();
-    }
+  
     // 时间插件
     $scope.timerange = function (params) {
         $('.timerange').daterangepicker({

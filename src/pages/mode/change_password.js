@@ -33,7 +33,7 @@ angular.module('app')
                         $modalInstance.close();
                         zeroModal.success('密码修改成功！');
                         $state.go('app.overview');
-                    }else if(data.data.status ==1){
+                    }else {
                             // console.log(data.data.msg);
                             zeroModal.close(loading);
                             zeroModal.error(data.data.msg);

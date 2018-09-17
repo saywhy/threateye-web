@@ -3,13 +3,17 @@
 app.controller('Safety_sizeController', ['$scope', '$http', '$state','$rootScope', function ($scope, $http, $state,$rootScope) {
     // 初始化
     $scope.init = function (params) {
+        $scope.content_show = false;
         clearInterval($rootScope.insideInterval);
         clearInterval($rootScope.startInterval);
+        clearInterval($rootScope.getUpdataStatus);
         $rootScope.pageNow= 0;
-        $scope.user = {};
         $scope.size = {
             start_time: moment().subtract(1, 'days').unix(),
-            end_time: moment().unix()
+            end_time: moment().unix(),
+            flow_size:"",
+            flow_duration:"",
+            host_ip:""
         };
         $scope.pages = {
             data: [],
@@ -19,10 +23,10 @@ app.controller('Safety_sizeController', ['$scope', '$http', '$state','$rootScope
             rows: 10
         };
         $scope.timerange(); // 时间插件初始化
-        $scope.getPage();   // 获取数据
     };
     // 获取数据
     $scope.getPage = function (pageNow) {
+        $scope.content_show = true;
         pageNow = pageNow ? pageNow : 1;
         $scope.index_num = (pageNow-1) * 10;
         $scope.params_data = {
@@ -56,7 +60,11 @@ app.controller('Safety_sizeController', ['$scope', '$http', '$state','$rootScope
     };
     // 搜索
     $scope.search = function (params) {
-        $scope.getPage();
+        if($scope.size.flow_size==''&&$scope.size.flow_duration==''&&$scope.size.host_ip==''){
+            zeroModal.error('至少选择时间范围以及另外一项搜索条件');
+           }else{
+            $scope.getPage(1);
+           }
     };
     // 下载报表
     $scope.download = function () {

@@ -4,6 +4,7 @@ app.controller('Set_net_ipController', ['$scope', '$http', '$state','$rootScope'
     $scope.init = function (params) {
         clearInterval($rootScope.insideInterval);
         clearInterval($rootScope.startInterval);
+        clearInterval($rootScope.getUpdataStatus);
         $rootScope.pageNow= 0;
         $scope.pages = {
             data: [],
@@ -32,6 +33,9 @@ app.controller('Set_net_ipController', ['$scope', '$http', '$state','$rootScope'
             if (data.status == 0) {
                 $scope.pages = data.data;
             }
+            if (data.status == 401) {
+                zeroModal.error(data.msg);
+            }
             zeroModal.close(loading);
         }).error(function () {
             zeroModal.close(loading);
@@ -57,6 +61,9 @@ app.controller('Set_net_ipController', ['$scope', '$http', '$state','$rootScope'
                     $scope.getPage();
                 }
                 if(data.status == 1){
+                    zeroModal.error(data.msg);
+                }
+                if (data.status == 401) {
                     zeroModal.error(data.msg);
                 }
                 zeroModal.close(loading);

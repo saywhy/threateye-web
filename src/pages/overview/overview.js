@@ -1,6 +1,6 @@
 'use strict';
 // overview controller
-app.controller('OverViemController', ['$scope', '$http', '$state', '$modal','$rootScope', function ($scope, $http, $state, $modal,$rootScope) {
+app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', '$rootScope', function ($scope, $http, $state, $modal, $rootScope) {
     // 初始化
     $scope.init = function (params) {
         $scope.computer_base64 = 'image://data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAADI0lEQVR4Xu2bS0iUURTH/2fGZhwrMZKKIpMis4fZRFhEhElFmwoX4ioQylpkD2mosAcWswkJJXuQzkaSFmZt3BX5oNA2YSoobRyDalMjKc2o8zlzwqJoopp7x28eznc/mNX3v/ee8/vOPfdc7h2CwR8yuP9QAFQEANiw5+R2E9MBwDgREWR6PthV/4LyCk/tBfEzI0ZCgIMltKmwwkGEmhkAW/PWoMCeA6LkTQ2fR8fxqO3lj+/N7PwFYPP6bDTfOWeIQDh9uQGd3QOhAEoO7sKVylJDALjlaoPr4VMFIGQKqAhQU0DlAJUE1SqglkFVB6hC6F8EtCBjdCogBSjDYobVnHj7iogqQe90EMPjfikAqxZYkG4xSbWJhVgBUHsBtRmS3w1OBhgfvVpUpugiqxkzv1g9McsBog4tsaVgqS1FVD5rXUQADB8Bs8aeQB1EFAGRFEKyPpuJkJka/VwQEYBICiFZAPNMhNwMq2wzab0CoAohVQjJF0LSEy2BG0SUAxLYH2nTFACVBFUSVElQHY6q0+E/jscP7S+A8+IR6SVlLjaoufsED1o7Qu8HLJxvQ0vjBaxYtngu+iRsc//QCCqvuvDJMxYKQLiHZBL+fkcomfwS9mUGQPHxG06L1XJJuFESCTVt+jY97nlbvzYnqyIefo24P8A/pSEnNzsew8M9/L6Z+jw+B4G+3xOM9VPlqIXPO4G6e1WxHvrneE4a8EwcZcAVDwuGBt3w+/3I37IuHsODwA5yM6d+9UzcZNBGvazwabzSN82rRfob806CBYRpFvP48nRrr4BUSMLAkJVTz0fl7Pp69xcHgYWmVdfgOwQ5PILMdFtPS2nuTiHvJEQKgAQsYamKADUFVA4wcBKsZtO+rP77AOwiSYODSBP5ow4xRkYD2uHXJ7bpeklB91WgqKG3DoQzIs7Lahho6ii3l8m2+59eVwBFjb1nAdTqaeBf+rrWXm6v1msM3QAUNbwpBrgVhKjfiwsSyjqP2Zv0gKALgMLGvh3EgXYisulhVLg+mFljMu/uLM9/FU4b7r0uAMINksjvFYBE/jqxsM3wEfANeS54DOvPkoIAAAAASUVORK5CYII=';
@@ -8,7 +8,8 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal','$ro
         $scope.router_base64 = 'image://data:image/png;base64,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';
         clearInterval($rootScope.insideInterval);
         clearInterval($rootScope.startInterval);
-        $rootScope.pageNow= 0;
+        clearInterval($rootScope.getUpdataStatus);
+        $rootScope.pageNow = 0;
         // 第一排
         $scope.sysState();
         $scope.file_flow_info(); // 中间 文件/流量信息
@@ -23,6 +24,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal','$ro
         // 第四排
         $scope.new_alarm(); //最新告警
         $scope.test();
+        $scope.flow_echarts = true;
     };
     $scope.test = function () {
         $http({
@@ -338,7 +340,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal','$ro
                     smb: [],
                     pop3: [],
                     smtp: [],
-                    dhcp: [],
+                    // dhcp: [],
                 };
                 for (var k in data.data) {
                     $scope.flow_statistics.title.push(k);
@@ -373,9 +375,9 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal','$ro
                 angular.forEach(data.data.smtp, function (item, index) {
                     $scope.flow_statistics.smtp.unshift(item.flow);
                 })
-                angular.forEach(data.data.dhcp, function (item, index) {
-                    $scope.flow_statistics.dhcp.unshift(item.flow);
-                })
+                // angular.forEach(data.data.dhcp, function (item, index) {
+                //     $scope.flow_statistics.dhcp.unshift(item.flow);
+                // })
                 angular.forEach($scope.flow_statistics.title, function (item, index) {
                     if (item == 'http') {
                         $scope.flow_statistics.item = {
@@ -674,49 +676,15 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal','$ro
                         }
                         $scope.flow_statistics.items.push($scope.flow_statistics.item);
                     }
-                    if (item == 'dhcp') {
-                        $scope.flow_statistics.item = {
-                            name: 'DHCP',
-                            type: 'line',
-                            smooth: true,
-                            showSymbol: false,
-                            symbol: 'circle',
-                            symbolSize: 6,
-                            data: $scope.flow_statistics.imap,
-                            areaStyle: {
-                                normal: {
-                                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                                        offset: 0,
-                                        color: 'rgba(153,204,255,0.8)'
-                                    }, {
-                                        offset: 1,
-                                        color: 'rgba(153,204,255,0.2)'
-                                    }], false)
-                                }
-                            },
-                            itemStyle: {
-                                normal: {
-                                    color: 'rgba(153,204,255,0.9)'
-                                }
-                            },
-                            lineStyle: {
-                                normal: {
-                                    width: 3
-                                }
-                            }
-                        }
-                        $scope.flow_statistics.items.push($scope.flow_statistics.item);
-                    }
                 })
                 // console.log($scope.flow_statistics);
-
                 var myChart = echarts.init(document.getElementById('safetyequipment'));
                 var option = {
                     grid: {
                         left: 50,
                         right: 40,
                         top: 6,
-                        bottom: 100
+                        bottom: 80
                     },
                     tooltip: {
                         trigger: 'axis',
@@ -737,7 +705,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal','$ro
                         left: 5,
                         orient: 'horizontal',
                         textStyle: {
-                            fontSize:12
+                            fontSize: 12
                         },
                         selected: {
                             // 选中'系列1'
@@ -751,10 +719,10 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal','$ro
                             'SMB': false,
                             'POP3': false,
                             'SMTP': false,
-                            'DHCP': false,
+                            // 'DHCP': false,
 
                         },
-                        data: ['HTTP', 'HTTPS', 'SSH', 'DNS', 'FTP', 'IMAP', 'SMB', 'POP3', 'SMTP', 'DHCP']
+                        data: ['HTTP', 'HTTPS', 'SSH', 'DNS', 'FTP', 'IMAP', 'SMB', 'POP3', 'SMTP']
                     },
                     xAxis: {
                         type: 'category',
@@ -784,7 +752,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal','$ro
                             }
                         }
                     },
-               
+
                     yAxis: {
                         type: 'value',
                         splitLine: {
@@ -940,7 +908,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal','$ro
                         selectedMode: 'single',
                         data: [{
                                 value: $scope.untreated_alarm.high,
-                                name: '高危',
+                                name: '高',
                                 itemStyle: {
                                     normal: {
                                         color: $scope.colorType.high
@@ -949,7 +917,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal','$ro
                             },
                             {
                                 value: $scope.untreated_alarm.medium,
-                                name: '中危',
+                                name: '中',
                                 itemStyle: {
                                     normal: {
                                         color: $scope.colorType.mid
@@ -958,7 +926,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal','$ro
                             },
                             {
                                 value: $scope.untreated_alarm.low,
-                                name: '低危',
+                                name: '低',
                                 itemStyle: {
                                     normal: {
                                         color: $scope.colorType.low
@@ -1058,7 +1026,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal','$ro
                         }
                     }],
                     series: [{
-                            name: '高危',
+                            name: '高',
                             type: 'bar',
                             barWidth: 20,
                             stack: '搜索引擎',
@@ -1071,7 +1039,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal','$ro
                             data: $scope.last7_alarm.high
                         },
                         {
-                            name: '中危',
+                            name: '中',
                             type: 'bar',
                             stack: '搜索引擎',
                             itemStyle: {
@@ -1082,7 +1050,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal','$ro
                             data: $scope.last7_alarm.medium
                         },
                         {
-                            name: '低危',
+                            name: '低',
                             type: 'bar',
                             stack: '搜索引擎',
                             itemStyle: {
@@ -1122,44 +1090,34 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal','$ro
             method: 'get',
             url: './yiiapi//alert/risk-asset-top5'
         }).success(function (data) {
-            // console.log(data);
             if (data.status == 0) {
-                $scope.risk_property_data = [{
-                    client_ip: data.data[0].asset_ip,
-                    style: {
-                        width: data.data[0].count + '%',
-                        borderRadius: '5px',
-                        backgroundColor: $scope.colorType.rgbaHigh8
+                $scope.risk_property_data = [];
+                angular.forEach(data.data, function (item, index) {
+                    $scope.item_risk_propety = {
+                        client_ip: item.asset_ip,
+                        style: {
+                            width: item.count + '%',
+                            borderRadius: '5px',
+                        }
                     }
-                }, {
-                    client_ip: data.data[1].asset_ip,
-                    style: {
-                        width: data.data[1].count + '%',
-                        borderRadius: '5px',
-                        backgroundColor: 'rgba(254,127,0,.8)'
+                    if (index == 0) {
+                        $scope.item_risk_propety.style.backgroundColor = $scope.colorType.rgbaHigh8;
                     }
-                }, {
-                    client_ip: data.data[2].asset_ip,
-                    style: {
-                        width: data.data[2].count + '%',
-                        borderRadius: '5px',
-                        backgroundColor: '#FE9B20'
+                    if (index == 1) {
+                        $scope.item_risk_propety.style.backgroundColor = 'rgba(254,127,0,.8)';
                     }
-                }, {
-                    client_ip: data.data[3].asset_ip,
-                    style: {
-                        width: data.data[3].count + '%',
-                        borderRadius: '5px',
-                        backgroundColor: '#FEBB11'
+                    if (index == 2) {
+                        $scope.item_risk_propety.style.backgroundColor = '#FE9B20';
                     }
-                }, {
-                    client_ip: data.data[4].asset_ip,
-                    style: {
-                        width: data.data[4].count + '%',
-                        borderRadius: '5px',
-                        backgroundColor: '#FECC01'
+                    if (index == 3) {
+                        $scope.item_risk_propety.style.backgroundColor = '#FEBB11';
                     }
-                }]
+                    if (index == 4) {
+                        $scope.item_risk_propety.style.backgroundColor = '#FECC01';
+                    }
+                    $scope.risk_property_data.push($scope.item_risk_propety);
+                })
+
             }
         }).error(function (err) {
             console.log(err);
@@ -1190,7 +1148,6 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal','$ro
         })
     };
     // 第四排 ——流量统计
-
     $scope.popfasle = function () {
         $scope.showpop = false; //  隐藏弹窗
     };
@@ -1215,14 +1172,18 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal','$ro
             }
             // 判断类型
             if (item.dev_type == '1') {
+                $scope.only_one = true;
                 $scope.probe_array.push(item);
             }
             if (item.dev_type == '2') {
+                $scope.only_one = true;
                 $scope.engine_array.push(item);
             }
             if (item.dev_type == '3') {
+                $scope.only_one = false;
                 $scope.graph_echart_array_item = {
                     name: '引擎/探针',
+                    names: '引擎/探针',
                     dev_ip: item.dev_ip,
                     status: item.status,
                     x: 300,
@@ -1245,44 +1206,16 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal','$ro
                 $scope.graph_echart_array.push($scope.graph_echart_array_item);
             }
         });
-        // 2 一台引擎模版
-        $scope.data_item0 = {
-            name: '节点0',
-            x: 350,
-            y: 200,
-            symbol: $scope.oracle_base64,
-            names: '引擎',
-            dev_ip: $scope.engine_array[0].dev_ip,
-            status: $scope.engine_array[0].status,
-            //节点上面的文字	
-            label: {
-                normal: {
-                    position: "bottom",
-                    show: true,
-                    textStyle: {
-                        fontSize: 12,
-                        color: '#666',
-                        align: 'center',
-                    },
-                    formatter: '引擎'
-                }
-            }
-        };
-        // 一台引擎
-        if ($scope.engine_array.length == 1) {
-            $scope.graph_echart_array.push($scope.data_item0);
-        };
-        // console.log($scope.probe_array);
-        // 多个探针 模版
-        angular.forEach($scope.probe_array, function (item, index) {
-            $scope.data_item1 = {
-                name: '节点1',
-                x:300,
-                y: 100,
-                symbol: $scope.router_base64,
-                names: '探针',
-                dev_ip: item.dev_ip,
-                status: item.status,
+        if ($scope.only_one) {
+            // 2 一台引擎模版
+            $scope.data_item0 = {
+                name: '节点0',
+                x: 350,
+                y: 200,
+                symbol: $scope.oracle_base64,
+                names: '引擎',
+                dev_ip: $scope.engine_array[0].dev_ip,
+                status: $scope.engine_array[0].status,
                 //节点上面的文字	
                 label: {
                     normal: {
@@ -1293,86 +1226,117 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal','$ro
                             color: '#666',
                             align: 'center',
                         },
-                        formatter: '探针'
+                        formatter: '引擎'
                     }
                 }
             };
-            $scope.links_item = {
-                source: '节点0',
-                target: '节点1',
-                dev_ip: item.dev_ip,
-                status: item.status,
-                names: '探针'
+            // 一台引擎
+            if ($scope.engine_array.length == 1) {
+                $scope.graph_echart_array.push($scope.data_item0);
             };
-            switch (index) {
-                case 0:
-                    $scope.data_item1.name = '节点1';
-                    $scope.links_item.target = '节点1';
-                    $scope.data_item1.x = 100;
-                    $scope.data_item1.y = 200;
-                    $scope.graph_echart_array.push($scope.data_item1);
-                    $scope.links_array.push($scope.links_item);
-                    break;
-                case 1:
-                    $scope.data_item1.name = '节点2';
-                    $scope.links_item.target = '节点2';
-                    $scope.data_item1.x = 100;
-                    $scope.data_item1.y = 100;
-                    $scope.graph_echart_array.push($scope.data_item1);
-                    $scope.links_array.push($scope.links_item);
-                    break;
-                case 2:
-                    $scope.data_item1.name = '节点3';
-                    $scope.links_item.target = '节点3';
-                    $scope.data_item1.x = 100;
-                    $scope.data_item1.y = 300;
-                    $scope.graph_echart_array.push($scope.data_item1);
-                    $scope.links_array.push($scope.links_item);
-                    break;
-                case 3:
-                    $scope.data_item1.name = '节点4';
-                    $scope.links_item.target = '节点4';
-                    $scope.data_item1.x = 600;
-                    $scope.data_item1.y = 200;
-                    $scope.graph_echart_array.push($scope.data_item1);
-                    $scope.links_array.push($scope.links_item);
-                    break;
-                case 4:
-                    $scope.data_item1.name = '节点5';
-                    $scope.links_item.target = '节点5';
-                    $scope.data_item1.x = 600;
-                    $scope.data_item1.y = 100;
-                    $scope.graph_echart_array.push($scope.data_item1);
-                    $scope.links_array.push($scope.links_item);
-                    break;
-                case 5:
-                    $scope.data_item1.name = '节点6';
-                    $scope.links_item.target = '节点6';
-                    $scope.data_item1.x = 600;
-                    $scope.data_item1.y = 300;
-                    $scope.graph_echart_array.push($scope.data_item1);
-                    $scope.links_array.push($scope.links_item);
-                    break;
-                case 6:
-                    $scope.data_item1.name = '节点7';
-                    $scope.links_item.target = '节点7';
-                    $scope.data_item1.x = 300;
-                    $scope.data_item1.y = 100;
-                    $scope.graph_echart_array.push($scope.data_item1);
-                    $scope.links_array.push($scope.links_item);
-                    break;
-                case 7:
-                    $scope.links_item.target = '节点8';
-                    $scope.data_item1.name = '节点8';
-                    $scope.data_item1.x = 300;
-                    $scope.data_item1.y = 300;
-                    $scope.graph_echart_array.push($scope.data_item1);
-                    $scope.links_array.push($scope.links_item);
-                    break;
-                default:
-                    break;
-            };
-        })
+            // console.log($scope.probe_array);
+            // 多个探针 模版
+            angular.forEach($scope.probe_array, function (item, index) {
+                $scope.data_item1 = {
+                    name: '节点1',
+                    x: 300,
+                    y: 100,
+                    symbol: $scope.router_base64,
+                    names: '探针',
+                    dev_ip: item.dev_ip,
+                    status: item.status,
+                    //节点上面的文字	
+                    label: {
+                        normal: {
+                            position: "bottom",
+                            show: true,
+                            textStyle: {
+                                fontSize: 12,
+                                color: '#666',
+                                align: 'center',
+                            },
+                            formatter: '探针'
+                        }
+                    }
+                };
+                $scope.links_item = {
+                    source: '节点0',
+                    target: '节点1',
+                    dev_ip: item.dev_ip,
+                    status: item.status,
+                    names: '探针'
+                };
+                switch (index) {
+                    case 0:
+                        $scope.data_item1.name = '节点1';
+                        $scope.links_item.target = '节点1';
+                        $scope.data_item1.x = 100;
+                        $scope.data_item1.y = 200;
+                        $scope.graph_echart_array.push($scope.data_item1);
+                        $scope.links_array.push($scope.links_item);
+                        break;
+                    case 1:
+                        $scope.data_item1.name = '节点2';
+                        $scope.links_item.target = '节点2';
+                        $scope.data_item1.x = 100;
+                        $scope.data_item1.y = 100;
+                        $scope.graph_echart_array.push($scope.data_item1);
+                        $scope.links_array.push($scope.links_item);
+                        break;
+                    case 2:
+                        $scope.data_item1.name = '节点3';
+                        $scope.links_item.target = '节点3';
+                        $scope.data_item1.x = 100;
+                        $scope.data_item1.y = 300;
+                        $scope.graph_echart_array.push($scope.data_item1);
+                        $scope.links_array.push($scope.links_item);
+                        break;
+                    case 3:
+                        $scope.data_item1.name = '节点4';
+                        $scope.links_item.target = '节点4';
+                        $scope.data_item1.x = 600;
+                        $scope.data_item1.y = 200;
+                        $scope.graph_echart_array.push($scope.data_item1);
+                        $scope.links_array.push($scope.links_item);
+                        break;
+                    case 4:
+                        $scope.data_item1.name = '节点5';
+                        $scope.links_item.target = '节点5';
+                        $scope.data_item1.x = 600;
+                        $scope.data_item1.y = 100;
+                        $scope.graph_echart_array.push($scope.data_item1);
+                        $scope.links_array.push($scope.links_item);
+                        break;
+                    case 5:
+                        $scope.data_item1.name = '节点6';
+                        $scope.links_item.target = '节点6';
+                        $scope.data_item1.x = 600;
+                        $scope.data_item1.y = 300;
+                        $scope.graph_echart_array.push($scope.data_item1);
+                        $scope.links_array.push($scope.links_item);
+                        break;
+                    case 6:
+                        $scope.data_item1.name = '节点7';
+                        $scope.links_item.target = '节点7';
+                        $scope.data_item1.x = 300;
+                        $scope.data_item1.y = 100;
+                        $scope.graph_echart_array.push($scope.data_item1);
+                        $scope.links_array.push($scope.links_item);
+                        break;
+                    case 7:
+                        $scope.links_item.target = '节点8';
+                        $scope.data_item1.name = '节点8';
+                        $scope.data_item1.x = 300;
+                        $scope.data_item1.y = 300;
+                        $scope.graph_echart_array.push($scope.data_item1);
+                        $scope.links_array.push($scope.links_item);
+                        break;
+                    default:
+                        break;
+                };
+            })
+        }
+
         // console.log($scope.graph_echart_array);
         // $("#pop").html('<div id="graph"</div>');
         var myChart = echarts.init(document.getElementById('graph'));
@@ -1399,8 +1363,8 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal','$ro
                 edgeSymbol: ['arrow', 'arrow'],
                 edgeSymbolSize: [7, 7],
                 edgeLabel: {
-                    normal:{
-                        show:false
+                    normal: {
+                        show: false
                     },
                     emphasis: {
                         textStyle: {
@@ -1419,31 +1383,38 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal','$ro
                 }
             }]
         };
-        myChart.clear();//只是清理画布，而不会删除 生成的元素节点
+        myChart.clear(); //只是清理画布，而不会删除 生成的元素节点
         myChart.setOption(option);
         //添加点击事件
-        myChart.off("click");//防止累计触发
+        myChart.off("click"); //防止累计触发
         myChart.on('click', function (params) {
             // 弹窗打印数据的名称
             // console.log(params);
             $scope.iot_detail_title = params;
             if (params.dataType == "node") {
-                    $scope.iotcontent = true;
-                    setTimeout(function () {
-                        $scope.iot_detail_top($scope.iot_detail_title); //iot具体cpu/内存/硬盘/流量
-                    }, 600);
+                $scope.iotcontent = true;
+                setTimeout(function () {
+                    $scope.iot_detail_top($scope.iot_detail_title); //iot具体cpu/内存/硬盘/流量
+                }, 600);
             }
         });
     };
     // iot_detail - 
     $scope.iot_detail_top = function (params) {
         // console.log(params);
+        if (params.data.names == "引擎") {
+            $scope.flow_echarts = false;
+            $("#iot_detail_top").css('height', '400px');
+        } else {
+            $scope.flow_echarts = true;
+            $("#iot_detail_top").css('height', '200px');
+        }
         var loading = zeroModal.loading(4);
-           $scope.sys_detail_cpu = [];
-            $scope.sys_detail_mem = [];
-            $scope.sys_detail_disk = [];
-            $scope.sys_detail_time = [];
-            $scope.sys_detail_flow = [];
+        $scope.sys_detail_cpu = [];
+        $scope.sys_detail_mem = [];
+        $scope.sys_detail_disk = [];
+        $scope.sys_detail_time = [];
+        $scope.sys_detail_flow = [];
         $http({
             method: 'get',
             url: './yiiapi/alert/dev-state',
@@ -1546,6 +1517,43 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal','$ro
                             }
                         }
                     },
+                    visualMap: [{
+                        show: false,
+                        type: 'piecewise',
+                        seriesIndex: 0,
+                        pieces: [{
+                            gt: 85,
+                            color: $scope.colorType.rgbaHigh10
+                        }, {
+                            gt: 0,
+                            lte: 85,
+                            color: $scope.colorType.rgbaMid
+                        }]
+                    }, {
+                        show: false,
+                        type: 'piecewise',
+                        seriesIndex: 1,
+                        pieces: [{
+                            gt: 85,
+                            color: $scope.colorType.rgbaHigh10
+                        }, {
+                            gt: 0,
+                            lte: 85,
+                            color: '#58c8da'
+                        }]
+                    }, {
+                        show: false,
+                        type: 'piecewise',
+                        seriesIndex: 2,
+                        pieces: [{
+                            gt: 90,
+                            color: $scope.colorType.rgbaHigh10
+                        }, {
+                            gt: 0,
+                            lte: 90,
+                            color: $scope.colorType.rgbaLow10
+                        }]
+                    }],
                     series: [{
                         name: 'CPU',
                         type: 'line',
@@ -1636,119 +1644,122 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal','$ro
                     }]
                 };
                 myChart.setOption(option);
-                // iot具体流量
-                var myChart_detail_flow = echarts.init(document.getElementById('iot_detail_bom'));
-                var option_detail_flow = {
-                    grid: {
-                        left: 40,
-                        right: 20,
-                        top: 15,
-                        bottom: 85
-                    },
-                    tooltip: {
-                        trigger: 'axis',
-                        axisPointer: {
-                            lineStyle: {
-                                color: '#ddd'
-                            }
+                myChart.resize();
+                if ($scope.flow_echarts) {
+                    // iot具体流量
+                    var myChart_detail_flow = echarts.init(document.getElementById('iot_detail_bom'));
+                    var option_detail_flow = {
+                        grid: {
+                            left: 40,
+                            right: 20,
+                            top: 15,
+                            bottom: 85
                         },
-                        backgroundColor: 'rgba(255,255,255,1)',
-                        padding: [5, 10],
-                        textStyle: {
-                            color: '#7588E4',
-                        },
-                        extraCssText: 'box-shadow: 0 0 5px rgba(0,0,0,0.3)'
-                    },
-                    legend: {
-                        bottom: 20,
-                        left: 20,
-                        orient: 'horizontal',
-                        selected: {
-                            // 选中'系列1'
-                            '流量': true
-                        },
-                        data: ['流量']
-                    },
-                    xAxis: {
-                        type: 'category',
-                        data: $scope.sys_detail_time,
-                        boundaryGap: false,
-                        splitLine: {
-                            show: false,
-                            interval: 'auto',
-                            lineStyle: {
-                                color: ['#D4DFF5']
-                            }
-                        },
-                        axisTick: {
-                            show: false
-                        },
-                        axisLine: {
-                            lineStyle: {
-                                color: '#666'
-                            }
-                        },
-                        axisLabel: {
-                            margin: 10,
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {
+                                lineStyle: {
+                                    color: '#ddd'
+                                }
+                            },
+                            backgroundColor: 'rgba(255,255,255,1)',
+                            padding: [5, 10],
                             textStyle: {
-                                fontSize: 10
+                                color: '#7588E4',
+                            },
+                            extraCssText: 'box-shadow: 0 0 5px rgba(0,0,0,0.3)'
+                        },
+                        legend: {
+                            bottom: 20,
+                            left: 20,
+                            orient: 'horizontal',
+                            selected: {
+                                // 选中'系列1'
+                                '流量': true
+                            },
+                            data: ['流量']
+                        },
+                        xAxis: {
+                            type: 'category',
+                            data: $scope.sys_detail_time,
+                            boundaryGap: false,
+                            splitLine: {
+                                show: false,
+                                interval: 'auto',
+                                lineStyle: {
+                                    color: ['#D4DFF5']
+                                }
+                            },
+                            axisTick: {
+                                show: false
+                            },
+                            axisLine: {
+                                lineStyle: {
+                                    color: '#666'
+                                }
+                            },
+                            axisLabel: {
+                                margin: 10,
+                                textStyle: {
+                                    fontSize: 10
+                                }
                             }
-                        }
-                    },
-                    yAxis: {
-                        type: 'value',
-                        splitLine: {
+                        },
+                        yAxis: {
+                            type: 'value',
+                            splitLine: {
+                                lineStyle: {
+                                    color: ['#D4DFF5']
+                                }
+                            },
+                            axisTick: {
+                                show: false
+                            },
+                            axisLine: {
+                                lineStyle: {
+                                    color: '#666'
+                                }
+                            },
+                            axisLabel: {
+                                margin: 10,
+                                textStyle: {
+                                    fontSize: 10
+                                }
+                            }
+                        },
+                        series: [{
+                            name: '流量',
+                            type: 'line',
+                            smooth: true,
+                            showSymbol: false,
+                            symbol: 'circle',
+                            symbolSize: 6,
+                            data: $scope.sys_detail_flow,
+                            areaStyle: {
+                                normal: {
+                                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                        offset: 0,
+                                        color: $scope.colorType.rgbaLow8
+                                    }, {
+                                        offset: 1,
+                                        color: $scope.colorType.rgbaLow2
+                                    }], false)
+                                }
+                            },
+                            itemStyle: {
+                                normal: {
+                                    color: $scope.colorType.rgbaLow10
+                                }
+                            },
                             lineStyle: {
-                                color: ['#D4DFF5']
+                                normal: {
+                                    width: 3
+                                }
                             }
-                        },
-                        axisTick: {
-                            show: false
-                        },
-                        axisLine: {
-                            lineStyle: {
-                                color: '#666'
-                            }
-                        },
-                        axisLabel: {
-                            margin: 10,
-                            textStyle: {
-                                fontSize: 10
-                            }
-                        }
-                    },
-                    series: [{
-                        name: '流量',
-                        type: 'line',
-                        smooth: true,
-                        showSymbol: false,
-                        symbol: 'circle',
-                        symbolSize: 6,
-                        data: $scope.sys_detail_flow,
-                        areaStyle: {
-                            normal: {
-                                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                                    offset: 0,
-                                    color: $scope.colorType.rgbaLow8
-                                }, {
-                                    offset: 1,
-                                    color: $scope.colorType.rgbaLow2
-                                }], false)
-                            }
-                        },
-                        itemStyle: {
-                            normal: {
-                                color: $scope.colorType.rgbaLow10
-                            }
-                        },
-                        lineStyle: {
-                            normal: {
-                                width: 3
-                            }
-                        }
-                    }]
-                };
-                myChart_detail_flow.setOption(option_detail_flow);
+                        }]
+                    };
+                    myChart_detail_flow.setOption(option_detail_flow);
+                }
             }
             if (data.status == 1) {
                 zeroModal.error(data.msg);

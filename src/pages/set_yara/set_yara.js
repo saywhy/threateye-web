@@ -4,6 +4,7 @@ app.controller('Set_yaraController', ['$scope', '$http', '$state','$rootScope', 
     $scope.init = function (params) {
         clearInterval($rootScope.insideInterval);
         clearInterval($rootScope.startInterval);
+        clearInterval($rootScope.getUpdataStatus);
         $rootScope.pageNow= 0;
     };
     $scope.yara_replace = function () {

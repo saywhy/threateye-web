@@ -4,6 +4,7 @@ app.controller('Set_emailController', ['$scope', '$http', '$state','$rootScope',
     $scope.init = function (params) {
         clearInterval($rootScope.insideInterval);
         clearInterval($rootScope.startInterval);
+        clearInterval($rootScope.getUpdataStatus);
         $rootScope.pageNow= 0;
         $scope.item = {};
         $scope.get_email();
@@ -49,12 +50,12 @@ app.controller('Set_emailController', ['$scope', '$http', '$state','$rootScope',
         rqs_data = $scope.item;
         var loading = zeroModal.loading(4);
         $http.post("./yiiapi/email/test", rqs_data).then(function success(rsp) {
-            // console.log(rsp);
+            console.log(rsp);
             zeroModal.close(loading);
             if (rsp.data.status == 0) {
                 zeroModal.success('邮件发送成功!');
             } else {
-                zeroModal.error('邮件发送失败!');
+                zeroModal.error(rsp.data.msg);
             }
         }, function err(rsp) {
             zeroModal.close(loading);
@@ -77,7 +78,7 @@ app.controller('Set_emailController', ['$scope', '$http', '$state','$rootScope',
             if (rsp.data.status == 0) {
                 zeroModal.success('保存成功!');
             } else {
-                zeroModal.error('保存失败!');
+                zeroModal.error(rsp.data.msg);
             }
         }, function err(rsp) {
             zeroModal.close(loading);

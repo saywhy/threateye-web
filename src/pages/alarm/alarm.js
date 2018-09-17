@@ -9,8 +9,8 @@ app.controller('AlarmController', [
     '$rootScope',
     function ($scope, $http, $state, $filter,$rootScope) {
         // 初始化
-       
         $scope.init = function (params) {
+            clearInterval($rootScope.getUpdataStatus);
             $scope.searchActive = false;
             $scope.crumbOptions = [
                 // {"href": "#/app/alarm", "title" : "告警"},
@@ -46,7 +46,11 @@ app.controller('AlarmController', [
             };
             $scope.timepicker();
             $scope.alarmEchart(); // 折线图表
-            $scope.getPage();
+            if($rootScope.pageNow!= 0){
+                $scope.getPage($rootScope.pageNow);
+            }else{
+                $scope.getPage(1)
+            }
             $scope.IntervalgetPage();
             $rootScope.startInterval = setInterval(function () {
                 $scope.IntervalgetPage();

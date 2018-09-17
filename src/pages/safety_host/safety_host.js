@@ -1,11 +1,13 @@
 'use strict';
 /* Controllers */
-app.controller('Safety_hostController', ['$scope', '$http', '$state','$rootScope', function ($scope, $http, $state,$rootScope) {
+app.controller('Safety_hostController', ['$scope', '$http', '$state', '$rootScope', function ($scope, $http, $state, $rootScope) {
     // 初始化
     $scope.init = function (params) {
+        $scope.content_show = false;
         clearInterval($rootScope.insideInterval);
         clearInterval($rootScope.startInterval);
-        $rootScope.pageNow= 0;
+        clearInterval($rootScope.getUpdataStatus);
+        $rootScope.pageNow = 0;
         $scope.host = {
             host_ip: '',
             start_time: moment().subtract(1, 'days').unix(),
@@ -37,7 +39,7 @@ app.controller('Safety_hostController', ['$scope', '$http', '$state','$rootScope
                 name: '网络通讯',
                 content_th: [{
                     name: '序号'
-                },{
+                }, {
                     name: '时间'
                 }, {
                     name: '源IP'
@@ -58,7 +60,7 @@ app.controller('Safety_hostController', ['$scope', '$http', '$state','$rootScope
                 name: '文件',
                 content_th: [{
                     name: '序号'
-                },{
+                }, {
                     name: '文件名'
                 }, {
                     name: '哈希值'
@@ -75,7 +77,7 @@ app.controller('Safety_hostController', ['$scope', '$http', '$state','$rootScope
                 name: '用户',
                 content_th: [{
                     name: '序号'
-                },{
+                }, {
                     name: '用户名'
                 }, {
                     name: '主机IP'
@@ -86,10 +88,10 @@ app.controller('Safety_hostController', ['$scope', '$http', '$state','$rootScope
             }
         ];
         $scope.selected = 0;
-        $scope.getPage_network();
     };
     // 主机网络调查
     $scope.getPage_network = function (pageNow) {
+        $scope.content_show = true;
         pageNow = pageNow ? pageNow : 1;
         $scope.params_data = {
             host_ip: $scope.host.host_ip,
@@ -107,10 +109,10 @@ app.controller('Safety_hostController', ['$scope', '$http', '$state','$rootScope
             // console.log(data);
             if (data.status == 0) {
                 $scope.tab_data[0].value = [];
-                angular.forEach(data.data.data.data, function (item,index) {
+                angular.forEach(data.data.data.data, function (item, index) {
                     // console.log(item);
                     var item_network = {
-                        index: index + 1 + (pageNow-1) * 10,
+                        index: index + 1 + (pageNow - 1) * 10,
                         time: item.timestamp,
                         Ip: item.src_ip,
                         source_port: item.src_port,
@@ -136,6 +138,7 @@ app.controller('Safety_hostController', ['$scope', '$http', '$state','$rootScope
 
     // 主机文件调查
     $scope.getPage_file = function (pageNow) {
+        $scope.content_show = true;
         pageNow = pageNow ? pageNow : 1;
         $scope.params_data = {
             host_ip: $scope.host.host_ip,
@@ -153,9 +156,9 @@ app.controller('Safety_hostController', ['$scope', '$http', '$state','$rootScope
             // console.log(data);
             if (data.status == 0) {
                 $scope.tab_data[1].value = [];
-                angular.forEach(data.data.data.data, function (item,index) {
+                angular.forEach(data.data.data.data, function (item, index) {
                     var item_network = {
-                        index: index + 1 + (pageNow-1) * 10,
+                        index: index + 1 + (pageNow - 1) * 10,
                         name: item.file_name,
                         hash: item.md5,
                         source: item.source,
@@ -179,6 +182,7 @@ app.controller('Safety_hostController', ['$scope', '$http', '$state','$rootScope
 
     // 主机用户调查
     $scope.getPage_user = function (pageNow) {
+        $scope.content_show = true;
         pageNow = pageNow ? pageNow : 1;
         $scope.params_data = {
             host_ip: $scope.host.host_ip,
@@ -196,9 +200,9 @@ app.controller('Safety_hostController', ['$scope', '$http', '$state','$rootScope
             // console.log(data);
             if (data.status == 0) {
                 $scope.tab_data[2].value = [];
-                angular.forEach(data.data.data.data, function (item,index) {
+                angular.forEach(data.data.data.data, function (item, index) {
                     var item_network = {
-                        index: index + 1 + (pageNow-1) * 10,
+                        index: index + 1 + (pageNow - 1) * 10,
                         user_name: item.username,
                         host_ip: item.host_ip,
                         application: item.application
@@ -236,15 +240,20 @@ app.controller('Safety_hostController', ['$scope', '$http', '$state','$rootScope
     };
     // 搜索
     $scope.search = function (params) {
-        if ($scope.selected == 0) {
-            $scope.getPage_network();
+        if ($scope.host.host_ip == '' ) {
+            zeroModal.error('至少选择时间范围以及另外一项搜索条件');
+        } else {
+            if ($scope.selected == 0) {
+                $scope.getPage_network();
+            }
+            if ($scope.selected == 1) {
+                $scope.getPage_file();
+            }
+            if ($scope.selected == 2) {
+                $scope.getPage_user();
+            }
         }
-        if ($scope.selected == 1) {
-            $scope.getPage_file();
-        }
-        if ($scope.selected == 2) {
-            $scope.getPage_user();
-        }
+
     };
 
     // 下载报表

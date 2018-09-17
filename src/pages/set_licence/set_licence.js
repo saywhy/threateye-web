@@ -4,6 +4,7 @@ app.controller('Set_licenceController', ['$scope', '$http', '$state','$rootScope
     $scope.init = function (params) {
         clearInterval($rootScope.insideInterval);
         clearInterval($rootScope.startInterval);
+        clearInterval($rootScope.getUpdataStatus);
         $rootScope.pageNow= 0;
          $scope.license_array = [];
         $scope.get_license(); // 获取证书列表
@@ -60,6 +61,8 @@ app.controller('Set_licenceController', ['$scope', '$http', '$state','$rootScope
                                 content: '验证失败！',
                                 contentDetail: '此序列号已被替他设备使用，请购买新的许可证！',
                             });
+                        }else{
+                            zeroModal.error(rsp.data.msg);
                         }
                     }, function err(rsp) {
                         zeroModal.error({
@@ -101,7 +104,7 @@ app.controller('Set_licenceController', ['$scope', '$http', '$state','$rootScope
 
                    }
                 } else {
-                    zeroModal.error('许可证无效!');
+                    zeroModal.error(rsp.data.msg);
                 }
             }, function err(rsp) {
                 zeroModal.error('许可证导入失败!');

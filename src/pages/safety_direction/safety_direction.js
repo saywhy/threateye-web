@@ -3,10 +3,11 @@
 app.controller('Safety_directionController', ['$scope', '$http', '$state','$rootScope', function ($scope, $http, $state,$rootScope) {
     // 初始化
     $scope.init = function (params) {
+        $scope.content_show = false;
         clearInterval($rootScope.insideInterval);
         clearInterval($rootScope.startInterval);
+        clearInterval($rootScope.getUpdataStatus);
         $rootScope.pageNow= 0;
-        $scope.direction = {};
         // 流量方向选择
         $scope.statusData = [{
             num: 0,
@@ -30,13 +31,14 @@ app.controller('Safety_directionController', ['$scope', '$http', '$state','$root
         };
         $scope.direction = {
             start_time: moment().subtract(1, 'days').unix(),
-            end_time: moment().unix()
+            end_time: moment().unix(),
+            host_ip:'',
         };
         $scope.timerange(); // 时间插件初始化
-        $scope.getPage(); // 获取数据
     };
     // 获取数据
     $scope.getPage = function (pageNow) {
+        $scope.content_show = true;
         pageNow = pageNow ? pageNow : 1;
         $scope.index_num = (pageNow-1) * 10;
         $scope.params_data = {
@@ -69,7 +71,11 @@ app.controller('Safety_directionController', ['$scope', '$http', '$state','$root
     };
     // 搜索
     $scope.search = function (params) {
-        $scope.getPage();
+        if($scope.direction.host_ip=='' ){
+            zeroModal.error('至少选择时间范围以及另外一项搜索条件');
+           }else{
+            $scope.getPage(1);
+           }
     };
     // 下载报表
     $scope.download = function () {

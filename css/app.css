@@ -8,7 +8,7 @@ html {
 }
 
 body {
-  font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
   font-size: 12px;
   -webkit-font-smoothing: antialiased;
   line-height: 1.42857143;
@@ -1789,9 +1789,9 @@ fieldset[disabled] .btn-default.active {
 .btn-primary {
   color: #ffffff !important;
   /* background-color: #428bca; */
-  background-color: rgba(6, 127, 228, 0.85);
+  background-color: #367FA9;
   /* border-color: #428bca; */
-  border-color: rgba(6, 127, 228, 0.85);
+  border-color: #367FA9;
 }
 
 .btn-primary:hover,
@@ -1800,8 +1800,8 @@ fieldset[disabled] .btn-default.active {
 .btn-primary.active,
 .open .dropdown-toggle.btn-primary {
   color: #ffffff !important;
-  background-color: rgb(6, 127, 228);
-  border-color: rgb(6, 127, 228);
+  background-color:#367FA9;
+  border-color: #367FA9;
 }
 
 .btn-primary:active,
