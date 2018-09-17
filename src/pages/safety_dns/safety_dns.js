@@ -48,7 +48,6 @@ app.controller('Safety_dnsController', ['$scope', '$http', '$state','$rootScope'
        }else{
         $scope.getPage(1);
        }
-
     };
     // 获取数据
     $scope.getPage = function (pageNow) {
@@ -86,11 +85,6 @@ app.controller('Safety_dnsController', ['$scope', '$http', '$state','$rootScope'
         }).error(function () {
             // zeroModal.close(loading);
         })
-    };
-    //导出csv 
-    $scope.export = function (params) {
-        // console.log($scope.dns);
-        // console.log($scope.searchData);
     };
     // 下载报表
     $scope.download = function () {
@@ -220,9 +214,6 @@ app.controller('Safety_dnsController', ['$scope', '$http', '$state','$rootScope'
             form.submit(); //表单提交
         }
     };
-
-
-
     // 时间插件
     $scope.timerange = function (params) {
         $('.timerange').daterangepicker({

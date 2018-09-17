@@ -164,8 +164,6 @@ app.controller('Safety_fileController', ['$scope', '$http', '$state','$rootScope
          }
      
     };
-
-
     // 时间插件
     $scope.timerange = function (params) {
         $('.timerange').daterangepicker({
