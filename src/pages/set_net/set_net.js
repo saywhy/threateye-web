@@ -1,13 +1,22 @@
 /* Controllers */
-app.controller('Set_netController', ['$scope', '$http', '$state','$rootScope', function ($scope, $http, $state,$rootScope) {
+app.controller('Set_netController', ['$scope', '$http', '$state', '$rootScope', function ($scope, $http, $state, $rootScope) {
     // 初始化
     $scope.init = function (params) {
         clearInterval($rootScope.insideInterval);
         clearInterval($rootScope.startInterval);
         clearInterval($rootScope.getUpdataStatus);
-        $rootScope.pageNow= 0;
+        $scope.select_disabled = false;
+        $rootScope.pageNow = 0;
         $scope.net = {};
-        $scope.net_detail={};
+        $scope.net_detail = {
+            // role:'guanli'
+            BOOTPROTO: '',
+            IPADDR: '',
+            MASK: '',
+            GATEWAY: '',
+            DNS1: '',
+            DNS2: ''
+        };
         $scope.net_names = [];
         $scope.ip_type = [{
                 num: 0,
@@ -20,6 +29,27 @@ app.controller('Set_netController', ['$scope', '$http', '$state','$rootScope', f
                 type: 'static'
             }
         ];
+        $scope.role = [{
+                num: 0,
+                name: '管理口',
+                type: 1
+            },
+            {
+                num: 1,
+                name: '通讯口',
+                type: 2
+            },
+            {
+                num: 2,
+                name: '镜像口',
+                type: 3
+            },
+            {
+                num: 3,
+                name: '沙箱口',
+                type: 4
+            }
+        ];
         $scope.get_network(); //获取网络配置
     }
     //获取网络配置
@@ -30,16 +60,20 @@ app.controller('Set_netController', ['$scope', '$http', '$state','$rootScope', f
             url: './yiiapi/seting/get-network'
         }).success(function (data) {
             // console.log(data);
+            $scope.get_data = {};
+            $scope.select_disabled = false;
             if (data.status == 0) {
                 $scope.net_names = [];
                 $scope.net_info_array = data.data.data;
                 angular.forEach($scope.net_info_array, function (item) {
                     $scope.net_names.push(item.NAME);
                 });
-                // console.log($scope.net_names);
+                $scope.get_data = JSON.stringify($scope.net_info_array);
+                // console.log($scope.net_info_array);
                 // 默认初始值
                 $scope.net.index = $scope.net_names[0];
                 $scope.net_detail = $scope.net_info_array[0];
+                // $scope.net_detail.role = '1';
             }
             if (data.status == 1) {
                 zeroModal.error(data.msg);
@@ -52,14 +86,42 @@ app.controller('Set_netController', ['$scope', '$http', '$state','$rootScope', f
     }
     // 网卡切换
     $scope.net_card = function (name) {
-        angular.forEach($scope.net_info_array, function (item) {
+
+        // 默认初始值
+        angular.forEach($scope.net_info_array, function (item, index) {
             if (name == item.NAME) {
-                $scope.net_detail = item;
+                $scope.net_detail = JSON.parse($scope.get_data)[index];
+                // $scope.net_detail = item;
+                if ($scope.net_detail.PORT == 3) {
+                    $scope.select_disabled = true;
+                } else {
+                    $scope.select_disabled = false;
+                }
             }
         });
     }
-    //设置网络配置
-    $scope.set_network = function () {
+    // 角色改变
+    $scope.role_change = function (parmas) {
+        //    镜像口
+        if (parmas == 3) {
+            $scope.select_disabled = true;
+            $scope.net_detail.PORT = 3;
+            $scope.net_detail.BOOTPROTO = 'none';
+            $scope.net_detail.IPADDR = '';
+            $scope.net_detail.MASK = '';
+            $scope.net_detail.GATEWAY = '';
+            $scope.net_detail.DNS1 = '';
+            $scope.net_detail.DNS2 = '';
+        } else {
+            // angular.forEach(JSON.parse($scope.get_data),function(item,index){
+            //     if($scope.net_detail.NAME==item.NAME){
+            //         $scope.net_detail = item
+            //     }
+            // })
+            $scope.select_disabled = false;
+        }
+    }
+    $scope.set_net = function(){
         var loading = zeroModal.loading(4);
         $http({
             method: 'put',
@@ -73,13 +135,12 @@ app.controller('Set_netController', ['$scope', '$http', '$state','$rootScope', f
                 GATEWAY: $scope.net_detail.GATEWAY,
                 DNS1: $scope.net_detail.DNS1,
                 DNS2: $scope.net_detail.DNS2,
+                PORT: $scope.net_detail.PORT
             }
         }).success(function (data) {
-            // console.log($scope.net_detail);
-            // console.log(data);
             if (data.status == 0) {
-                zeroModal.success('网络配置成功');
                 $scope.get_network(); //获取网络配置
+                zeroModal.success('网络配置成功');
             }
             if (data.status == 1) {
                 zeroModal.error(data.msg);
@@ -92,27 +153,48 @@ app.controller('Set_netController', ['$scope', '$http', '$state','$rootScope', f
             console.log(error);
             zeroModal.close(loading);
         })
+    };
+    //设置网络配置
+    $scope.set_network = function () {
+        $scope.port_only = false;
+        // console.log($scope.net_detail);
+        if ($scope.net_detail.PORT == 0) {
+            zeroModal.error('请选择角色');
+        } else {
+            angular.forEach(JSON.parse($scope.get_data), function (item,index) {
+                if (item.PORT == 3) {
+                    $scope.item_item = item;
+                    $scope.port_only = true;
+                }
+            });
+            if($scope.port_only){
+                if($scope.item_item.NAME == $scope.net_detail.NAME){
+                    $scope.set_net();
+                }else{
+                    if($scope.net_detail.PORT ==3){
+                        // console.log($scope.net_detail);
+                        zeroModal.error('网卡中只允许配置一个镜像口！');
+                    }else{
+                        $scope.set_net();
+                    }
+                }
+            }else{
+                $scope.set_net();
+            }
+           
+        }
     }
-
-
-
-
     //获取代理设置
     $scope.getProxy = function (params) {
         $http.get('/seting/proxy/status/proxy').then(function success(rsp) {
-            //  console.log(rsp.data.result.HTTPS_PROXY);
             if (rsp.data.result.HTTPS_PROXY || rsp.data.result.HTTP_PROXY) {
                 $scope.httpsModel = rsp.data.result.HTTPS_PROXY
                 $scope.httpModel = rsp.data.result.HTTP_PROXY
-
             } else {
                 $scope.httpsModel = '';
                 $scope.httpModel = '';
             }
-
-        }, function err(rsp) {
-
-        });
+        }, function err(rsp) {});
     }
     //设置代理服务器
     $scope.saveHttps = function () {

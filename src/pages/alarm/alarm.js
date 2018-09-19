@@ -7,7 +7,7 @@ app.controller('AlarmController', [
     '$state',
     '$filter',
     '$rootScope',
-    function ($scope, $http, $state, $filter,$rootScope) {
+    function ($scope, $http, $state, $filter, $rootScope) {
         // 初始化
         $scope.init = function (params) {
             clearInterval($rootScope.getUpdataStatus);
@@ -36,19 +36,19 @@ app.controller('AlarmController', [
                 maxPage: "...",
                 pageNow: 1,
             };
-           
+
             // 默认时间
             $scope.searchData = {
                 startTime: moment().subtract(365, 'days').unix(),
                 endTime: moment().unix(),
-                src_ip:'',
-                dest_ip:''
+                src_ip: '',
+                dest_ip: ''
             };
             $scope.timepicker();
             $scope.alarmEchart(); // 折线图表
-            if($rootScope.pageNow!= 0){
+            if ($rootScope.pageNow != 0) {
                 $scope.getPage($rootScope.pageNow);
-            }else{
+            } else {
                 $scope.getPage(1)
             }
             $scope.IntervalgetPage();
@@ -58,13 +58,13 @@ app.controller('AlarmController', [
         };
         $scope.dataTime = 'frist'
         $scope.IntervalgetPage = function () {
-            if($scope.searchActive){
+            if ($scope.searchActive) {
                 // 不刷新
                 // console.log('停止刷新');
                 clearInterval($rootScope.startInterval);
-                $rootScope.insideInterval =setInterval(function(){
+                $rootScope.insideInterval = setInterval(function () {
                     // console.log('内部循环');
-                    if(!$scope.searchActive){
+                    if (!$scope.searchActive) {
                         // console.log('开启循环刷新');
                         clearInterval($rootScope.insideInterval);
                         // 开始循环
@@ -72,8 +72,8 @@ app.controller('AlarmController', [
                             $scope.IntervalgetPage();
                         }, 5000);
                     }
-                },5000)
-            }else {
+                }, 5000)
+            } else {
                 // console.log('数据更新111');
                 $http({
                     method: 'get',
@@ -88,9 +88,9 @@ app.controller('AlarmController', [
                         if (data.data != $scope.dataTime) {
                             // console.log('数据更新');
                             $scope.dataTime = data.data;
-                                    $scope.searchData.endTime=data.data; //更新时间
-                                    $scope.getPage();
-                                    $scope.alarmEchart(); // 折线图表
+                            $scope.searchData.endTime = data.data; //更新时间
+                            $scope.getPage();
+                            $scope.alarmEchart(); // 折线图表
                         } else {
                             $scope.dataTime = data.data;
                             // console.log('数据无变化');
@@ -103,11 +103,11 @@ app.controller('AlarmController', [
         }
         // 告警列表
         $scope.getPage = function (pageNow) {
-            if(pageNow){
+            if (pageNow) {
                 $rootScope.pageNow = pageNow;
                 $scope.pages.pageNow = pageNow;
-            }else{
-                if($rootScope.pageNow!= 0){
+            } else {
+                if ($rootScope.pageNow != 0) {
                     $scope.pages.pageNow = $rootScope.pageNow;
                 }
             }
@@ -130,7 +130,7 @@ app.controller('AlarmController', [
             }).success(function (data) {
                 // console.log(data.count);
                 if (data.status == 0) {
-                        $scope.pages = data.data;
+                    $scope.pages = data.data;
                 }
                 // console.log($scope.pages);
             }).error(function (err) {
@@ -164,10 +164,10 @@ app.controller('AlarmController', [
         };
         // 搜索按钮
         $scope.search = function () {
-            if($scope.searchData.src_ip!=''||$scope.searchData.dest_ip!=''){
+            if ($scope.searchData.src_ip != '' || $scope.searchData.dest_ip != '') {
                 // 不刷新
                 $scope.searchActive = true;
-            }else{
+            } else {
                 // 刷新
                 $scope.searchActive = false;
             }

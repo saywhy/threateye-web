@@ -104,7 +104,7 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter','
                         report_type: $scope.selectedName
                     }
                 }).success(function (data) {
-                    // console.log(data);
+                    console.log(data);
                     if (data.status == 0) {
                         // console.log(data.data);
                         zeroModal.close(loading);
@@ -394,8 +394,11 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter','
         $scope.alert_trend_value = [];
         angular.forEach(params, function (item, index) {
             $scope.alert_trend_name.push(item.date_time);
-            $scope.alert_trend_value.push(item.count);
+            $scope.alert_trend_value.push(item.count-0);
         })
+        console.log($scope.alert_trend_name);
+        console.log($scope.alert_trend_value);
+        
         var myChart = echarts.init(document.getElementById('alert_trend'));
         var option_file = {
             grid: {
@@ -616,7 +619,7 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter','
         $('#reservationtime').daterangepicker({
             maxDate: choosetime.maxDate,
             minDate: choosetime.minDate,
-            timePickerIncrement: 10,
+            timePicker:true,
             startDate: choosetime.startDate,
             endDate: choosetime.endDate,
             locale: {

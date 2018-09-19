@@ -23,18 +23,7 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', '$r
         $scope.untreatedAlarm(); //第二排中间未处理告警
         // 第四排
         $scope.new_alarm(); //最新告警
-        $scope.test();
         $scope.flow_echarts = true;
-    };
-    $scope.test = function () {
-        $http({
-            method: 'get',
-            url: './yiiapi/alert/threat-type'
-        }).success(function (data) {
-            // console.log(data);
-        }).error(function (err) {
-            console.log(err);
-        })
     };
     // 第一排 左边图表--系统状态
     $scope.sysState = function (params) {

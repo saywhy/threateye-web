@@ -60,13 +60,15 @@ app.controller('SigninFormController', ['$scope', '$http', '$state', function ($
                     "login-button": ""
                 }
             }).then(function successCallback(data) {
-                // console.log(data);
+                console.log(data);
                 zeroModal.close(loading);
                 // 创建成功，显示登录页面登录
                 if (data.data.status == 0) {
                     zeroModal.success('创建管理员成功!');
                     $scope.login_show = false;
+                    $state.go('app.overview');
                 }else if(data.data.status == 202){
+                    $scope.login_show = false;
                     $state.go('app.overview');
                 } 
             }, function errorCallback(data) {

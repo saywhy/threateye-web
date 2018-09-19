@@ -14,6 +14,12 @@
                         </div>
                     </div>
                     <div class="form-group row item_form">
+                        <label for="port" class="col-sm-1 control-label" style="min-width:130px">角色</label>
+                        <div class="col-sm-3" style="max-width: 230px">
+                            <select class="form-control input_radius" style="background-color: #fff;" ng-change="role_change(net_detail.PORT)"  ng-model="net_detail.PORT" ng-options="x.type as x.name for x in role"></select>
+                        </div>
+                    </div>
+                    <div class="form-group row item_form">
                         <label for="host" class="col-sm-1 control-label" style="min-width:130px">是否启用</label>
                         <div class="col-sm-6">
                             <div class="pull-left">
@@ -22,40 +28,40 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group row item_form" ng-if="net_detail.ONBOOT  == 'yes'">
+                    <div class="form-group row item_form" ng-if="net_detail.ONBOOT  == 'yes'" >
                         <label for="port" class="col-sm-1 control-label" style="min-width:130px">获取IP方式</label>
                         <div class="col-sm-3" style="max-width: 230px">
-                            <select class="form-control input_radius" style="background-color: #fff;" ng-model="net_detail.BOOTPROTO" ng-options="x.type as x.name for x in ip_type"></select>
+                            <select class="form-control input_radius" style="background-color: #fff;"ng-disabled="select_disabled"  ng-model="net_detail.BOOTPROTO" ng-options="x.type as x.name for x in ip_type"></select>
                         </div>
                     </div>
                     <div class="form-group row item_form" ng-if="net_detail.ONBOOT  == 'yes' && net_detail.BOOTPROTO == 'static'">
-                        <label for="port" class="col-sm-1 control-label" style="min-width:130px">IP地址</label>
+                        <label for="port" class="col-sm-1 control-label"  style="min-width:130px">IP地址</label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control item_input" id="ip_addr" placeholder="" ng-model="net_detail.IPADDR">
+                            <input type="text" class="form-control item_input" ng-disabled="select_disabled" id="ip_addr" placeholder="" ng-model="net_detail.IPADDR">
                         </div>
                     </div>
                     <div class="form-group row item_form" ng-if="net_detail.ONBOOT  == 'yes' && net_detail.BOOTPROTO == 'static'">
                         <label for="port" class="col-sm-1 control-label" style="min-width:130px">子网掩码</label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control item_input" id="sub_net" placeholder="" ng-model="net_detail.MASK">
+                            <input type="text" class="form-control item_input" ng-disabled="select_disabled" id="sub_net" placeholder="" ng-model="net_detail.MASK">
                         </div>
                     </div>
                     <div class="form-group row item_form" ng-if="net_detail.ONBOOT  == 'yes' && net_detail.BOOTPROTO == 'static'">
                         <label for="port" class="col-sm-1 control-label" style="min-width:130px">默认网关</label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control item_input" id="default_gateway" placeholder="" ng-model="net_detail.GATEWAY">
+                            <input type="text" class="form-control item_input" ng-disabled="select_disabled" id="default_gateway" placeholder="" ng-model="net_detail.GATEWAY">
                         </div>
                     </div>
                     <div class="form-group row item_form" ng-if="net_detail.ONBOOT  == 'yes' && net_detail.BOOTPROTO == 'static'">
                         <label for="port" class="col-sm-1 control-label" style="min-width:130px">首选DNS服务器</label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control item_input" id="first_dns" placeholder="" ng-model="net_detail.DNS1">
+                            <input type="text" class="form-control item_input" ng-disabled="select_disabled" id="first_dns" placeholder="" ng-model="net_detail.DNS1">
                         </div>
                     </div>
                     <div class="form-group row item_form" ng-if="net_detail.ONBOOT == 'yes' && net_detail.BOOTPROTO == 'static'">
                         <label for="port" class="col-sm-1 control-label" style="min-width:130px">备用DNS服务器</label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control item_input" id="spare_dns" placeholder="" ng-model="net_detail.DNS2">
+                            <input type="text" class="form-control item_input" ng-disabled="select_disabled" id="spare_dns" placeholder="" ng-model="net_detail.DNS2">
                         </div>
                     </div>
                     <div class="row">
