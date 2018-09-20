@@ -1,6 +1,6 @@
 'use strict';
 /* Controllers */
-app.controller('Safety_iocController', ['$scope', '$http', '$state','$rootScope', function ($scope, $http, $state,$rootScope) {
+app.controller('Safety_iocController', ['$scope', '$http', '$state', '$rootScope', function ($scope, $http, $state, $rootScope) {
     // 初始化
     $scope.init = function (params) {
         $scope.content_show = false;
@@ -8,7 +8,7 @@ app.controller('Safety_iocController', ['$scope', '$http', '$state','$rootScope'
         clearInterval($rootScope.insideInterval);
         clearInterval($rootScope.startInterval);
         clearInterval($rootScope.getUpdataStatus);
-        $rootScope.pageNow= 0;
+        $rootScope.pageNow = 0;
         $scope.upload_true = true; //初始化禁用提交按钮
         $("#avatval").click(function () {
             $("input[type='file']").trigger('click');
@@ -45,27 +45,32 @@ app.controller('Safety_iocController', ['$scope', '$http', '$state','$rootScope'
         $scope.content_show = true;
         var loading = zeroModal.loading(4);
         pageNow = pageNow ? pageNow : 1;
-        $scope.index_num = (pageNow-1) * 10;
+        $scope.index_num = (pageNow - 1) * 10;
         $scope.params_data = {
             page: pageNow,
             rows: 10
         };
-        $http({
-            method: 'get',
-            url: './yiiapi/investigate/ioc-scanning-list',
-            params: $scope.params_data,
-        }).success(function (data) {
-            // console.log(data);
-            if (data.status == 0) {
-                $scope.pages = data.data;
-                angular.forEach( $scope.pages.data,function(item,index){
-                    item.create_percent = item.create_percent +'%';
-                });
-            }
-            zeroModal.close(loading);
-        }).error(function () {
-            zeroModal.close(loading);
-        })
+        if (pageNow > 1000) {
+            zeroModal.error('数据超过一万条,请缩小搜索条件');
+        } else {
+            var loading = zeroModal.loading(4);
+            $http({
+                method: 'get',
+                url: './yiiapi/investigate/ioc-scanning-list',
+                params: $scope.params_data,
+            }).success(function (data) {
+                // console.log(data);
+                if (data.status == 0) {
+                    $scope.pages = data.data;
+                    angular.forEach($scope.pages.data, function (item, index) {
+                        item.create_percent = item.create_percent + '%';
+                    });
+                }
+                zeroModal.close(loading);
+            }).error(function () {
+                zeroModal.close(loading);
+            })
+        }
     };
     // 下载模版
     $scope.download_temp = function () {
@@ -91,9 +96,9 @@ app.controller('Safety_iocController', ['$scope', '$http', '$state','$rootScope'
             url: "./yiiapi/investigate/upload-file",
             type: "post",
             data: formData,
-            xhr: function () {　　　　
-                var xhr = $.ajaxSettings.xhr();　　　　
-                if (xhr.upload) {　　　　　　
+            xhr: function () {
+                var xhr = $.ajaxSettings.xhr();
+                if (xhr.upload) {
                     xhr.upload.onprogress = function (progress) {
                         if (progress.lengthComputable) {
                             // console.log(progress.lengthComputable);
@@ -104,9 +109,9 @@ app.controller('Safety_iocController', ['$scope', '$http', '$state','$rootScope'
                     };
                     xhr.upload.onloadstart = function () {
                         // console.log('started...');
-                    };　　　
+                    };
                 }
-                return xhr;　
+                return xhr;
             },
             processData: false, // 告诉jQuery不要去处理发送的数据
             contentType: false, // 告诉jQuery不要去设置Content-Type请求头
@@ -115,10 +120,10 @@ app.controller('Safety_iocController', ['$scope', '$http', '$state','$rootScope'
                 res = JSON.parse(res);
                 if (res.status == 0) {
                     zeroModal.success('上传成功');
-                    $scope.$apply(function(){
+                    $scope.$apply(function () {
                         $scope.btn_disabled = false;
                     })
-                }else{
+                } else {
                     zeroModal.error(res.msg);
                 }
             },

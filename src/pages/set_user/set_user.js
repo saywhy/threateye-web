@@ -1,12 +1,12 @@
 /* Controllers */
-app.controller('Set_userController', ['$scope', '$http', '$state','$rootScope', function ($scope, $http, $state,$rootScope) {
+app.controller('Set_userController', ['$scope', '$http', '$state', '$rootScope', function ($scope, $http, $state, $rootScope) {
     // 初始化
     $scope.init = function (params) {
         $scope.power = false;
         clearInterval($rootScope.insideInterval);
         clearInterval($rootScope.startInterval);
         clearInterval($rootScope.getUpdataStatus);
-        $rootScope.pageNow= 0;
+        $rootScope.pageNow = 0;
         $scope.UserIDList = [];
         $scope.userList = {};
         $scope.pages = {
@@ -26,27 +26,31 @@ app.controller('Set_userController', ['$scope', '$http', '$state','$rootScope', 
     $scope.getPage = function (pageNow) {
         var loading = zeroModal.loading(4);
         pageNow = pageNow ? pageNow : 1;
-        $scope.index_num = (pageNow-1) * 10;
-        $http.post('./yiiapi/user/page', {
-            page: pageNow
-        }).then(function success(rsp) {
-            // console.log(rsp.data);
-            zeroModal.close(loading);
-            if (rsp.data.status == 0) {
-                $scope.pages = rsp.data.data;
-                $scope.power = true;
-            }
-            if(rsp.data.status == 1){
-                zeroModal.error(rsp.data.msg);
-                $scope.power = true;
-            }
-            if (rsp.data.status == 401) {
-                zeroModal.error(rsp.data.msg);
-             
-            }
-        }, function err(rsp) {
-            zeroModal.close(loading);
-        });
+        $scope.index_num = (pageNow - 1) * 10;
+        if (pageNow > 1000) {
+            zeroModal.error('数据超过一万条');
+        } else {
+            $http.post('./yiiapi/user/page', {
+                page: pageNow
+            }).then(function success(rsp) {
+                // console.log(rsp.data);
+                zeroModal.close(loading);
+                if (rsp.data.status == 0) {
+                    $scope.pages = rsp.data.data;
+                    $scope.power = true;
+                }
+                if (rsp.data.status == 1) {
+                    zeroModal.error(rsp.data.msg);
+                    $scope.power = true;
+                }
+                if (rsp.data.status == 401) {
+                    zeroModal.error(rsp.data.msg);
+
+                }
+            }, function err(rsp) {
+                zeroModal.close(loading);
+            });
+        }
     };
     // 添加用户
     $scope.add = function () {
@@ -154,11 +158,11 @@ app.controller('Set_userController', ['$scope', '$http', '$state','$rootScope', 
     //重置密码
     $scope.resetPassword = function (user) {
         // console.log(user);
-        
+
         var loading = zeroModal.loading(4);
         $http.get("./yiiapi/user/get-password-reset-token?id=" + user.id).then(function success(rsp) {
             // console.log(rsp);
-            
+
             zeroModal.close(loading);
             if (rsp.data.status == 0) {
                 var W = 540;
@@ -202,9 +206,9 @@ app.controller('Set_userController', ['$scope', '$http', '$state','$rootScope', 
                             data: post_data,
                         }).success(function (data) {
                             // console.log(data);
-                            if(data.status == 0){
+                            if (data.status == 0) {
                                 zeroModal.success('密码重置成功！');
-                            }else{
+                            } else {
                                 zeroModal.error('密码重置失败！');
                             }
                             zeroModal.close(loading);

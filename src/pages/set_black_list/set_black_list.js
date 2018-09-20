@@ -1,11 +1,11 @@
 /* Controllers */
-app.controller('Set_black_listController', ['$scope', '$http', '$state','$rootScope', function ($scope, $http, $state,$rootScope) {
+app.controller('Set_black_listController', ['$scope', '$http', '$state', '$rootScope', function ($scope, $http, $state, $rootScope) {
     // 初始化
     $scope.init = function (params) {
         clearInterval($rootScope.insideInterval);
         clearInterval($rootScope.startInterval);
         clearInterval($rootScope.getUpdataStatus);
-        $rootScope.pageNow= 0;
+        $rootScope.pageNow = 0;
         $("input[type='file']").change(function (target) {
             $("#avatval").val($(this).val());
             $scope.uploadPic();
@@ -24,30 +24,34 @@ app.controller('Set_black_listController', ['$scope', '$http', '$state','$rootSc
     $scope.getPage0 = function (pageNow) {
         var loading = zeroModal.loading(4);
         pageNow = pageNow ? pageNow : 1;
-        $scope.index_num = (pageNow-1) * 10;
+        $scope.index_num = (pageNow - 1) * 10;
         $scope.params_data = {
             page: pageNow,
             rows: 10
         };
-        $http({
-            method: 'get',
-            url: './yiiapi/whitelist/list',
-            params: $scope.params_data,
-        }).success(function (data) {
-            // console.log(data);
-            if (data.status == 0) {
-                $scope.pages0 = data.data;
-            }
-            if(data.status == 1){
-                zeroModal.error(data.msg);
-            }
-            if (data.status == 401) {
-                zeroModal.error(data.msg);
-            }
-            zeroModal.close(loading);
-        }).error(function () {
-            zeroModal.close(loading);
-        })
+        if (pageNow > 1000) {
+            zeroModal.error('数据超过一万条');
+        } else {
+            $http({
+                method: 'get',
+                url: './yiiapi/whitelist/list',
+                params: $scope.params_data,
+            }).success(function (data) {
+                // console.log(data);
+                if (data.status == 0) {
+                    $scope.pages0 = data.data;
+                }
+                if (data.status == 1) {
+                    zeroModal.error(data.msg);
+                }
+                if (data.status == 401) {
+                    zeroModal.error(data.msg);
+                }
+                zeroModal.close(loading);
+            }).error(function () {
+                zeroModal.close(loading);
+            })
+        }
     };
 
     // 添加白名单
@@ -73,7 +77,7 @@ app.controller('Set_black_listController', ['$scope', '$http', '$state','$rootSc
     }
 
     //添加白名单请求
-    $scope.add_whitelist = function(white_list){
+    $scope.add_whitelist = function (white_list) {
         var loading = zeroModal.loading(4);
         $http({
             method: 'post',
@@ -89,7 +93,7 @@ app.controller('Set_black_listController', ['$scope', '$http', '$state','$rootSc
                 $scope.white_list.indicator = '';
                 $scope.getPage0();
             }
-            if(data.status == 1){
+            if (data.status == 1) {
                 zeroModal.error(data.msg);
             }
             if (data.status == 401) {
@@ -102,7 +106,7 @@ app.controller('Set_black_listController', ['$scope', '$http', '$state','$rootSc
         })
     };
     //删除白名单
-    $scope.del = function(item){
+    $scope.del = function (item) {
         // console.log(item);
         $scope.del_item = item;
         zeroModal.confirm({
@@ -113,9 +117,9 @@ app.controller('Set_black_listController', ['$scope', '$http', '$state','$rootSc
                     method: 'DELETE',
                     url: './yiiapi/whitelist/del',
                     data: {
-                        id:  $scope.del_item.id,
-                        indicator:  $scope.del_item.indicator,
-                        alert_type:  $scope.del_item.alert_type
+                        id: $scope.del_item.id,
+                        indicator: $scope.del_item.indicator,
+                        alert_type: $scope.del_item.alert_type
                     },
                 }).success(function (data) {
                     // console.log(data);
@@ -123,7 +127,7 @@ app.controller('Set_black_listController', ['$scope', '$http', '$state','$rootSc
                         zeroModal.success('删除成功！');
                         $scope.getPage0();
                     }
-                    if(data.status == 1){
+                    if (data.status == 1) {
                         zeroModal.error(data.msg);
                     }
                     if (data.status == 401) {
@@ -150,9 +154,9 @@ app.controller('Set_black_listController', ['$scope', '$http', '$state','$rootSc
             url: "./yiiapi/whitelist/add-import",
             type: "post",
             data: formData,
-            xhr: function () {　　　　
-                var xhr = $.ajaxSettings.xhr();　　　　
-                if (xhr.upload) {　　　　　　
+            xhr: function () {
+                var xhr = $.ajaxSettings.xhr();
+                if (xhr.upload) {
                     xhr.upload.onprogress = function (progress) {
                         if (progress.lengthComputable) {
                             // $('#progress')[0].style = 'width:' + parseInt(progress.loaded / progress.total * 100) + '%';
@@ -160,15 +164,15 @@ app.controller('Set_black_listController', ['$scope', '$http', '$state','$rootSc
                     };
                     xhr.upload.onloadstart = function () {
                         // console.log('started...');
-                    };　　　
+                    };
                 }
-                return xhr;　
+                return xhr;
             },
             processData: false, // 告诉jQuery不要去处理发送的数据
             contentType: false, // 告诉jQuery不要去设置Content-Type请求头
             success: function (res) {
                 // console.log(res);
-                res = JSON.parse(res) 
+                res = JSON.parse(res)
                 if (res.status == 0) {
                     zeroModal.success('上传成功');
                     $scope.getPage0(); // 获取数据列表
@@ -186,7 +190,7 @@ app.controller('Set_black_listController', ['$scope', '$http', '$state','$rootSc
         })
     };
     // 下载模版
-    $scope.download = function(){
+    $scope.download = function () {
         var tt = new Date().getTime();
         var url = './yiiapi/whitelist/download-ioc-template';
         var form = $("<form>"); //定义一个form表单

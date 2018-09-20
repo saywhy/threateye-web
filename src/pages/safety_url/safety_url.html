@@ -27,10 +27,10 @@
                                 <label>目的端口</label>
                                 <input type="text" class="form-control input_radius" ng-model="url.dst_port" ng-keyup="myKeyup($event)">
                             </div>
-                            <div class="form-group col-md-2">
+                            <!-- <div class="form-group col-md-2">
                                 <label>Email地址</label>
                                 <input type="text" class="form-control input_radius" ng-model="url.email" ng-keyup="myKeyup($event)">
-                            </div>
+                            </div> -->
                         </div>
                         <div class="row margin download_relative">
                             <div class="form-group col-md-4" style="max-width: 300px;">
@@ -56,7 +56,7 @@
                                     <th>源端口</th>
                                     <th>目的地址</th>
                                     <th>目的端口</th>
-                                    <th>Email地址</th>
+                                    <!-- <th>Email地址</th> -->
                                     <th>应用</th>
                                 </tr>
                                 <tr style="cursor: pointer;" ng-repeat="item in pages.data.data">
@@ -66,7 +66,7 @@
                                     <td class="td_content" ng-bind="item.src_port"></td>
                                     <td class="td_content" ng-bind="item.dest_ip"></td>
                                     <td class="td_content" ng-bind="item.dest_port"></td>
-                                    <td class="td_content" ng-bind="item.email"></td>
+                                    <!-- <td class="td_content" ng-bind="item.email"></td> -->
                                     <td class="td_content" ng-bind="item.application"></td>
                                 </tr>
                             </table>

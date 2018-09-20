@@ -100,40 +100,44 @@ app.controller('Safety_hostController', ['$scope', '$http', '$state', '$rootScop
             current_page: pageNow,
             per_page_count: '10'
         };
-        var loading = zeroModal.loading(4);
-        $http({
-            method: 'get',
-            url: './yiiapi/investigate/host-network-investigation',
-            params: $scope.params_data,
-        }).success(function (data) {
-            // console.log(data);
-            if (data.status == 0) {
-                $scope.tab_data[0].value = [];
-                angular.forEach(data.data.data.data, function (item, index) {
-                    // console.log(item);
-                    var item_network = {
-                        index: index + 1 + (pageNow - 1) * 10,
-                        time: item.timestamp,
-                        Ip: item.src_ip,
-                        source_port: item.src_port,
-                        addr: item.dest_ip,
-                        port: item.dest_port,
-                        email: item.email,
-                        application: item.application
-                    }
-                    $scope.tab_data[0].value.push(item_network);
-                });
-                $scope.pages_network = data.data;
-                // console.log( $scope.tab_data[0].value);
-            }
-            if (data.status == 1) {
-                zeroModal.error(data.msg);
-            }
-            zeroModal.close(loading);
-        }).error(function (error) {
-            console.log(error);
-            zeroModal.close(loading);
-        })
+        if (pageNow > 1000) {
+            zeroModal.error('数据超过一万条,请缩小搜索条件');
+        } else {
+            var loading = zeroModal.loading(4);
+            $http({
+                method: 'get',
+                url: './yiiapi/investigate/host-network-investigation',
+                params: $scope.params_data,
+            }).success(function (data) {
+                // console.log(data);
+                if (data.status == 0) {
+                    $scope.tab_data[0].value = [];
+                    angular.forEach(data.data.data.data, function (item, index) {
+                        // console.log(item);
+                        var item_network = {
+                            index: index + 1 + (pageNow - 1) * 10,
+                            time: item.timestamp,
+                            Ip: item.src_ip,
+                            source_port: item.src_port,
+                            addr: item.dest_ip,
+                            port: item.dest_port,
+                            email: item.email,
+                            application: item.application
+                        }
+                        $scope.tab_data[0].value.push(item_network);
+                    });
+                    $scope.pages_network = data.data;
+                    // console.log( $scope.tab_data[0].value);
+                }
+                if (data.status == 1) {
+                    zeroModal.error(data.msg);
+                }
+                zeroModal.close(loading);
+            }).error(function (error) {
+                console.log(error);
+                zeroModal.close(loading);
+            })
+        }
     };
 
     // 主机文件调查
@@ -147,37 +151,41 @@ app.controller('Safety_hostController', ['$scope', '$http', '$state', '$rootScop
             current_page: pageNow,
             per_page_count: '10'
         };
-        var loading = zeroModal.loading(4);
-        $http({
-            method: 'get',
-            url: './yiiapi/investigate/host-file-investigation',
-            params: $scope.params_data,
-        }).success(function (data) {
-            // console.log(data);
-            if (data.status == 0) {
-                $scope.tab_data[1].value = [];
-                angular.forEach(data.data.data.data, function (item, index) {
-                    var item_network = {
-                        index: index + 1 + (pageNow - 1) * 10,
-                        name: item.file_name,
-                        hash: item.md5,
-                        source: item.source,
-                        host_ip: item.host_ip,
-                        application: item.application
-                    }
-                    $scope.tab_data[1].value.push(item_network);
-                });
-                $scope.pages_file = data.data;
-                // console.log( $scope.tab_data[0].value);
-            }
-            if (data.status == 1) {
-                zeroModal.error(data.msg);
-            }
-            zeroModal.close(loading);
-        }).error(function (error) {
-            console.log(error);
-            zeroModal.close(loading);
-        })
+        if (pageNow > 1000) {
+            zeroModal.error('数据超过一万条,请缩小搜索条件');
+        } else {
+            var loading = zeroModal.loading(4);
+            $http({
+                method: 'get',
+                url: './yiiapi/investigate/host-file-investigation',
+                params: $scope.params_data,
+            }).success(function (data) {
+                // console.log(data);
+                if (data.status == 0) {
+                    $scope.tab_data[1].value = [];
+                    angular.forEach(data.data.data.data, function (item, index) {
+                        var item_network = {
+                            index: index + 1 + (pageNow - 1) * 10,
+                            name: item.file_name,
+                            hash: item.md5,
+                            source: item.source,
+                            host_ip: item.host_ip,
+                            application: item.application
+                        }
+                        $scope.tab_data[1].value.push(item_network);
+                    });
+                    $scope.pages_file = data.data;
+                    // console.log( $scope.tab_data[0].value);
+                }
+                if (data.status == 1) {
+                    zeroModal.error(data.msg);
+                }
+                zeroModal.close(loading);
+            }).error(function (error) {
+                console.log(error);
+                zeroModal.close(loading);
+            })
+        }
     };
 
     // 主机用户调查
@@ -191,35 +199,39 @@ app.controller('Safety_hostController', ['$scope', '$http', '$state', '$rootScop
             current_page: pageNow,
             per_page_count: '10'
         };
-        var loading = zeroModal.loading(4);
-        $http({
-            method: 'get',
-            url: './yiiapi/investigate/host-user-investigation',
-            params: $scope.params_data,
-        }).success(function (data) {
-            // console.log(data);
-            if (data.status == 0) {
-                $scope.tab_data[2].value = [];
-                angular.forEach(data.data.data.data, function (item, index) {
-                    var item_network = {
-                        index: index + 1 + (pageNow - 1) * 10,
-                        user_name: item.username,
-                        host_ip: item.host_ip,
-                        application: item.application
-                    }
-                    $scope.tab_data[2].value.push(item_network);
-                });
-                $scope.pages_user = data.data;
-                // console.log( $scope.tab_data[0].value);
-            }
-            if (data.status == 1) {
-                zeroModal.error(data.msg);
-            }
-            zeroModal.close(loading);
-        }).error(function (error) {
-            console.log(error);
-            zeroModal.close(loading);
-        })
+        if (pageNow > 1000) {
+            zeroModal.error('数据超过一万条,请缩小搜索条件');
+        } else {
+            var loading = zeroModal.loading(4);
+            $http({
+                method: 'get',
+                url: './yiiapi/investigate/host-user-investigation',
+                params: $scope.params_data,
+            }).success(function (data) {
+                // console.log(data);
+                if (data.status == 0) {
+                    $scope.tab_data[2].value = [];
+                    angular.forEach(data.data.data.data, function (item, index) {
+                        var item_network = {
+                            index: index + 1 + (pageNow - 1) * 10,
+                            user_name: item.username,
+                            host_ip: item.host_ip,
+                            application: item.application
+                        }
+                        $scope.tab_data[2].value.push(item_network);
+                    });
+                    $scope.pages_user = data.data;
+                    // console.log( $scope.tab_data[0].value);
+                }
+                if (data.status == 1) {
+                    zeroModal.error(data.msg);
+                }
+                zeroModal.close(loading);
+            }).error(function (error) {
+                console.log(error);
+                zeroModal.close(loading);
+            })
+        }
     };
 
 
@@ -240,7 +252,7 @@ app.controller('Safety_hostController', ['$scope', '$http', '$state', '$rootScop
     };
     // 搜索
     $scope.search = function (params) {
-        if ($scope.host.host_ip == '' ) {
+        if ($scope.host.host_ip == '') {
             zeroModal.error('至少选择时间范围以及另外一项搜索条件');
         } else {
             if ($scope.selected == 0) {

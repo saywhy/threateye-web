@@ -42,7 +42,7 @@
                                     <th style="width:270px;">时间</th>
                                     <th>主机IP</th>
                                     <th>流量</th>
-                                    <th>流量方向</th>
+                                    <th>链接时长</th>
                                     <th>目的地址</th>
                                     <th>应用</th>
                                 </tr>
@@ -51,7 +51,7 @@
                                     <td class="td_content" ng-bind="item.timestamp"></td>
                                     <td class="td_content" ng-bind="item.host_ip"></td>
                                     <td class="td_content" ng-bind="item.flow_bytes"></td>
-                                    <td class="td_content" ng-bind="item.flow_duration"></td>
+                                    <td class="td_content" ng-bind="item.flow_duration + ' s'"></td>
                                     <td class="td_content" ng-bind="item.dest_ip"></td>
                                     <td class="td_content" ng-bind="item.application"></td>
                                 </tr>

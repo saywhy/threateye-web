@@ -32,7 +32,7 @@ angular.module('app')
                 rgbaLow8: 'rgba(74,164,110,.8)',
                 rgbaLow2: 'rgba(74,164,110,.2)',
             };
-
+        
             // save settings to local storage
             if (angular.isDefined($localStorage.settings)) {
                 $scope.app.settings = $localStorage.settings;

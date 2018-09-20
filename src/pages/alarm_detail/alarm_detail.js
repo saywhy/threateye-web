@@ -207,7 +207,7 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
                         },
                         {
                             key: '主要受影响地区',
-                            value: content.ip_geo
+                            value: content.geo
                         },
                         {
                             key: '相关联域名',
@@ -421,9 +421,9 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
                         }
                     }
                     $scope.threat.sdk = [{
-                        key: '威胁类型',
-                        value: content.category
-                    },{
+                            key: '威胁类型',
+                            value: content.category
+                        }, {
                             key: '文件名',
                             value: content.file_name
                         },
@@ -591,46 +591,54 @@ app.controller('Alarm_detailController', ['$scope', '$http', '$stateParams', '$s
         // 当前告警资产
         $scope.getPage = function (pageNow) {
             pageNow = pageNow ? pageNow : 1;
-            $http({
-                method: 'get',
-                url: './yiiapi/alert/get-same-indicator-alert',
-                params: {
-                    'indicator': $scope.alert_details.indicator,
-                    // 'id': $scope.alert_details.id,
-                    'is_deal': 0,
-                    'page': pageNow,
-                    'row': 10,
-                }
-            }).success(function (data) {
-                // console.log(data);
-                if (data.status == 0) {
-                    $scope.pages = data.data;
-                }
-            }).error(function (err) {
-                console.log(err);
-            })
+            if (pageNow > 1000) {
+                zeroModal.error('数据超过一万条,请缩小搜索条件');
+            } else {
+                $http({
+                    method: 'get',
+                    url: './yiiapi/alert/get-same-indicator-alert',
+                    params: {
+                        'indicator': $scope.alert_details.indicator,
+                        // 'id': $scope.alert_details.id,
+                        'is_deal': 0,
+                        'page': pageNow,
+                        'row': 10,
+                    }
+                }).success(function (data) {
+                    // console.log(data);
+                    if (data.status == 0) {
+                        $scope.pages = data.data;
+                    }
+                }).error(function (err) {
+                    console.log(err);
+                })
+            }
         };
         // 历史告警资产
         $scope.getPage1 = function (pageNow) {
             pageNow = pageNow ? pageNow : 1;
-            $http({
-                method: 'get',
-                url: './yiiapi/alert/get-same-indicator-alert',
-                params: {
-                    'indicator': $scope.alert_details.indicator,
-                    // 'id': $scope.alert_details.id,
-                    'is_deal': 2,
-                    'page': pageNow,
-                    'row': 10,
-                }
-            }).success(function (data) {
-                // console.log(data);
-                if (data.status == 0) {
-                    $scope.pages1 = data.data;
-                }
-            }).error(function (err) {
-                console.log(err);
-            })
+            if (pageNow > 1000) {
+                zeroModal.error('数据超过一万条,请缩小搜索条件');
+            } else {
+                $http({
+                    method: 'get',
+                    url: './yiiapi/alert/get-same-indicator-alert',
+                    params: {
+                        'indicator': $scope.alert_details.indicator,
+                        // 'id': $scope.alert_details.id,
+                        'is_deal': 2,
+                        'page': pageNow,
+                        'row': 10,
+                    }
+                }).success(function (data) {
+                    // console.log(data);
+                    if (data.status == 0) {
+                        $scope.pages1 = data.data;
+                    }
+                }).error(function (err) {
+                    console.log(err);
+                })
+            }
         };
         // 告警资产tab切换
         $scope.show = function (params) {

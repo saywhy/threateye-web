@@ -1,11 +1,11 @@
 /* Controllers */
-app.controller('Set_net_ipController', ['$scope', '$http', '$state','$rootScope', function ($scope, $http, $state,$rootScope) {
+app.controller('Set_net_ipController', ['$scope', '$http', '$state', '$rootScope', function ($scope, $http, $state, $rootScope) {
     // 初始化
     $scope.init = function (params) {
         clearInterval($rootScope.insideInterval);
         clearInterval($rootScope.startInterval);
         clearInterval($rootScope.getUpdataStatus);
-        $rootScope.pageNow= 0;
+        $rootScope.pageNow = 0;
         $scope.pages = {
             data: [],
             count: 0,
@@ -19,27 +19,31 @@ app.controller('Set_net_ipController', ['$scope', '$http', '$state','$rootScope'
     $scope.getPage = function (pageNow) {
         var loading = zeroModal.loading(4);
         pageNow = pageNow ? pageNow : 1;
-        $scope.index_num = (pageNow-1) * 10;
+        $scope.index_num = (pageNow - 1) * 10;
         $scope.params_data = {
             page: pageNow,
             rows: 10
         };
-        $http({
-            method: 'get',
-            url: './yiiapi/ipsegment/list',
-            params: $scope.params_data,
-        }).success(function (data) {
-            // console.log(data);
-            if (data.status == 0) {
-                $scope.pages = data.data;
-            }
-            if (data.status == 401) {
-                zeroModal.error(data.msg);
-            }
-            zeroModal.close(loading);
-        }).error(function () {
-            zeroModal.close(loading);
-        })
+        if (pageNow > 1000) {
+            zeroModal.error('数据超过一万条');
+        } else {
+            $http({
+                method: 'get',
+                url: './yiiapi/ipsegment/list',
+                params: $scope.params_data,
+            }).success(function (data) {
+                // console.log(data);
+                if (data.status == 0) {
+                    $scope.pages = data.data;
+                }
+                if (data.status == 401) {
+                    zeroModal.error(data.msg);
+                }
+                zeroModal.close(loading);
+            }).error(function () {
+                zeroModal.close(loading);
+            })
+        }
     };
     //添加网络ip
     $scope.add = function () {
@@ -56,11 +60,11 @@ app.controller('Set_net_ipController', ['$scope', '$http', '$state','$rootScope'
                 // console.log(data);
                 if (data.status == 0) {
                     zeroModal.success('设置成功！');
-                    $scope.net_ip ='',
-                    $scope.net_ip_mask ='',
-                    $scope.getPage();
+                    $scope.net_ip = '',
+                        $scope.net_ip_mask = '',
+                        $scope.getPage();
                 }
-                if(data.status == 1){
+                if (data.status == 1) {
                     zeroModal.error(data.msg);
                 }
                 if (data.status == 401) {
@@ -76,7 +80,7 @@ app.controller('Set_net_ipController', ['$scope', '$http', '$state','$rootScope'
         }
     }
     // 删除网络ip
-     $scope.del = function(id){
+    $scope.del = function (id) {
         var loading = zeroModal.loading(4);
         $http({
             method: 'DELETE',
@@ -90,7 +94,7 @@ app.controller('Set_net_ipController', ['$scope', '$http', '$state','$rootScope'
                 zeroModal.success('删除成功！');
                 $scope.getPage();
             }
-            if(data.status == 1){
+            if (data.status == 1) {
                 zeroModal.error(data.msg);
             }
             zeroModal.close(loading);
@@ -98,6 +102,6 @@ app.controller('Set_net_ipController', ['$scope', '$http', '$state','$rootScope'
             zeroModal.close(loading);
             zeroModal.error('删除失败！');
         })
-     }
+    }
     $scope.init();
 }]);

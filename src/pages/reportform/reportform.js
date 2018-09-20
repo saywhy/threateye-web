@@ -173,7 +173,7 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter','
                         report_type: $scope.selectedName
                     }
                 }).then(function (data, status, headers, config) {
-                    console.log(data);
+                    // console.log(data);
                     if (data.data.status == 0) {
                         // 添加成功，刷新数据 
                         zeroModal.success("保存成功!");
@@ -193,7 +193,6 @@ app.controller('ReportformController', ['$scope', '$http', '$state', '$filter','
                 })
             }
         }
-
     };
     // 删除报表
     $scope.del = function (params) {

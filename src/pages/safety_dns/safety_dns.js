@@ -1,19 +1,19 @@
 'use strict';
 /* Controllers */
-app.controller('Safety_dnsController', ['$scope', '$http', '$state','$rootScope', function ($scope, $http, $state,$rootScope) {
+app.controller('Safety_dnsController', ['$scope', '$http', '$state', '$rootScope', function ($scope, $http, $state, $rootScope) {
     // 初始化
     $scope.init = function (params) {
         clearInterval($rootScope.insideInterval);
         clearInterval($rootScope.startInterval);
         clearInterval($rootScope.getUpdataStatus);
-        $rootScope.pageNow= 0;
+        $rootScope.pageNow = 0;
         $scope.content_show = false;
         $scope.dns = {
-            host_ip:'',
-            server_ip:'',
-            domain_ip:'',
-            resolves_ip:'',
-            ttl:''
+            host_ip: '',
+            server_ip: '',
+            domain_ip: '',
+            resolves_ip: '',
+            ttl: ''
         };
         $scope.pages = {
             data: [],
@@ -43,16 +43,17 @@ app.controller('Safety_dnsController', ['$scope', '$http', '$state','$rootScope'
     };
     //搜索
     $scope.search = function () {
-       if($scope.dns.host_ip==''&&$scope.dns.server_ip==''&&$scope.dns.domain_ip==''&&$scope.dns.resolves_ip==''&&$scope.dns.ttl==''){
-        zeroModal.error('至少选择时间范围以及另外一项搜索条件');
-       }else{
-        $scope.getPage(1);
-       }
+        if ($scope.dns.host_ip == '' && $scope.dns.server_ip == '' && $scope.dns.domain_ip == '' && $scope.dns.resolves_ip == '' && $scope.dns.ttl == '') {
+            zeroModal.error('至少选择时间范围以及另外一项搜索条件');
+        } else {
+            $scope.getPage(1);
+        }
     };
+
     // 获取数据
     $scope.getPage = function (pageNow) {
-        $scope.content_show = true;
         pageNow = pageNow ? pageNow : 1;
+        $scope.content_show = true;
         $scope.index_num = (pageNow - 1) * 10;
         $scope.params_data = {
             host_ip: $scope.dns.host_ip,
@@ -66,25 +67,28 @@ app.controller('Safety_dnsController', ['$scope', '$http', '$state','$rootScope'
             current_page: pageNow,
             per_page_count: '10'
         };
-        // console.log($scope.params_data);
-        // var loading = zeroModal.loading(4);
-        $http({
-            method: 'get',
-            url: './yiiapi/investigate/dns-investigation',
-            params: $scope.params_data,
-        }).success(function (data) {
-            // console.log(data);
-            if (data.status == 0) {
-                $scope.pages = data.data;
-                // console.log($scope.pages);
-            }
-            if (data.status == 1) {
-                zeroModal.error(data.msg);
-            }
-            // zeroModal.close(loading);
-        }).error(function () {
-            // zeroModal.close(loading);
-        })
+        if (pageNow > 1000) {
+            zeroModal.error('数据超过一万条,请缩小搜索条件');
+        } else {
+            var loading = zeroModal.loading(4);
+            $http({
+                method: 'get',
+                url: './yiiapi/investigate/dns-investigation',
+                params: $scope.params_data,
+            }).success(function (data) {
+                // console.log(data);
+                if (data.status == 0) {
+                    $scope.pages = data.data;
+                    // console.log($scope.pages);
+                }
+                if (data.status == 1) {
+                    zeroModal.error(data.msg);
+                }
+                zeroModal.close(loading);
+            }).error(function () {
+                zeroModal.close(loading);
+            })
+        }
     };
     // 下载报表
     $scope.download = function () {
@@ -129,6 +133,7 @@ app.controller('Safety_dnsController', ['$scope', '$http', '$state','$rootScope'
         }).error(function (error) {
             console.log(error);
         })
+
         function download_now() {
             var tt = new Date().getTime();
             var url = './yiiapi/investigate/dns-investigation-export';

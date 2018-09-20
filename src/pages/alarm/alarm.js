@@ -122,20 +122,23 @@ app.controller('AlarmController', [
                 page: $scope.pages.pageNow,
                 rows: '10'
             };
-            // console.log($scope.params_data);
-            $http({
-                method: 'get',
-                url: './yiiapi/alert/list',
-                params: $scope.params_data,
-            }).success(function (data) {
-                // console.log(data.count);
-                if (data.status == 0) {
-                    $scope.pages = data.data;
-                }
-                // console.log($scope.pages);
-            }).error(function (err) {
-                console.log(err);
-            })
+            if (pageNow > 1000) {
+                zeroModal.error('数据超过一万条,请缩小搜索条件');
+            } else {
+                $http({
+                    method: 'get',
+                    url: './yiiapi/alert/list',
+                    params: $scope.params_data,
+                }).success(function (data) {
+                    // console.log(data.count);
+                    if (data.status == 0) {
+                        $scope.pages = data.data;
+                    }
+                    // console.log($scope.pages);
+                }).error(function (err) {
+                    console.log(err);
+                })
+            }
         }
         $scope.status_str = [{
             css: 'success',
