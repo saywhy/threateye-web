@@ -53,18 +53,22 @@ app.controller('Safety_iocController', ['$scope', '$http', '$state', '$rootScope
         if (pageNow > 1000) {
             zeroModal.error('数据超过一万条,请缩小搜索条件');
         } else {
-            var loading = zeroModal.loading(4);
             $http({
                 method: 'get',
                 url: './yiiapi/investigate/ioc-scanning-list',
                 params: $scope.params_data,
             }).success(function (data) {
-                // console.log(data);
+                console.log(data);
                 if (data.status == 0) {
                     $scope.pages = data.data;
-                    angular.forEach($scope.pages.data, function (item, index) {
-                        item.create_percent = item.create_percent + '%';
-                    });
+                    if($scope.pages.data.length !=0){
+                        angular.forEach($scope.pages.data, function (item, index) {
+                            item.create_percent = item.create_percent + '%';
+                        });
+                    }
+                }
+                if (data.status == 401) {
+                    zeroModal.error(data.msg);
                 }
                 zeroModal.close(loading);
             }).error(function () {
@@ -116,8 +120,8 @@ app.controller('Safety_iocController', ['$scope', '$http', '$state', '$rootScope
             processData: false, // 告诉jQuery不要去处理发送的数据
             contentType: false, // 告诉jQuery不要去设置Content-Type请求头
             success: function (res) {
-                // console.log(res);
-                res = JSON.parse(res);
+                console.log(res);
+                // res = JSON.parse(res);
                 if (res.status == 0) {
                     zeroModal.success('上传成功');
                     $scope.$apply(function () {
@@ -168,6 +172,9 @@ app.controller('Safety_iocController', ['$scope', '$http', '$state', '$rootScope
                         form.append(input1);
                         form.submit(); //表单提交
                     } else if (data.status == 1) {
+                        zeroModal.error(data.msg);
+                    }
+                    if (data.status == 401) {
                         zeroModal.error(data.msg);
                     }
                 }).error(function (error) {

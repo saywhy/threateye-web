@@ -52,12 +52,15 @@ app.controller('Safety_urlController', ['$scope', '$http', '$state', '$rootScope
                 url: './yiiapi/investigate/ipurl-communication-investigation',
                 params: $scope.params_data,
             }).success(function (data) {
-                console.log(data);
+                // console.log(data);
                 if (data.status == 0) {
                     $scope.pages = data.data;
                     // console.log($scope.pages);
                 }
                 if (data.status == 1) {
+                    zeroModal.error(data.msg);
+                }
+                if (data.status == 401) {
                     zeroModal.error(data.msg);
                 }
                 zeroModal.close(loading);
@@ -114,6 +117,9 @@ app.controller('Safety_urlController', ['$scope', '$http', '$state', '$rootScope
             if (data.status == 1) {
                 zeroModal.error(data.msg);
             }
+            if (data.status == 401) {
+                zeroModal.error(data.msg);
+            }
         }).error(function (error) {
             console.log(error);
         })
@@ -123,10 +129,16 @@ app.controller('Safety_urlController', ['$scope', '$http', '$state', '$rootScope
             var url = './yiiapi/investigate/ipurl-communication-investigation-export';
             var form = $("<form>"); //定义一个form表单
             form.attr("style", "display:none");
-            form.attr("target", "");
+            form.attr("target", "name");
+            form.attr("id", "form1");
             form.attr("method", "get"); //请求类型
             form.attr("action", url); //请求地址
             $("body").append(form); //将表单放置在web中
+
+            // var iframe = $("<iframe>"); //定义一个iframe
+            // form.attr("name", "name");
+            // form.attr("id", "iframe1");
+            // $("body").append(iframe); //将表单放置在web中
 
             var input1 = $("<input>");
             input1.attr("type", "hidden");
@@ -184,7 +196,6 @@ app.controller('Safety_urlController', ['$scope', '$http', '$state', '$rootScope
 
             form.submit(); //表单提交
         }
-
     };
 
     // 时间插件

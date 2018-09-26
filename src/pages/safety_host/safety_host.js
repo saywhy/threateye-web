@@ -180,6 +180,9 @@ app.controller('Safety_hostController', ['$scope', '$http', '$state', '$rootScop
                 if (data.status == 1) {
                     zeroModal.error(data.msg);
                 }
+                if (data.status == 401) {
+                    zeroModal.error(data.msg);
+                }
                 zeroModal.close(loading);
             }).error(function (error) {
                 console.log(error);
@@ -343,6 +346,9 @@ app.controller('Safety_hostController', ['$scope', '$http', '$state', '$rootScop
                 download_now(item);
             }
             if (data.status == 1) {
+                zeroModal.error(data.msg);
+            }
+            if (data.status == 401) {
                 zeroModal.error(data.msg);
             }
         }).error(function (error) {

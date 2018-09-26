@@ -84,6 +84,9 @@ app.controller('Safety_dnsController', ['$scope', '$http', '$state', '$rootScope
                 if (data.status == 1) {
                     zeroModal.error(data.msg);
                 }
+                if (data.status == 401) {
+                    zeroModal.error(data.msg);
+                }
                 zeroModal.close(loading);
             }).error(function () {
                 zeroModal.close(loading);
@@ -128,6 +131,9 @@ app.controller('Safety_dnsController', ['$scope', '$http', '$state', '$rootScope
                 download_now();
             }
             if (data.status == 1) {
+                zeroModal.error(data.msg);
+            }
+            if (data.status == 401) {
                 zeroModal.error(data.msg);
             }
         }).error(function (error) {
