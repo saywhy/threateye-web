@@ -37,7 +37,6 @@ app.controller('Set_ruleController', ['$scope', '$http', '$state','$rootScope', 
                     $scope.offline_update_button = true;
                 })
             }
-
         });
         $scope.progress_if = false;
         $scope.updataStatus();
@@ -152,7 +151,7 @@ app.controller('Set_ruleController', ['$scope', '$http', '$state','$rootScope', 
             },
             success: function (res) {
                 res = JSON.parse(res)
-                // console.log(res);
+                console.log(res);
                 if (res.status == 0) {
                     zeroModal.success('上传成功');
                     $scope.$apply(function () {

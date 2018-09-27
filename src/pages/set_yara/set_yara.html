@@ -1,27 +1,28 @@
 <div class="set" ng-controller="Set_yaraController" ng-init="app.settings.container = false;" ng-cloak>
     <!-- Main content -->
-    <div class="row">
-        <div class="col-md-12 ">
+    <div class="row" ng-cloak>
+        <div class="col-md-12 " >
             <div class="set_content">
                 <div class="yara_rule">
-                    <p>
+                    <p ng-if="yara_file">
                         <span class="yara_span">文件大小:</span>
-                        <span>212KB</span>
+                        <span ng-bind="yara_data.file_size">212KB</span>
                     </p>
-                    <p>
+                    <p ng-if="yara_file">
                         <span class="yara_span">上次更新时间:</span>
-                        <span>2018年06月12日 22:23:22</span>
+                        <span ng-bind="yara_data.update_time">2018年06月12日 22:23:22</span>
                     </p>
+                    <p ng-if="!yara_file">规则库内暂无规则文件，请先上传规则文件。</p>
                     <div style="margin-top: 20px">
-                        <button class="btn btn-primary btn_yara" style="margin-right: 20px" ng-click="offline_update()">下&nbsp;载</button>
-                        <button class="btn btn-primary btn_yara" style="margin-right: 50px" ng-click="yara_replace()">替&nbsp;换</button>
-                        <button class="btn btn-primary btn_yara" ng-click="offline_update()">删&nbsp;除</button>
+                        <button class="btn btn-primary btn_yara" style="margin-right: 20px" ng-disabled="!yara_file" ng-click="get_date('download')">下&nbsp;载</button>
+                        <button class="btn btn-primary btn_yara" ng-cloak style="margin-right: 50px" ng-click="yara_replace()" ng-bind="yara_file?'替换':'上传'"></button>
+                        <button class="btn btn-primary btn_yara"  ng-disabled="!yara_file" ng-click="del()">删&nbsp;除</button>
                     </div>
                     <div class="input-file" style="display: none">
                         <form id="upload" method="post" enctype="multipart/form-data">
                             <input type="text" id="avatval" placeholder="请选择文件···" readonly="readonly" style="vertical-align: middle;" />
                             <input type="file" name="file" id="avatar" />
-                            <button ng-click="uploadPic()" class="btn btn-primary upload_button" ng-disabled="upload_true" id="avatsel1">上传文件</button>
+                            <button ng-click="upload()" class="btn btn-primary upload_button" id="avatsel1">上传文件</button>
                         </form>
                     </div>
                 </div>

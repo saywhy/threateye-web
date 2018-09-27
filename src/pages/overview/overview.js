@@ -1145,14 +1145,15 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', '$r
     };
     // 拓扑图
     $scope.graph_echart = function () {
+        $scope.probe_array_if = false; //探针
+        $scope.engine_array_if = false; //引擎
         $scope.graph_echart_array = [];
         $scope.graph_echart_array_item = {};
         // 探针数组
         $scope.probe_array = [];
         // 引擎数组
         $scope.engine_array = [];
-        // 引擎和探针的关系
-        $scope.links_array = [];
+        console.log($scope.sysState_data.dev_info);
         angular.forEach($scope.sysState_data.dev_info, function (item, index) {
             if (item.status == 0) {
                 item.status = '离线'
@@ -1160,71 +1161,20 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', '$r
                 item.status = '在线'
             }
             // 判断类型
+            // 探针
             if (item.dev_type == '1') {
-                $scope.only_one = true;
+                $scope.probe_array_if = true;
                 $scope.probe_array.push(item);
+
             }
+            // 引擎
             if (item.dev_type == '2') {
-                $scope.only_one = true;
+                $scope.engine_array_if = true;
                 $scope.engine_array.push(item);
             }
-            if (item.dev_type == '3') {
-                $scope.only_one = false;
-                $scope.graph_echart_array_item = {
-                    name: '引擎/探针',
-                    names: '引擎/探针',
-                    dev_ip: item.dev_ip,
-                    status: item.status,
-                    x: 300,
-                    y: 150,
-                    symbol: $scope.computer_base64,
-                    //节点上面的文字	
-                    label: {
-                        normal: {
-                            position: "bottom",
-                            show: true,
-                            textStyle: {
-                                fontSize: 12,
-                                color: '#666',
-                                align: 'center',
-                            },
-                            formatter: '引擎/探针'
-                        }
-                    }
-                }
-                $scope.graph_echart_array.push($scope.graph_echart_array_item);
-            }
         });
-        if ($scope.only_one) {
-            // 2 一台引擎模版
-            $scope.data_item0 = {
-                name: '节点0',
-                x: 350,
-                y: 200,
-                symbol: $scope.oracle_base64,
-                names: '引擎',
-                dev_ip: $scope.engine_array[0].dev_ip,
-                status: $scope.engine_array[0].status,
-                //节点上面的文字	
-                label: {
-                    normal: {
-                        position: "bottom",
-                        show: true,
-                        textStyle: {
-                            fontSize: 12,
-                            color: '#666',
-                            align: 'center',
-                        },
-                        formatter: '引擎'
-                    }
-                }
-            };
-            // 一台引擎
-            if ($scope.engine_array.length == 1) {
-                $scope.graph_echart_array.push($scope.data_item0);
-            };
-            // console.log($scope.probe_array);
-            // 多个探针 模版
+        // 多个探针
+        if ($scope.probe_array_if) {
             angular.forEach($scope.probe_array, function (item, index) {
                 $scope.data_item1 = {
                     name: '节点1',
@@ -1323,11 +1273,36 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', '$r
                     default:
                         break;
                 };
+
+
             })
         }
-
-        // console.log($scope.graph_echart_array);
-        // $("#pop").html('<div id="graph"</div>');
+          // 一台引擎模版
+        if ($scope.engine_array_if) {
+            $scope.data_item0 = {
+                name: '节点0',
+                x: 350,
+                y: 200,
+                symbol: $scope.oracle_base64,
+                names: '引擎',
+                dev_ip: $scope.engine_array[0].dev_ip,
+                status: $scope.engine_array[0].status,
+                //节点上面的文字	
+                label: {
+                    normal: {
+                        position: "bottom",
+                        show: true,
+                        textStyle: {
+                            fontSize: 12,
+                            color: '#666',
+                            align: 'center',
+                        },
+                        formatter: '引擎'
+                    }
+                }
+            };
+            $scope.graph_echart_array.push($scope.data_item0);
+        }
         var myChart = echarts.init(document.getElementById('graph'));
         var option = {
             tooltip: {
