@@ -158,12 +158,11 @@ angular.module('app')
                     method: 'get',
                     url: './yiiapi/news/list',
                 }).success(function (data) {
-                    // console.log(data);
+                    console.log(data);
                     if (data.status == 0) {
-                        // $scope.$apply(function(){
                         $scope.user_name = data.user_name;
                         $scope.new_data_info = data.data;
-                        // })
+                        $scope.role_admin = data.role; //权限限制
                     } else {
                         $scope.new_data_info = 0;
                     }
