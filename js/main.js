@@ -158,7 +158,7 @@ angular.module('app')
                     method: 'get',
                     url: './yiiapi/news/list',
                 }).success(function (data) {
-                    console.log(data);
+                    // console.log(data);
                     if (data.status == 0) {
                         $scope.user_name = data.user_name;
                         $scope.new_data_info = data.data;
@@ -172,7 +172,6 @@ angular.module('app')
                         // 未登录
                         $state.go('signin');
                     }
-
                 })
             };
             $scope.showNews = function (item) {

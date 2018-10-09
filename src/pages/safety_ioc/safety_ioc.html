@@ -11,7 +11,7 @@
                 <div style="margin:5px 20px">
                     <div class="input-file">
                         <form id="upload" method="post" enctype="multipart/form-data">
-                            <input type="text" id="avatval" placeholder="请选择文件···" readonly="readonly" style="vertical-align: middle;" />
+                            <input type="text" id="avatval" placeholder="请点击此处选择文件···" readonly="readonly" style="vertical-align: middle;" />
                             <input type="file" name="file" id="avatar" accept=".txt,.ioc" />
                             <button ng-click="uploadPic()" class="btn btn-primary upload_button" ng-disabled="upload_true"
                                 id="avatsel1">上传文件</button>
@@ -33,7 +33,7 @@
                 <div class="col-md-6" style="margin-top: 10px">
                     <span>文件上传成功之后，请点击搜索按钮，进行文件筛选。</span>
                 </div>
-                <div class="tab-content" style="padding-top:0px;border-bottom:0px;" ng-if="content_show">
+                <div class="tab-content" style="padding-top:0px;border-bottom:0px;" >
                     <div class="tab-pane active" id="protect">
                         <div class="row">
                             <div class="col-md-12">
@@ -60,7 +60,7 @@
                                                             <img src="../src/images/icos/download.png" ng-click="download(item.id)"
                                                                 width="16" height="16" alt="">
                                                         </td>
-                                                        <td ng-bind="item.create_time">2018-07-20 05:00:00</td>
+                                                        <td ng-bind="item.create_time | date: 'yyyy-MM-dd HH:mm:ss' ">2018-07-20 05:00:00</td>
                                                         <td class="cursor">&nbsp;&nbsp;
                                                             <img src="../src/images/icos/delate.png" ng-click="del(item.id)"
                                                                 width="16" height="16" alt="">
@@ -74,7 +74,7 @@
                                                     <!-- angularjs分页 -->
                                                     <ul class="pagination pagination-sm no-margin pull-right ng-cloak">
                                                         <li>
-                                                            <a href="javascript:void(0);" ng-click="getPage(pages0.pageNow-1)"
+                                                            <a href="javascript:void(0);" ng-click="getPage(pages.pageNow-1)"
                                                                 ng-if="pages.pageNow>1">上一页</a>
                                                         </li>
                                                         <li>

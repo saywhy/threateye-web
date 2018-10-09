@@ -11,13 +11,13 @@ app.controller('Safety_iocController', ['$scope', '$http', '$state', '$rootScope
         $rootScope.pageNow = 0;
         $scope.upload_true = true; //初始化禁用提交按钮
         $("#avatval").click(function () {
-            $("input[type='file']").trigger('click');
+            $("#avatar").trigger('click');
             $scope.$apply(function () {
                 $('#progress')[0].style = 'width:0%';
                 $scope.progress_if = false;
             })
         });
-        $("input[type='file']").change(function (target) {
+        $("#avatar").change(function (target) {
             $("#avatval").val($(this).val());
             if (target.target.value) {
                 if (target.target.value.split('.')[1].indexOf('txt') == -1 && target.target.value.split('.')[1].indexOf('ioc') == -1) {
@@ -39,6 +39,7 @@ app.controller('Safety_iocController', ['$scope', '$http', '$state', '$rootScope
             maxPage: "...",
             pageNow: 1,
         };
+        $scope.getPage();
     };
     //获取数据
     $scope.getPage = function (pageNow) {
@@ -58,7 +59,7 @@ app.controller('Safety_iocController', ['$scope', '$http', '$state', '$rootScope
                 url: './yiiapi/investigate/ioc-scanning-list',
                 params: $scope.params_data,
             }).success(function (data) {
-                console.log(data);
+                // console.log(data);
                 if (data.status == 0) {
                     $scope.pages = data.data;
                     if($scope.pages.data.length !=0){
@@ -126,6 +127,9 @@ app.controller('Safety_iocController', ['$scope', '$http', '$state', '$rootScope
                     zeroModal.success('上传成功');
                     $scope.$apply(function () {
                         $scope.btn_disabled = false;
+                        $scope.upload_true = true;
+                        $scope.progress_if = false;
+                        $("#upload")[0].reset();
                     })
                 } else {
                     zeroModal.error(res.msg);

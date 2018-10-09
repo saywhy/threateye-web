@@ -12,7 +12,7 @@
                         <span class="yara_span">上次更新时间:</span>
                         <span ng-bind="yara_data.update_time">2018年06月12日 22:23:22</span>
                     </p>
-                    <p ng-if="!yara_file">规则库内暂无规则文件，请先上传规则文件。</p>
+                    <p ng-if="!yara_file">并未发现任何yara规则文件，请先上传规则库文件！</p>
                     <div style="margin-top: 20px">
                         <button class="btn btn-primary btn_yara" style="margin-right: 20px" ng-disabled="!yara_file" ng-click="get_date('download')">下&nbsp;载</button>
                         <button class="btn btn-primary btn_yara" ng-cloak style="margin-right: 50px" ng-click="yara_replace()" ng-bind="yara_file?'替换':'上传'"></button>

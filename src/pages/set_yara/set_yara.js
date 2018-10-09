@@ -43,7 +43,7 @@ app.controller('Set_yaraController', ['$scope', '$http', '$state', '$rootScope',
             method: 'get',
             url: './yiiapi/yararule/get'
         }).success(function (data) {
-            console.log(data);  
+            // console.log(data);  
              if(data.status == 1){
                 $scope.yara_file = false;
             }

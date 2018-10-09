@@ -1326,7 +1326,6 @@ app.controller('OverViemController', ['$scope', '$http', '$state', '$modal', '$r
             })
         }
 
-        
         // console.log($scope.graph_echart_array);
         // $("#pop").html('<div id="graph"</div>');
         var myChart = echarts.init(document.getElementById('graph'));

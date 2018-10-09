@@ -20,7 +20,7 @@ app.controller('Set_ruleController', ['$scope', '$http', '$state','$rootScope', 
             $("#avatval").val($(this).val());
             if (target.target.value) {
                 if (target.target.value.split('.')[1].indexOf('tgz') == -1) {
-                    zeroModal.error(' 请重新选择.tgz格式的文件上传');
+                    zeroModal.error('请重新选择.tgz格式的文件上传');
                     // 请上传名为sdk.tgz、ips.tgz、sandbox.tgz或yara.tgz的文件
                     $scope.$apply(function () {
                         $scope.upload_true = true;
@@ -41,11 +41,9 @@ app.controller('Set_ruleController', ['$scope', '$http', '$state','$rootScope', 
         $scope.progress_if = false;
         $scope.updataStatus();
     };
-
-
     $rootScope.getUpdataStatus = setInterval(function () {
         $scope.updataStatus();
-    }, 10000)
+    }, 10000);
 
     $scope.updataStatus = function () {
         $http({
@@ -74,7 +72,7 @@ app.controller('Set_ruleController', ['$scope', '$http', '$state','$rootScope', 
             zeroModal.error('获取更新状态失败！');
             clearInterval($rootScope.getUpdataStatus);
         })
-    }
+    };
     // 实时更新
     $scope.real_time_update = function () {
         if ($scope.disabledUpdata) {
@@ -122,7 +120,6 @@ app.controller('Set_ruleController', ['$scope', '$http', '$state','$rootScope', 
             zeroModal.error('更新失败！');
         })
     };
-
     // 上传文件
     $scope.uploadPic = function () {
         $scope.progress_if = true;
